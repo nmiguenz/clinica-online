@@ -57,7 +57,39 @@
       </div>
     </div>
     </div>
+
+    <div class="accesos-rapidos justify-content-center">
+
+      <div class="fab-button">
+          <button class="fastAccessButton"
+              [ngStyle]="{'background-image': 'url(' + adminFotoUrl + ')'}" (click)="cargarAdmin()">
+          </button>
+          <br>
+          <h6>Administrador</h6>
+      </div>
+
+      <div class="fab-button">
+        <button class="fastAccessButton"
+            [ngStyle]="{'background-image': 'url(' + especialistaFotoUrl + ')'}" (click)="cargarEspecialista()">
+        </button>
+        <br>
+        <h6>Especialista</h6>
+      </div>
+
+      <div class="fab-button">
+        <button class="fastAccessButton"
+            [ngStyle]="{'background-image': 'url(' + pacienteFotoUrl + ')'}" (click)="cargarPaciente()">
+        </button>
+        <br>
+        <h6>Paciente</h6>
+      </div>
+
+    </div>
+
+
+
   </div>
 
 </section>
+
 <!-- Section: Design Block -->

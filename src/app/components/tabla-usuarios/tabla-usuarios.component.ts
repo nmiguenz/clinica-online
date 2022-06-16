@@ -29,7 +29,7 @@ export class TablaUsuariosComponent implements OnInit {
     private db : FirestoreDbService,
     private auth: AuthService,
     private especSrv : EspecialistaService) {
-    this.loguedUser = auth.setLoggedUserByTipe();
+    this.loguedUser = this.auth.setLoggedUserByTipe();
   }
 
   ngOnInit(): void {
@@ -63,7 +63,6 @@ export class TablaUsuariosComponent implements OnInit {
   }
 
   administradorSeleccionado(administrador: Administrador) {
-
     this.seSeleccionoAdministrador.emit(administrador);
   }
 

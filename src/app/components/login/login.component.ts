@@ -20,6 +20,13 @@ export class LoginComponent implements OnInit {
   formGroup : FormGroup | any;
   user : any = null;
 
+  //Acceso R�pido
+  email: string = '';
+  password: string = '';
+  public adminFotoUrl: string = '';
+  public pacienteFotoUrl: string = '';
+  public especialistaFotoUrl: string = '';
+
   constructor(private auth : AuthService, private fb : FormBuilder, private route: Router, private db: FirestoreDbService) {
     this.formGroup = this.fb.group({
       'mail' : ['', [Validators.required, Validators.email]],
@@ -27,7 +34,28 @@ export class LoginComponent implements OnInit {
     })
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    let admin = this.db.getUser('usuarios','==','mail','nmiguenz@gmail.com').subscribe((usuarios: any) => {
+      if (usuarios[0] != null) {
+        this.adminFotoUrl = usuarios[0].payload.doc.data().fotoUno;
+      }
+      admin.unsubscribe();
+    });
+
+    let paciente = this.db.getUser('usuarios','==','mail','relabuelo@gmail.com').subscribe((usuarios: any) => {
+      if (usuarios[0] != null) {
+        this.pacienteFotoUrl = usuarios[0].payload.doc.data().fotoUno;
+      }
+      paciente.unsubscribe();
+    });
+
+    let especialista = this.db.getUser('usuarios','==','mail','relabuelo@gmail.com').subscribe((usuarios: any) => {
+      if (usuarios[0] != null) {
+        this.especialistaFotoUrl = usuarios[0].payload.doc.data().fotoUno;
+      }
+      especialista.unsubscribe();
+    });
+  }
 
   mostrarPassword(){
 		var input = <HTMLInputElement>document.getElementById("pass");
@@ -52,7 +80,7 @@ export class LoginComponent implements OnInit {
 
         if(this.user){
 
-          //Chequeo si el EMAIL del PACIENTE!!! ESTÁ VERIFICADO
+          //Chequeo si el EMAIL del PACIENTE!!! ESTÝ VERIFICADO
           if(this.user.perfil == 'paciente'){
             this.auth.login(this.formGroup.value.mail, this.formGroup.value.password)
             .then((res:any)=>{
@@ -104,7 +132,21 @@ export class LoginComponent implements OnInit {
       this.loading = false;
     });
 
+  }
 
+  cargarAdmin() {
+    this.formGroup.controls.mail.setValue("nmiguenz@gmail.com");
+    this.formGroup.controls.password.setValue("123456");
+  }
+
+  cargarPaciente() {
+    this.formGroup.controls.mail.setValue("relabuelo@gmail.com");
+    this.formGroup.controls.password.setValue("123456");
+  }
+
+  cargarEspecialista(){
+    this.formGroup.controls.mail.setValue("roquesosa@gmail.com");
+    this.formGroup.controls.password.setValue("123456");
   }
 
 
