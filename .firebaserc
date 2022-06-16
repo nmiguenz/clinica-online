@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "clinica-online-3c036": {
+      "hosting": {
+        "clinicaOnline": [
+          "clinica-online-3c036"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "clinica-online-3c036"
+  }
+}

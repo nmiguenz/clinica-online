@@ -1,1 +1,11 @@
 /* You can add global styles to this file, and also import other style files */
+h1, h2{
+  font-family: 'Archivo Black', sans-serif;
+}
+
+body{
+  font-family: 'Archivo', sans-serif;
+  --navbar-scroll: transparent;
+  --navbar-scroll-text: white;
+  --navbar-scroll-shadow: none;
+}

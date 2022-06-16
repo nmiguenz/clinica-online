@@ -1,0 +1,197 @@
+<app-loading [inputLoading]="loading"></app-loading>
+  <!-- Section: Design Block -->
+<section class="">
+
+  <div class="container vh-100 d-flex justify-content-center align-items-center ">
+    <div class="card signin-content py-4 shadow-lg p-3 mb-2 bg-body rounded-4 d-flex">
+
+      <div class="row align-items-center">
+
+        <div class="signin-form col-md-7 py-4 px-5 text-align-start opacity-100">
+          <h1 class="fw-bold mb-4">Register</h1>
+          <form [formGroup]="formGroup" (submit)="alta()">
+            <!-- 2 column grid layout with text inputs for the first and last names -->
+            <div class="row">
+
+              <div class="col-md-6 mb-4">
+                <div class="form-floating">
+                  <input type="text" class="form-control" id="nombre" placeholder="name@example.com" formControlName="nombre">
+                  <label for="nombre">Nombre</label>
+                  <span class="text-danger" *ngIf="formGroup.get('nombre')?.hasError('required') && formGroup.get('nombre')?.touched">Nombre requerido.</span>
+                  <span class="text-danger" *ngIf="formGroup.get('nombre')?.hasError('pattern')">Complete solo con letras.</span>
+                </div>
+              </div>
+
+              <div class="col-md-6 mb-4">
+                <div class="form-floating">
+                  <input type="text" class="form-control" id="apellido" placeholder="name@example.com" formControlName="apellido">
+                  <label for="apellido">Apellido</label>
+                  <span class="text-danger" *ngIf="formGroup.get('apellido')?.hasError('required') && formGroup.get('apellido')?.touched">Apellido requerido.</span>
+                  <span class="text-danger" *ngIf="formGroup.get('apellido')?.hasError('pattern')">Complete solo con letras.</span>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="row">
+
+              <div class="col-md-6 mb-4">
+                <div class="form-floating">
+                  <input type="text" class="form-control" id="edad" formControlName="edad" placeholder="name@example.com" formControlName="edad">
+                  <label for="edad">Edad</label>
+                  <span class="text-danger" *ngIf="formGroup.get('edad')?.hasError('required') && formGroup.get('edad')?.touched">Edad requerida.</span>
+                  <span class="text-danger" *ngIf="formGroup.get('edad')?.hasError('pattern')">Complete solo con números.</span>
+                  <span class="text-danger" *ngIf="formGroup.get('edad')?.hasError('min')">Debe ser mayor a 1.</span>
+                  <span class="text-danger" *ngIf="formGroup.get('edad')?.hasError('max')">Debe ser menor a 120.</span>
+                </div>
+              </div>
+
+              <div class="col-md-6 mb-4">
+                <div class="form-floating">
+                  <input type="text" class="form-control" id="dni" formControlName="dni" placeholder="name@example.com" formControlName="dni">
+                  <label for="dni">DNI</label>
+                  <span class="text-danger" *ngIf="formGroup.get('dni')?.hasError('required') && formGroup.get('dni')?.touched">DNI requerido.</span>
+                  <span class="text-danger" *ngIf="formGroup.get('dni')?.hasError('pattern')">Complete solo con números.</span>
+                  <span class="text-danger" *ngIf="formGroup.get('dni')?.hasError('min')">Debe ser mayor a 1.</span>
+                  <span class="text-danger" *ngIf="formGroup.get('dni')?.hasError('max')">Debe ser menor a 99999999.</span>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- Email input -->
+            <div class="form-floating mb-4">
+              <input type="email" class="form-control" id="email" placeholder="name@example.com" formControlName="mail">
+              <label for="email">Email</label>
+              <span class="text-danger" *ngIf="formGroup.get('mail')?.hasError('required') && formGroup.get('mail')?.touched">El mail requerido.</span>
+              <span class="text-danger" *ngIf="formGroup.get('mail')?.hasError('email')">El formato del mail es incorrecto.</span>
+            </div>
+
+            <!-- Password input -->
+            <div class="form-floating mb-4">
+              <input type="password" class="form-control" id="password" placeholder="*" formControlName="password" minlength="6" maxlength="20">
+              <label for="password">Password</label>
+              <span class="text-danger" *ngIf="formGroup.get('password')?.hasError('required') && formGroup.get('password')?.touched">El password es requerido.</span>
+              <span class="text-danger" *ngIf="formGroup.get('password')?.hasError('minLength')">El password debe contener al menos 6 caracteres.</span>
+              <span class="text-danger" *ngIf="formGroup.get('password')?.hasError('maxLength')">El password debe contener como máximo 20 caracteres.</span>
+            </div>
+
+            <!-- Elección de perfil de alta -->
+            <div class="row mb-4" *ngIf="perfil == '' ">
+
+              <div class="col-md-6">
+                <button type="button" class="btn btn-outline-info btn-block" (click)="perfilUsuario('paciente')">
+                  Paciente
+                </button>
+              </div>
+
+              <div class="col-md-6">
+                <button type="button" class="btn btn-outline-success btn-block" (click)="perfilUsuario('especialista')">
+                  Especialista
+                </button>
+              </div>
+
+
+            </div>
+
+            <div  *ngIf="perfil == 'paciente'; then paciente"></div>
+            <div  *ngIf="perfil == 'especialista'; then especialista"></div>
+
+            <ng-template #paciente>
+                <div class="form-floating mb-4">
+                  <input type="text" class="form-control" id="obraSocial" formControlName="obraSocial" placeholder="*">
+                  <label for="obraSocial">Obra Social</label>
+                  <span class="text-danger" *ngIf="formGroup.get('obraSocial')?.hasError('required') && formGroup.get('obraSocial')?.touched">La obra social es requerida.</span>
+                </div>
+
+                <div class="row mb-4">
+
+                  <div class="col-md-6">
+                    <div class="input-group custom-file-button">
+                      <label class="input-group-text" for="inputGroupFile">Foto de perfil</label>
+                      <input type="file" class="form-control" id="inputGroupFile" formControlName="fotoUno" (input)="obtenerImg($event,1)" accept="image/*">
+                      <span class="text-danger" *ngIf="formGroup.get('fotoUno')?.hasError('required') && formGroup.get('fotoUno')?.touched">Foto de perfil requerida.</span>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="input-group custom-file-button mb-4">
+                      <label class="input-group-text" for="inputGroupFile2">Foto de perfil dos</label>
+                      <input type="file" class="form-control" id="inputGroupFile2" formControlName="fotoDos" (input)="obtenerImg($event,2)" accept="image/*">
+                      <span class="text-danger" *ngIf="formGroup.get('fotoDos')?.hasError('required') && formGroup.get('fotoDos')?.touched">Foto de perfil requerida.</span>
+                    </div>
+                  </div>
+
+                </div>
+
+              </ng-template>
+
+              <ng-template #especialista>
+
+                <div class="input-group mb-4">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" id="especialidad"><button type="button" (click)="crearEspecialidad = !(crearEspecialidad)">Agregar Espacialidad</button></span>
+                  </div>
+                  <select class="form-select" id="especialidad" formControlName="especialidad">
+                    <option selected>Elige una especialidad</option>
+                    <option *ngFor="let especialidad of especialidades" [value]="especialidad.nombre">{{especialidad.nombre}}</option>
+                  </select>
+                  <span class="text-danger" *ngIf="formGroup.get('especialidad')?.hasError('required') && formGroup.get('especialidad')?.touched">La especialidad es requerida.</span>
+                </div>
+
+                <div class="row" *ngIf="crearEspecialidad">
+
+                  <div class="col-md-9 mb-4">
+                    <div class="form-floating">
+                      <input type="text" class="form-control" id="ne" placeholder="name@example.com" [(ngModel)]="nuevaEspecialidad" [ngModelOptions]="{standalone: true}">
+                      <label for="ne">Nueva especialidad</label>
+                    </div>
+                  </div>
+
+                  <div class="col-md-3 mb-4">
+                    <button class="btn btn-primary btn-lg btn-block mt-1" type="button" (click)="agregarEspecialidad(nuevaEspecialidad)">Agregar</button>
+                  </div>
+                </div>
+
+                <div class="input-group custom-file-button mb-4">
+                  <label class="input-group-text" for="foto">Foto de perfil</label>
+                  <input type="file" class="form-control" id="foto" formControlName="fotoUno" (input)="obtenerImg($event,1)" accept="image/*">
+                  <span class="text-danger" *ngIf="formGroup.get('fotoUno')?.hasError('required') && formGroup.get('fotoUno')?.touched">Foto de perfil requerida.</span>
+                </div>
+
+              </ng-template>
+
+            <!-- Submit button -->
+            <button type="submit" class="btn btn-primary btn-block mb-4 " [disabled]="!formGroup.valid">
+              ALTA
+            </button>
+
+            <!-- Register buttons -->
+            <div class="text-center">
+              <p>o logueate con:</p>
+
+              <button type="button" class="btn btn-primary  ">
+                <i class="bi bi-google"></i>
+              </button>
+
+            </div>
+          </form>
+
+        </div>
+
+        <div class="singin-img col-md-5 py-5 text-lg-center opacity-100 h-100">
+          <img src="../../../assets/undraw_my_app_re_gxtj.svg"
+          alt="" class="opacity-100"/>
+        </div>
+
+      </div>
+
+      <div class="row text-align-end volver">
+        <p class="text-end me-5 text-dark"><a [routerLink]="['/home']"><i class="bi bi-arrow-left-square-fill"></i><span> Volver</span></a></p>
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+<!-- Section: Design Block -->

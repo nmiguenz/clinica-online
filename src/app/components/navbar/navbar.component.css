@@ -1,0 +1,18 @@
+.navbar{
+  position: fixed;
+  width:100%;
+  transition: background-color 1s;
+  background-color: var(--navbar-scroll);
+  transition: background-color 1s ease;
+  color: var(--navbar-scroll-text);
+  -webkit-box-shadow: var(--navbar-scroll-shadow);
+  box-shadow: var(--navbar-scroll-shadow);
+}
+
+.cerrarSesion{
+  font-size: 1.5rem;
+}
+
+.cerrarSesion:hover{
+  cursor: pointer;
+}

@@ -1,0 +1,94 @@
+section{
+  /* background-color: #f9f9f9; */
+  background-image: url('../../../assets/doctor-g143d9ddc3_1920.jpg');
+  background-size: cover;
+  opacity: 1.5;
+}
+img{
+  width: 80%;
+}
+
+.card{
+  position: relative;
+  z-index: 10;
+  background-color: #eff3f5!important;
+  opacity: 0.95;
+}
+
+/* Input type FILE */
+.custom-file-button input[type=file] {
+  margin-left: -2px;
+  padding: 1rem;
+}
+
+.custom-file-button input[type=file]::-webkit-file-upload-button {
+  display: none !important;
+}
+
+.custom-file-button input[type=file]::file-selector-button {
+  display: none !important;
+}
+
+.custom-file-button:hover label {
+  background-color: #dde0e3;
+  cursor: pointer;
+}
+
+.volver{
+  margin-top: -3.5rem;
+  padding-right: 2rem;
+}
+
+.btn-block{
+  width: -webkit-fill-available !important;
+}
+
+.show-pass{
+  position: absolute;
+  margin-top: -2.7rem;
+  margin-left: 28rem;
+  font-size: 1.5rem;
+}
+
+@media (max-width: 1400px) {
+  .show-pass {
+    position: absolute;
+    margin-top: -2.7rem;
+    margin-left: 26rem;
+  }
+}
+
+@media (max-width: 1200px) {
+  .show-pass {
+    position: absolute;
+    margin-top: -2.7rem;
+    margin-left: 20rem;
+  }
+}
+
+@media (max-width: 992px) {
+  .show-pass {
+    position: absolute;
+    margin-top: -2.7rem;
+    margin-left: 13rem;
+  }
+}
+
+@media (max-width: 767px) {
+  .show-pass {
+    position: absolute;
+    margin-top: -2.7rem;
+    margin-left: 23rem;
+  }
+}
+
+
+.cascading-right {
+  margin-right: -50px;
+}
+
+@media (max-width: 991.98px) {
+  .cascading-right {
+    margin-right: 0;
+  }
+}
