@@ -129,6 +129,7 @@ export class RegisterComponent implements OnInit {
         this.formGroup.value.password,
         this.formGroup.value.fotoUno,
         'especialista',
+        false
       );
 
       try {

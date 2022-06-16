@@ -7,10 +7,12 @@
   color: var(--navbar-scroll-text);
   -webkit-box-shadow: var(--navbar-scroll-shadow);
   box-shadow: var(--navbar-scroll-shadow);
+
 }
 
 .cerrarSesion{
   font-size: 1.5rem;
+  background-color: rgb(255, 255, 255);
 }
 
 .cerrarSesion:hover{

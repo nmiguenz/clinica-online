@@ -10,7 +10,7 @@ export class Paciente {
   fotoDos : string = '';
   perfil : string = '';
 
-  constructor(name:string, surname:string, age:number, id:number, ob:string, email:string, pass:string, img:string, img2:string, perfil:string){
+  constructor(name:string, surname:string, age:number, id:number, ob:string, email:string, pass:string, img:string, img2:string, perfil:string,){
     this.nombre = name;
     this.apellido = surname;
     this.edad = age;
@@ -21,5 +21,6 @@ export class Paciente {
     this.fotoUno = img;
     this.fotoDos = img2;
     this.perfil = perfil;
+
   }
 }

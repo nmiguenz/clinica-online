@@ -8,8 +8,9 @@ export class Especialista {
   password : string = '';
   fotoUno : string = '';
   perfil : string = '';
+  habilitado: boolean;
 
-  constructor(name:string, surname:string, age:number, id:number, especility:string, email:string, pass:string, img:string, perfil: string){
+  constructor(name:string, surname:string, age:number, id:number, especility:string, email:string, pass:string, img:string, perfil: string, habilitado: boolean){
     this.nombre = name;
     this.apellido = surname;
     this.edad = age;
@@ -19,5 +20,6 @@ export class Especialista {
     this.password = pass;
     this.fotoUno = img;
     this.perfil = perfil;
+    this.habilitado = habilitado;
   }
 }

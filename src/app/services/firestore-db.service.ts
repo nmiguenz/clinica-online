@@ -1,3 +1,4 @@
+import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { getStorage, ref, getDownloadURL, uploadBytes } from '@angular/fire/storage';
@@ -74,6 +75,10 @@ export class FirestoreDbService {
     } catch (error) {
       return error
     }
+  }
+
+  getUser(collectionName:string, operator: '<' | '>' | '==' | '<=' | '>=', field:string ,objectName:string){
+    return this.db.collection(collectionName, ref => ref.where(field, operator, objectName)).snapshotChanges();
   }
 
   async getDocById(collectionName:string, id:string) {

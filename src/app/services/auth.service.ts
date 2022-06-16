@@ -1,9 +1,11 @@
+import { updateProfile } from 'firebase/auth';
 import { Especialista } from './../classes/especialista';
 import { Paciente } from 'src/app/classes/paciente';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { UserPerfil } from '../interface/user-perfil';
+import { Administrador } from '../classes/administrador';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +15,7 @@ export class AuthService {
   userObject : any;
   pacienteLogueado : Paciente | any;
   especialistaLogueado : Especialista | any;
-  adminLogueado : any;
+  adminLogueado : Administrador | any;
 
   private currentUserSubject: BehaviorSubject<UserPerfil> = new BehaviorSubject({} as UserPerfil);
   public readonly currentUser: Observable<UserPerfil> = this.currentUserSubject.asObservable();
@@ -77,11 +79,22 @@ export class AuthService {
         this.userObject['especialidad'],
         this.userObject['mail'],
         this.userObject['password'],
-        this.userObject['foto'],
-        this.userObject['perfil'])
+        this.userObject['fotoUno'],
+        this.userObject['perfil'],
+        this.userObject['habilitado'])
         return this.especialistaLogueado;
     }else{
-      return
+      this.adminLogueado = new Administrador(
+        this.userObject['nombre'],
+        this.userObject['apellido'],
+        this.userObject['edad'],
+        this.userObject['dni'],
+        this.userObject['mail'],
+        this.userObject['password'],
+        this.userObject['fotoUno'],
+        this.userObject['perfil'],
+        this.userObject['habilitado'])
+        return this.adminLogueado;
     }
   }
 

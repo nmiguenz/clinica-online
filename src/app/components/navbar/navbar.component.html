@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-light pe-5 ps-5">
+<nav class="navbar navbar-expand-lg navbar-light pe-5 ps-5 mb-4">
   <div class="container-fluid">
     <a class="navbar-brand" href="#"><span><img src="../../../assets/hospital.png" alt="logo" width="50" height="50"></span> Clinica Online</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -23,6 +23,7 @@
           <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
             <h6 class="ps-3">{{usuarioLogueado.nombre}} {{usuarioLogueado.apellido}}</h6>
             <a class="dropdown-item" >Perfil</a>
+            <a class="dropdown-item" [routerLink]="['backoffice/seccionUsuarios']" *ngIf="perfil == 'admin'">Sección usuarios</a>
             <!-- <a class="dropdown-item" href="#">Log Out</a> -->
           </div>
         </li>

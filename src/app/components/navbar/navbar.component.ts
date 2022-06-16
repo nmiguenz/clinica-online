@@ -21,7 +21,9 @@ export class NavbarComponent implements OnInit {
       currentUser => {
         this.estaLoggeado = currentUser.isLogged;
         this.perfil = currentUser.perfil;
-        this.usuarioLogueado = auth.setLoggedUserByTipe();
+        if(this.perfil != null){
+          this.usuarioLogueado = auth.setLoggedUserByTipe();
+        }
       }
     );
   }
@@ -32,16 +34,18 @@ export class NavbarComponent implements OnInit {
 
   //Animación del Navbar
   scroll(){
-    let navElement = document.getElementsByClassName('navbar');
+    // let navElement = document.getElementsByClassName('navbar');
 
-    if(window.scrollY >= 700){
-      document.body.style.setProperty('--navbar-scroll', "#eff3f5");
-      document.body.style.setProperty('--navbar-scroll-text', "black");
-      document.body.style.setProperty('--navbar-scroll-shadow', "0px 6px 12px -5px #000000");
-    }else if(window.scrollY < 700){
-      document.body.style.setProperty('--navbar-scroll', "transparent");
-      document.body.style.setProperty('--navbar-scroll-text', "white");
-      document.body.style.setProperty('--navbar-scroll-shadow', "none");
+    if(!this.estaLoggeado){
+      if(window.scrollY >= 700){
+        document.body.style.setProperty('--navbar-scroll', "#eff3f5");
+        document.body.style.setProperty('--navbar-scroll-text', "black");
+        document.body.style.setProperty('--navbar-scroll-shadow', "0px 6px 12px -5px #000000");
+      }else if(window.scrollY < 700){
+        document.body.style.setProperty('--navbar-scroll', "transparent");
+        document.body.style.setProperty('--navbar-scroll-text', "white");
+        document.body.style.setProperty('--navbar-scroll-shadow', "none");
+      }
     }
   }
 

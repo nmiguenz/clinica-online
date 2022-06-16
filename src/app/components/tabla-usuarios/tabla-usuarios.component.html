@@ -1,0 +1,63 @@
+<!-- <div class="table-responsive"> -->
+  <table *ngIf="inputUsuarioSeleccionado =='paciente'" class="table table-bordered">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">Nombre</th>
+            <th scope="col">Apellido</th>
+            <th scope="col">DNI</th>
+            <th scope="col">Edad</th>
+        </tr>
+    </thead>
+    <tbody (click)="pacienteSeleccionado(paciente)" *ngFor="let paciente of arrayPacientes">
+        <tr>
+            <td>{{paciente.nombre}}</td>
+            <td>{{paciente.apellido}}</td>
+            <td>{{paciente.dni}}</td>
+            <td>{{paciente.edad}}</td>
+        </tr>
+    </tbody>
+</table>
+
+<table *ngIf="inputUsuarioSeleccionado =='admin'" class="table table-bordered">
+  <thead class="thead-dark">
+      <tr>
+          <th scope="col">Nombre</th>
+          <th scope="col">Apellido</th>
+          <th scope="col">DNI</th>
+          <th scope="col">Edad</th>
+      </tr>
+  </thead>
+  <tbody (click)="administradorSeleccionado(admin)" *ngFor="let admin of arrayAdministradores">
+      <tr>
+          <td>{{admin.nombre}}</td>
+          <td>{{admin.apellido}}</td>
+          <td>{{admin.dni}}</td>
+          <td>{{admin.edad}}</td>
+      </tr>
+  </tbody>
+</table>
+
+<table *ngIf="inputUsuarioSeleccionado =='especialista'" class="table table-bordered">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">Nombre</th>
+            <th scope="col">Apellido</th>
+            <th scope="col">DNI</th>
+            <th scope="col">Edad</th>
+            <th scope="col">Habilitado</th>
+
+        </tr>
+    </thead>
+      <tbody (click)="especialistaSeleccionado(especialista)" *ngFor="let especialista of arrayEspecialistas">
+        <tr>
+            <td>{{especialista.nombre}}</td>
+            <td>{{especialista.apellido}}</td>
+            <td>{{especialista.dni}}</td>
+            <td>{{especialista.edad}}</td>
+            <td>
+                <input type="checkbox" (change)="habilitarEspecialista(especialista,$event)" [checked]="especialista.habilitado">
+            </td>
+        </tr>
+    </tbody>
+</table>
+

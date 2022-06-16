@@ -13,14 +13,13 @@ import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { HttpClientModule } from '@angular/common/http';
 import { environment } from '../environments/environment';
-import { SeccionUsuarioComponent } from './components/seccion-usuario/seccion-usuario.component';
+import { TablaUsuariosComponent } from './components/tabla-usuarios/tabla-usuarios.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
-    SeccionUsuarioComponent,
   ],
   imports: [
     BrowserModule,
