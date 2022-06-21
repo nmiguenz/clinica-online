@@ -11,8 +11,23 @@ img{
 .card{
   position: relative;
   z-index: 10;
-  background-color: #eff3f5!important;
-  opacity: 0.95;
+  /* opacity: 0.95; */
+}
+
+.register{
+  width: 30rem;
+  height: 30rem;
+  border-radius: 30px;
+  border-color: #6f67fb;
+  /* background-color: #6e67fb09; */
+  background-color: #eff3f5;
+}
+
+.register:hover{
+  transform: scale(1.05);
+  border-width:medium;
+  /* border-color: rgb(37, 167, 11); */
+  background-color: #6e67fba6;
 }
 
 /* Input type FILE */

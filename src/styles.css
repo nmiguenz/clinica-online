@@ -1,5 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
-h1, h2{
+h1, h2, h3, h4, h5{
   font-family: 'Archivo Black', sans-serif;
 }
 
@@ -8,4 +8,12 @@ body{
   --navbar-scroll: transparent;
   --navbar-scroll-text: white;
   --navbar-scroll-shadow: none;
+}
+
+.card{
+  background-color: #eff3f5!important;
+}
+
+a{
+  cursor: pointer;
 }

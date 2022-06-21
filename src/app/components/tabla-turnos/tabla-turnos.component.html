@@ -1,0 +1,61 @@
+<p>{{mensajeFiltro}}</p>
+<p><input type="text" [(ngModel)]="filter"></p>
+
+<ul *ngIf="tipoUsuario=='administrador'" class="list-group mb-3">
+    <!-- <li appHighlight class="list-group-item d-flex justify-content-between lh-sm" (click)="SeleccionarTurno(turno)"
+        *ngFor="let turno of arrayTurnosAdministrador | filtroMixtoEspecialidadEspecialista:filter"> -->
+        <li class="list-group-item d-flex justify-content-between lh-sm" (click)="SeleccionarTurno(turno)"
+        *ngFor="let turno of arrayTurnosAdministrador">
+        <b>Especialidad: </b>
+        <span>{{turno.especialidad}}</span>
+        <b>Especialista: </b>
+        <span>{{turno.datosEspecialista.nombre}}</span>
+        <b>Paciente: </b>
+        <span>{{turno.datosPaciente.nombre}}</span>
+        <b>Fecha: </b>
+        <span>{{turno.fecha}}</span>
+        <b>Estado:</b>
+        <span [ngStyle]="styleObject(turno)">
+            {{turno.estado}}
+        </span>
+
+    </li>
+</ul>
+
+<ul *ngIf="tipoUsuario=='especialista'" class="list-group mb-3">
+    <!-- <li appEmbiggens class="list-group-item d-flex justify-content-between lh-sm" (click)="SeleccionarTurno(turno)"
+        *ngFor="let turno of arrayTurnosEspecialista | filtroTurno:filter"> -->
+        <li class="list-group-item d-flex justify-content-between lh-sm" (click)="SeleccionarTurno(turno)"
+        *ngFor="let turno of arrayTurnosEspecialista ">
+        <b>Paciente: </b>
+        <span>{{turno.datosPaciente.nombre}</span>
+        <b>Especialidad: </b>
+        <span>{{turno.especialidad}}</span>
+        <b>Fecha: </b>
+        <span>{{turno.fecha}}</span>
+        <b>Estado:</b>
+        <span [ngStyle]="styleObject(turno)">
+            {{turno.estado}}
+        </span>
+
+    </li>
+</ul>
+
+<ul *ngIf="tipoUsuario=='paciente'" class="list-group mb-3">
+    <!-- <li class="list-group-item d-flex justify-content-between lh-sm" (click)="SeleccionarTurno(turno)"
+        *ngFor="let turno of arrayTurnosPaciente | filtroTurno:filter"> -->
+        <li class="list-group-item d-flex justify-content-between lh-sm" (click)="SeleccionarTurno(turno)"
+        *ngFor="let turno of arrayTurnosPaciente ">
+        <b>Especialidad: </b>
+        <span>{{turno.especialidad}}</span>
+        <b>Especialista: </b>
+        <span>{{turno.datosEspecialista.nombre}</span>
+        <b>Fecha: </b>
+        <span>{{turno.fecha}}</span>
+        <b>Estado:</b>
+        <span [ngStyle]="styleObject(turno)">
+            {{turno.estado}}
+        </span>
+
+    </li>
+</ul>

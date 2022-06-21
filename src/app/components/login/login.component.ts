@@ -1,12 +1,8 @@
-import { UserPerfil } from './../../interface/user-perfil';
-import { Especialista } from './../../classes/especialista';
-import { Paciente } from './../../classes/paciente';
 import { FirestoreDbService } from './../../services/firestore-db.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { SlowBuffer } from 'buffer';
 
 @Component({
   selector: 'app-login',
@@ -20,7 +16,7 @@ export class LoginComponent implements OnInit {
   formGroup : FormGroup | any;
   user : any = null;
 
-  //Acceso R�pido
+  //Acceso Rápido
   email: string = '';
   password: string = '';
   public adminFotoUrl: string = '';
@@ -80,15 +76,13 @@ export class LoginComponent implements OnInit {
 
         if(this.user){
 
-          //Chequeo si el EMAIL del PACIENTE!!! ESTÝ VERIFICADO
+          //Chequeo si el EMAIL del PACIENTE!!! ESTÁ VERIFICADO
           if(this.user.perfil == 'paciente'){
             this.auth.login(this.formGroup.value.mail, this.formGroup.value.password)
             .then((res:any)=>{
 
                 if(res.user.emailVerified == true){
-                  localStorage.setItem('usuarioLogueado', JSON.stringify(this.user));
-
-                  this.auth.setCurrentUser({perfil: this.user.perfil, isLogged:true});
+                  this.auth.setCurrentUser(this.user);
                   this.loading = false;
                   this.route.navigateByUrl('/backoffice');
                 }
@@ -106,10 +100,7 @@ export class LoginComponent implements OnInit {
           else{
             //Chequeo que estén habilitados en la DB los ADMIN y los especialistas
             if(this.user.habilitado == true){
-
-                localStorage.setItem('usuarioLogueado', JSON.stringify(this.user));
-
-                this.auth.setCurrentUser({perfil: this.user.perfil, isLogged:true});
+                this.auth.setCurrentUser(this.user);
                 this.loading = false;
                 this.route.navigateByUrl('/backoffice');
               }

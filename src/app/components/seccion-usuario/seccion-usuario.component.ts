@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Administrador } from 'src/app/classes/administrador';
 import { Especialista } from 'src/app/classes/especialista';
 import { Paciente } from 'src/app/classes/paciente';
@@ -10,32 +10,23 @@ import { Paciente } from 'src/app/classes/paciente';
 })
 export class SeccionUsuarioComponent implements OnInit {
 
-  administrador: Administrador | any;
-  paciente: Paciente | any;
-  especialista: Especialista | any;
-  tipoUsuarios : string = '';
+  // administrador: Administrador | any;
+  // paciente: Paciente | any;
+  // especialista: Especialista | any;
+  perfil : string = '';
 
   constructor() { }
 
   ngOnInit(): void {
   }
 
-  cambiarTabla(tipoUsuarios: string) {
+  cambiarTabla(perfil: string) {
     this.reset();
-    this.tipoUsuarios = tipoUsuarios;
-    console.log(tipoUsuarios);
+    this.perfil = perfil;
   }
 
   reset() {
-    if (this.administrador != null) {
-      this.administrador = null;
-    }
-    else if (this.especialista != null) {
-      this.especialista = null;
-    }
-    else{
-      this.paciente = null;
-    }
+    this.perfil = '';
   }
 
 }

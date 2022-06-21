@@ -14,6 +14,7 @@ import { FirestoreDbService } from 'src/app/services/firestore-db.service';
 export class RegisterComponent implements OnInit {
 
   perfil : string = '';
+  pantalla : string = '';
   loading: boolean = false;
   formGroup : FormGroup | any;
   imagenes : any[] = [];
@@ -177,6 +178,12 @@ export class RegisterComponent implements OnInit {
     this.especialidades = []; //limpio el array
     this.db.alta({nombre: especialidad}, 'especialidad')
     .catch(error => console.log(error));
+  }
+
+  seleccionarTipoUser(tipo:string){
+    this.pantalla = 'registro';
+    this.perfil = tipo;
+    console.log(this.pantalla, this.perfil)
   }
 
 }

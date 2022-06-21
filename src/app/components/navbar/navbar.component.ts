@@ -19,10 +19,16 @@ export class NavbarComponent implements OnInit {
   constructor(private auth: AuthService, private route : Router) {
     this.authServiceSubscription = this.auth.currentUser.subscribe(
       currentUser => {
-        this.estaLoggeado = currentUser.isLogged;
-        this.perfil = currentUser.perfil;
-        if(this.perfil != null){
-          this.usuarioLogueado = auth.setLoggedUserByTipe();
+        if(currentUser){
+          if(currentUser.perfil == 'admin'){
+            this.estaLoggeado = false;
+            this.perfil = currentUser.perfil;
+          }
+          else{
+            this.estaLoggeado = false;
+            this.perfil = currentUser.perfil;
+          }
+          this.usuarioLogueado = this.auth.usuarioLogueado;
         }
       }
     );
@@ -34,8 +40,6 @@ export class NavbarComponent implements OnInit {
 
   //Animación del Navbar
   scroll(){
-    // let navElement = document.getElementsByClassName('navbar');
-
     if(!this.estaLoggeado){
       if(window.scrollY >= 700){
         document.body.style.setProperty('--navbar-scroll', "#eff3f5");
@@ -50,9 +54,8 @@ export class NavbarComponent implements OnInit {
   }
 
   cerrarSesion(){
-    this.auth.setCurrentUser({perfil: '', isLogged:false});
-    this.auth.logOut();
-    localStorage.clear();
+    this.estaLoggeado = false
+    this.auth.logOut().then(res => console.log(res));
     this.route.navigateByUrl('home');
   }
 

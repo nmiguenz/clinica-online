@@ -2,11 +2,22 @@
   <!-- Section: Design Block -->
 <section class="">
 
-  <div class="container vh-100 d-flex justify-content-center align-items-center ">
+  <!-- Botones de selección -->
+  <div class="container vh-100 d-flex justify-content-center align-items-center" *ngIf="pantalla == ''">
+    <div class="row align-items-center">
+      <div class="col-md-6">
+        <button class="register" (click)="seleccionarTipoUser('paciente')"><img src="../../../assets/undraw_doctor_kw-5-l.svg" alt="paciente"><h2>PACIENTE</h2></button>
+      </div>
+      <div class="col-md-6">
+        <button class="register" (click)="seleccionarTipoUser('especialista')"><img src="../../../assets/undraw_medical_research_qg4d.svg" alt="doctor"><h2>ESPECIALISTA</h2></button>
+      </div>
+    </div>
+  </div>
+
+  <div class="container vh-100 d-flex justify-content-center align-items-center" *ngIf="pantalla == 'registro'">
     <div class="card signin-content py-4 shadow-lg p-3 mb-2 bg-body rounded-4 d-flex">
 
-      <div class="row align-items-center">
-
+      <div class="row align-items-center" >
         <div class="signin-form col-md-7 py-4 px-5 text-align-start opacity-100">
           <h1 class="fw-bold mb-4">Register</h1>
           <form [formGroup]="formGroup" (submit)="alta()">
@@ -185,7 +196,7 @@
 
       </div>
 
-      <div class="row text-align-end volver">
+      <div class="row text-align-end volver" *ngIf="pantalla == 'registro'">
         <p class="text-end me-5 text-dark"><a [routerLink]="['/home']"><i class="bi bi-arrow-left-square-fill"></i><span> Volver</span></a></p>
       </div>
 

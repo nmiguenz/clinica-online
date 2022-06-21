@@ -11,8 +11,8 @@ img{
 .card{
   position: relative;
   z-index: 10;
-  background-color: #eff3f5!important;
-  opacity: 0.95;
+  background-color: #eff3f5ed !important;
+  /* opacity: 0.95; */
 }
 
 .btn-block{
@@ -26,16 +26,17 @@ img{
   font-size: 1.5rem;
 }
 
+/* Accesos rápidos */
 .accesos-rapidos{
   position: absolute;
-  margin-left: 90%;
+  margin-left: -85%;
   text-align: center;
 }
 
 .fastAccessButton {
-  width: 50px;
-  height: 50px;
-  border-radius: 150px;
+  width: 6rem;
+  height: 6rem;
+  /* border-radius: 150px; */
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;

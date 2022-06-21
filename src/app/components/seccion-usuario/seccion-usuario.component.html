@@ -1,13 +1,22 @@
 
   <div class="container">
     <div class="card tablaUsuarios py-4 shadow-lg p-3 mb-5 bg-body rounded-4 d-flex">
-      <app-tabla-usuarios [inputUsuarioSeleccionado]="tipoUsuarios"></app-tabla-usuarios>
-        <button class="btn btn-primary btn-md" (click)="cambiarTabla('paciente')" type="button">Ver
-            Pacientes</button>
-        <button class="btn btn-primary btn-md" (click)="cambiarTabla('especialista')" type="button">Ver
-          Especialistas</button>
-        <button class="btn btn-primary btn-md" (click)="cambiarTabla('admin')" type="button">Ver
-          Administradores</button>
+      <h1 class="fw-bold mb-4">Información de <span>{{perfil || '...'}}</span></h1>
+      <app-tabla-usuarios [inputUsuarioSeleccionado]="perfil"></app-tabla-usuarios>
+      <div class="row">
+        <div class="col col-md-4">
+          <button class="btn btn-primary w-100" (click)="cambiarTabla('paciente')" type="button">Ver
+              Pacientes</button>
+        </div>
+        <div class="col col-md-4">
+          <button class="btn btn-primary w-100" (click)="cambiarTabla('especialista')" type="button">Ver
+            Especialistas</button>
+        </div>
+        <div class="col col-md-4">
+          <button class="btn btn-primary w-100" (click)="cambiarTabla('admin')" type="button">Ver
+            Administradores</button>
+        </div>
+      </div>
     </div>
   </div>
 

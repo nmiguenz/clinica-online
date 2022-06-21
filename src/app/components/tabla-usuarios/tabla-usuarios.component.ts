@@ -1,5 +1,4 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Console } from 'console';
 import { Administrador } from 'src/app/classes/administrador';
 import { Especialista } from 'src/app/classes/especialista';
 import { Paciente } from 'src/app/classes/paciente';
@@ -22,14 +21,11 @@ export class TablaUsuariosComponent implements OnInit {
   arrayAdministradores: Administrador[] = [];
   arrayPacientes: Paciente[] = [];
   arrayEspecialistas: Especialista[] = [];
-  loguedUser : any;
 
 
   constructor(
     private db : FirestoreDbService,
-    private auth: AuthService,
     private especSrv : EspecialistaService) {
-    this.loguedUser = this.auth.setLoggedUserByTipe();
   }
 
   ngOnInit(): void {
@@ -53,7 +49,7 @@ export class TablaUsuariosComponent implements OnInit {
     ).catch(error => console.log(error));
 
     //Colección de Administradores
-    this.db.getCollectionByField('usuarios','==','perfil','admin')
+    this.db.getCollectionByField('usuarios','==','perfil','admin' || 'administrador')
     .then((ref:any) => ref.subscribe((arg:any) => {
       arg.forEach((element:any) => {
           this.arrayAdministradores.push(element)

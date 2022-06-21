@@ -13,13 +13,29 @@ import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { HttpClientModule } from '@angular/common/http';
 import { environment } from '../environments/environment';
-import { TablaUsuariosComponent } from './components/tabla-usuarios/tabla-usuarios.component';
+import { MisTurnosComponent } from './pages/mis-turnos/mis-turnos.component';
+import { TurnosComponent } from './pages/turnos/turnos.component';
+import { SolicitarTurnoComponent } from './pages/solicitar-turno/solicitar-turno.component';
+import { MiPerfilComponent } from './pages/mi-perfil/mi-perfil.component';
+import { TurnosPacienteComponent } from './components/turnos-paciente/turnos-paciente.component';
+import { TurnosEspecialistaComponent } from './components/turnos-especialista/turnos-especialista.component';
+import { TablaTurnosComponent } from './components/tabla-turnos/tabla-turnos.component';
+import { DetalleTurnoComponent } from './components/detalle-turno/detalle-turno.component';
+
 
 
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
+    MisTurnosComponent,
+    TurnosComponent,
+    SolicitarTurnoComponent,
+    MiPerfilComponent,
+    TurnosPacienteComponent,
+    TurnosEspecialistaComponent,
+    TablaTurnosComponent,
+    DetalleTurnoComponent,
   ],
   imports: [
     BrowserModule,

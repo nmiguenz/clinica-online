@@ -8,6 +8,10 @@ main {
   overflow-y: hidden;
 }
 
+a:hover{
+  cursor:pointer;
+}
+
 .b-example-divider {
   flex-shrink: 0;
   width: 1.5rem;
