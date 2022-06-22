@@ -19,23 +19,27 @@ export class NavbarComponent implements OnInit {
   constructor(private auth: AuthService, private route : Router) {
     this.authServiceSubscription = this.auth.currentUser.subscribe(
       currentUser => {
-        if(currentUser){
-          if(currentUser.perfil == 'admin'){
-            this.estaLoggeado = false;
-            this.perfil = currentUser.perfil;
-          }
-          else{
-            this.estaLoggeado = false;
-            this.perfil = currentUser.perfil;
-          }
-          this.usuarioLogueado = this.auth.usuarioLogueado;
+        if(currentUser.perfil != undefined){
+          //Estado de logueo
+          currentUser.isLogged = true;
+          this.estaLoggeado = currentUser.isLogged;
+
+          //perfil
+          this.perfil = currentUser.perfil;
+
+          //Usuario
+          this.usuarioLogueado = currentUser;
+        }
+        else{
+          this.estaLoggeado = false;
+          this.perfil = '';
         }
       }
     );
   }
 
   ngOnInit(): void {
-    window.addEventListener('scroll', this.scroll, true)
+    window.addEventListener('scroll', this.scroll, true);
   }
 
   //Animación del Navbar
@@ -54,9 +58,12 @@ export class NavbarComponent implements OnInit {
   }
 
   cerrarSesion(){
-    this.estaLoggeado = false
-    this.auth.logOut().then(res => console.log(res));
-    this.route.navigateByUrl('home');
+    this.auth.logOut().then(()=>{
+      this.estaLoggeado = false;
+      this.perfil = '';
+      this.route.navigateByUrl('home');
+    })
+    .catch(error=>console.log(error));
   }
 
 }

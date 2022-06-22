@@ -33,8 +33,8 @@ export class TablaUsuariosComponent implements OnInit {
     //Colección de pacientes
     this.db.getCollectionByField('usuarios','==','perfil','paciente')
     .then((ref:any) => ref.subscribe((arg:any) => {
-      arg.forEach((element:any) => {
-          this.arrayPacientes.push(element)
+      this.arrayPacientes = arg.map((element:any) => {
+          return element;
         });
     })
     ).catch(error => console.log(error));
@@ -42,8 +42,8 @@ export class TablaUsuariosComponent implements OnInit {
     //Colección de especialistas
     this.db.getCollectionByField('usuarios','==','perfil','especialista')
     .then((ref:any) => ref.subscribe((arg:any) => {
-      arg.forEach((element:any) => {
-          this.arrayEspecialistas.push(element)
+      this.arrayEspecialistas = arg.map((element:any) => {
+          return element;
         });
     })
     ).catch(error => console.log(error));
@@ -51,8 +51,8 @@ export class TablaUsuariosComponent implements OnInit {
     //Colección de Administradores
     this.db.getCollectionByField('usuarios','==','perfil','admin' || 'administrador')
     .then((ref:any) => ref.subscribe((arg:any) => {
-      arg.forEach((element:any) => {
-          this.arrayAdministradores.push(element)
+      this.arrayAdministradores = arg.map((element:any) => {
+          return element;
         });
     })
     ).catch(error => console.log(error));

@@ -16,7 +16,7 @@ export class LoginComponent implements OnInit {
   formGroup : FormGroup | any;
   user : any = null;
 
-  //Acceso RÃ¡pido
+  //Acceso Rápido
   email: string = '';
   password: string = '';
   public adminFotoUrl: string = '';
@@ -68,26 +68,26 @@ export class LoginComponent implements OnInit {
 
   async ingreso(){
 
-    await this.db.getCollectionByField('usuarios','==','mail',this.formGroup.value.mail)
+    this.db.getCollectionByField('usuarios','==','mail',this.formGroup.value.mail)
     .then((res: any) => {
       this.loading = true;
-      res.subscribe((arg:any) =>{
+      let miSuscription = res.subscribe((arg:any) =>{
         this.user = arg['0'];
 
         if(this.user){
-
-          //Chequeo si el EMAIL del PACIENTE!!! ESTÃ VERIFICADO
+          //Chequeo si el EMAIL del PACIENTE!!! ESTÁ VERIFICADO
           if(this.user.perfil == 'paciente'){
             this.auth.login(this.formGroup.value.mail, this.formGroup.value.password)
             .then((res:any)=>{
 
                 if(res.user.emailVerified == true){
+
                   this.auth.setCurrentUser(this.user);
                   this.loading = false;
-                  this.route.navigateByUrl('/backoffice');
+                  this.route.navigateByUrl('/turnos');
                 }
                 else{
-                  console.log('No verificÃ³ el mail.');
+                  console.log('No verificó el mail.');
                   this.loading = false;
                   this.route.navigateByUrl('/home');
                 }
@@ -98,14 +98,14 @@ export class LoginComponent implements OnInit {
             });
           }
           else{
-            //Chequeo que estÃ©n habilitados en la DB los ADMIN y los especialistas
+            //Chequeo que estén habilitados en la DB los ADMIN y los especialistas
             if(this.user.habilitado == true){
                 this.auth.setCurrentUser(this.user);
                 this.loading = false;
                 this.route.navigateByUrl('/backoffice');
               }
               else{
-                console.log('No verificÃ³ el mail.');
+                console.log('No verificó el mail.');
                 this.loading = false;
                 this.route.navigateByUrl('/home');
               }
@@ -116,13 +116,12 @@ export class LoginComponent implements OnInit {
           console.log('No existe usuario con ese email');
           this.loading = false;
         }
-
+        miSuscription.unsubscribe();
       })})
     .catch((error:any)=> {
       console.log(error);
       this.loading = false;
     });
-
   }
 
   cargarAdmin() {

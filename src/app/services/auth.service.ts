@@ -41,7 +41,6 @@ export class AuthService {
 
   //Cierra la sesión del usuario
   logOut() : Promise<void> {
-    this.usuarioLogueado = null;
     return this.auth.signOut();
   }
 
@@ -50,52 +49,4 @@ export class AuthService {
     return this.auth.authState;
   }
 
-
-  // setLoggedUserByTipe(){
-    // let user = localStorage.getItem('usuarioLogueado');
-    // if (user != null){
-    //   this.userObject = JSON.parse(user)
-    // }
-
-    // if(this.userObject['perfil'] == 'paciente'){
-    //   this.pacienteLogueado = new Paciente(
-    //     this.userObject['nombre'],
-    //     this.userObject['apellido'],
-    //     this.userObject['edad'],
-    //     this.userObject['dni'],
-    //     this.userObject['obraSocial'],
-    //     this.userObject['mail'],
-    //     this.userObject['password'],
-    //     this.userObject['fotoUno'],
-    //     this.userObject['fotoDos'],
-    //     this.userObject['perfil']);
-    //     return this.pacienteLogueado;
-    // }
-    // else if (this.userObject['perfil'] == 'especialista'){
-    //   this.especialistaLogueado = new Especialista(
-    //     this.userObject['nombre'],
-    //     this.userObject['apellido'],
-    //     this.userObject['edad'],
-    //     this.userObject['dni'],
-    //     this.userObject['especialidad'],
-    //     this.userObject['mail'],
-    //     this.userObject['password'],
-    //     this.userObject['fotoUno'],
-    //     this.userObject['perfil'],
-    //     this.userObject['habilitado'])
-    //     return this.especialistaLogueado;
-    // }else{
-    //   this.adminLogueado = new Administrador(
-    //     this.userObject['nombre'],
-    //     this.userObject['apellido'],
-    //     this.userObject['edad'],
-    //     this.userObject['dni'],
-    //     this.userObject['mail'],
-    //     this.userObject['password'],
-    //     this.userObject['fotoUno'],
-    //     this.userObject['perfil'],
-    //     this.userObject['habilitado'])
-    //     return this.adminLogueado;
-    // }
-  // }
 }

@@ -21,6 +21,8 @@ import { TurnosPacienteComponent } from './components/turnos-paciente/turnos-pac
 import { TurnosEspecialistaComponent } from './components/turnos-especialista/turnos-especialista.component';
 import { TablaTurnosComponent } from './components/tabla-turnos/tabla-turnos.component';
 import { DetalleTurnoComponent } from './components/detalle-turno/detalle-turno.component';
+import { AltaTurnoComponent } from './components/alta-turno/alta-turno.component';
+import { LoadingGeneralComponent } from './components/loading-general/loading-general.component';
 
 
 
@@ -36,6 +38,8 @@ import { DetalleTurnoComponent } from './components/detalle-turno/detalle-turno.
     TurnosEspecialistaComponent,
     TablaTurnosComponent,
     DetalleTurnoComponent,
+    AltaTurnoComponent,
+    LoadingGeneralComponent,
   ],
   imports: [
     BrowserModule,

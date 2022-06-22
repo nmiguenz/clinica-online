@@ -1,49 +1,49 @@
-import { EstadoTurno, Turno } from './../../classes/turno';
-import { FormGroup, Validators, FormBuilder } from '@angular/forms';
+import { AuthService } from './../../services/auth.service';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { Paciente } from 'src/app/classes/paciente';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Especialista } from 'src/app/classes/especialista';
+import { Paciente } from 'src/app/classes/paciente';
+import { EstadoTurno, Turno } from 'src/app/classes/turno';
 import { FirestoreDbService } from 'src/app/services/firestore-db.service';
 
 @Component({
-  selector: 'app-alta-turno-admin',
-  templateUrl: './alta-turno-admin.component.html',
-  styleUrls: ['./alta-turno-admin.component.css']
+  selector: 'app-alta-turno',
+  templateUrl: './alta-turno.component.html',
+  styleUrls: ['./alta-turno.component.css']
 })
-export class AltaTurnoAdminComponent implements OnInit {
-
+export class AltaTurnoComponent implements OnInit {
   formGroup : FormGroup | any;
   filter = '';
   tipoUsuario = ''
 
   //Spinner
-  @Output() eventoSpinner :  EventEmitter<any> = new EventEmitter<any>();
+  loading : boolean = false;
 
   //Listados
   listaEspecialistas : Especialista[] = [];
   listaEspecialidad : any[] = [];
   listaEspecialidadFiltrada : any[] = [];
-  listaPacientes : Paciente[] = [];
+  pacienteLoggeado : Paciente | any;
 
   //Usuarios del turno
   especialistaSeleccionado : Especialista | any;
   especialidadSeleccionado : any;
-  pacienteSeleccionado : Paciente | any;
 
-  constructor(private db : FirestoreDbService, private fb : FormBuilder) {
+  constructor(private db : FirestoreDbService, private auth : AuthService, private fb : FormBuilder) {
+
+    this.pacienteLoggeado = this.auth.usuarioLogueado;
+    console.log(this.pacienteLoggeado);
 
     this.formGroup = this.fb.group({
       'especialista' : ['', [Validators.required]],
       'especialidad' : ['', [Validators.required]],
-      'paciente' : ['', [Validators.required]],
+      'paciente' : [this.pacienteLoggeado.nombre + ' ' + this.pacienteLoggeado.apellido, [Validators.required]],
       'fecha' : ['', [Validators.required]]
     })
 
     //Get de usuarios
     this.getEspecialistas();
-    this.getPacientes();
     this.getEspecialidades();
-
   }
 
   ngOnInit(): void {
@@ -71,18 +71,7 @@ export class AltaTurnoAdminComponent implements OnInit {
     .catch(error=>console.log(error));
   }
 
-  async getPacientes(){
-    let paciente = await this.db.getUser('usuarios','==','perfil','paciente').subscribe((usuarios: any) => {
-      if (usuarios != null) {
-        usuarios.forEach((element: any) => {
-          this.listaPacientes.push(element.payload.doc.data());
-        });
-      }
-      paciente.unsubscribe();
-    });
-  }
-
-   //Filtro las especialidades segÃºn las que tiene el especialista
+   //Filtro las especialidades según las que tiene el especialista
   // Devuelve un array con las especialidades
   filtroUnicoEspecialidad(speciality : string){
     const lista = this.listaEspecialidad.filter( especialidad => {
@@ -113,23 +102,12 @@ export class AltaTurnoAdminComponent implements OnInit {
     this.formGroup.controls.especialidad.setValue(espe);
   }
 
-  seleccionarPaciente(paciente : Paciente){
-    this.tipoUsuario = 'default';
-    this.filter = '';
-    this.formGroup.controls.paciente.setValue(paciente.nombre + ' ' + paciente.apellido);
-    this.pacienteSeleccionado = paciente;
-  }
-
-  lanzarSpinner(loading : boolean){
-    this.eventoSpinner.emit(loading);
-  }
-
   async altaTurno(){
 
       const turno = new Turno(
         this.especialistaSeleccionado,
         this.formGroup.value.especialidad,
-        this.pacienteSeleccionado,
+        this.pacienteLoggeado,
         this.formGroup.value.fecha,
         EstadoTurno.pendiente,
         "",
@@ -140,14 +118,13 @@ export class AltaTurnoAdminComponent implements OnInit {
       try {
         if (turno != null){
           // this.loading = true;
-          this.lanzarSpinner(true);
-          // //Parseo el objeto porque Firebase no acepta los objetos CUSTOM
-          // let res= await this.db.alta(JSON.parse(JSON.stringify(paciente)), 'paciente');
+          this.loading = true;
+
           await this.db.alta(JSON.parse(JSON.stringify(turno)), 'turnos')
           .then(()=>{
             this.resetParametros();
             // this.loading = false;
-            this.lanzarSpinner(false);
+            this.loading = false;
           })
           .catch(error => console.log(error));
         }
@@ -159,6 +136,6 @@ export class AltaTurnoAdminComponent implements OnInit {
   resetParametros(){
     this.tipoUsuario = '';
     this.formGroup.reset();
-
+    this.formGroup.controls.paciente.setValue(this.pacienteLoggeado.nombre + ' ' + this.pacienteLoggeado.apellido);
   }
 }
