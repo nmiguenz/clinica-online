@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { Administrador } from 'src/app/classes/administrador';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-mi-perfil-admin',
@@ -7,9 +9,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MiPerfilAdminComponent implements OnInit {
 
-  constructor() { }
+  @Input() usuario : Administrador | any;
+
+  constructor(private auth: AuthService) { }
 
   ngOnInit(): void {
+    // this.usuario = this.auth.usuarioLogueado;
   }
 
 }

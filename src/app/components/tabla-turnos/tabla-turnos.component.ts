@@ -1,7 +1,7 @@
-import { TurnosService } from './../../services/turnos.service';
-import { AuthService } from 'src/app/services/auth.service';
+import { FirestoreDbService } from 'src/app/services/firestore-db.service';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { EstadoTurno, Turno } from 'src/app/classes/turno';
+import { Paciente } from 'src/app/classes/paciente';
 
 @Component({
   selector: 'app-tabla-turnos',
@@ -12,57 +12,54 @@ export class TablaTurnosComponent implements OnInit {
 
   @Output() seSeleccionoTurno: EventEmitter<any> = new EventEmitter<any>();
   @Input() tipoUsuario: string = '';
+  @Input() usuarioMostrar : Paciente | any;
 
-  arrayTurnosAdministrador: Turno[] = [];
-  arrayTurnosPaciente: Turno[] = [];
-  arrayTurnosEspecialista: Turno[] = [];
+  listadoTurnosEspecialista: Turno[] = [];
+  listadoTurnosPaciente: Turno[] = [];
   filter: string = '';
-  mensajeFiltro: string = '';
 
-
-
-  constructor(
-    public turnosService: TurnosService,
-    // public especialistaService: EspecialistaService,
-    // public pacienteService: PacienteService
-    private auth : AuthService
-  ) { }
+  constructor(private db : FirestoreDbService) { }
 
   ngOnInit(): void {
-    // let loggedUser = this.auth.usuarioLogueado;
-    // if (this.tipoUsuario == 'especialista') {
-    //   this.turnosService.getTurnosByEspecialista(loggedUser.mail).subscribe((turnos: any) => {
-    //     let listaTurnosEspecialista: Turno[] = [];
-    //     for (let index = 0; index < turnos.length; index++) {
-    //       const turno = turnos[index];
-    //       listaTurnosEspecialista.push(turno.payload.doc.data());
-    //     }
-    //     this.arrayTurnosEspecialista = listaTurnosEspecialista;
-    //   })
-    //   this.mensajeFiltro = 'Buscar por especialidad o paciente';
-    // }
-    // else if (this.tipoUsuario == 'paciente') {
-    //   this.turnosService.getTurnosByPaciente(loggedUser.mail).subscribe((turnos: any) => {
-    //     let listaTurnosPaciente: Turno[] = [];
-    //     for (let index = 0; index < turnos.length; index++) {
-    //       let turno: Turno = turnos[index].payload.doc.data()
-    //       listaTurnosPaciente.push(turno);
-    //     }
-    //     this.arrayTurnosPaciente = listaTurnosPaciente;
-    //   })
-    //   this.mensajeFiltro = 'Buscar por especialidad o especialista';
-    // }
-    // else if (this.tipoUsuario == 'administrador') {
-    //   this.turnosService.getTurnos().subscribe((turnos: any) => {
-    //     let listaTurnosAdministrador: Turno[] = [];
-    //     for (let index = 0; index < turnos.length; index++) {
-    //       const turno = turnos[index];
-    //       listaTurnosAdministrador.push(turno.payload.doc.data());
-    //     }
-    //     this.arrayTurnosAdministrador = listaTurnosAdministrador;
-    //   })
-    //   this.mensajeFiltro = 'Buscar por especialidad o especialista';
-    // }
+    //Listado Turnos
+    if(this.usuarioMostrar.perfil == 'paciente')
+      this.getTurnosPaciente(this.usuarioMostrar.dni);
+    else
+      this.getTurnosEspecialista(this.usuarioMostrar.dni);
+  }
+
+  getTurnosPaciente(dni : number){
+    this.db.getCollection('turnos')
+    .then((res:any)=>{
+      res.subscribe((ref:any)=>{
+        this.listadoTurnosPaciente = [];
+        ref.map((element:any) => {
+          let turno = element.payload.doc.data();
+          turno['id'] = element.payload.doc.id;
+          if(dni == turno.datosPaciente.dni){
+            this.listadoTurnosPaciente.push(turno);
+          }
+        });
+      })
+    })
+    .catch(error=>console.log(error));
+  }
+
+  getTurnosEspecialista(dni : number){
+    this.db.getCollection('turnos')
+    .then((res:any)=>{
+      res.subscribe((ref:any)=>{
+        this.listadoTurnosEspecialista = [];
+        ref.map((element:any) => {
+          let turno = element.payload.doc.data();
+          turno['id'] = element.payload.doc.id;
+          if(dni == turno.datosEspecialista.dni){
+            this.listadoTurnosEspecialista.push(turno);
+          }
+        });
+      })
+    })
+    .catch(error=>console.log(error));
   }
 
   SeleccionarTurno(turno: Turno) {
@@ -72,19 +69,20 @@ export class TablaTurnosComponent implements OnInit {
 
   styleObject(turno: Turno): Object {
     if (turno.estado == EstadoTurno.cancelado) {
-      return { color: "red", 'font-weight': "bold" }
+      return { 'background-color': "red", 'color': "white", 'font-weight' : '700', 'padding': "4px 8px", 'text-align': "center", 'border-radius': "20px"}
     }
     else if (turno.estado == EstadoTurno.aceptado) {
-      return { color: "green", 'font-weight': "bold" }
-
-    } else if (turno.estado == EstadoTurno.rechazado) {
-      return { color: "red", 'font-weight': "bold" }
-
-    } else if (turno.estado == EstadoTurno.finalizado) {
-      return { color: "blue", 'font-weight': "bold" }
-
+      return { 'background-color': "blue", 'color': "white", 'font-weight' : '700', 'padding': "4px 8px", 'text-align': "center", 'border-radius': "20px"}
     }
-    return {}
+    else if (turno.estado == EstadoTurno.rechazado) {
+      return { 'background-color': "red", 'color': "white", 'font-weight' : '700', 'padding': "4px 8px", 'text-align': "center", 'border-radius': "20px"}
+    }
+    else if (turno.estado == EstadoTurno.finalizado) {
+      return { 'background-color': "green", 'color': "black", 'font-weight' : '700', 'padding': "4px 8px", 'text-align': "center", 'border-radius': "20px"}
+    }
+    else{
+      return  {'background-color': "yellow", 'color': "black", 'font-weight' : '700', 'padding': "4px 8px", 'text-align': "center", 'border-radius': "20px"}
+    }
   }
 
 }

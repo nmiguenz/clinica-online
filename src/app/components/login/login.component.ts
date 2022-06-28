@@ -22,6 +22,7 @@ export class LoginComponent implements OnInit {
   public adminFotoUrl: string = '';
   public pacienteFotoUrl: string = '';
   public especialistaFotoUrl: string = '';
+  public especialistaDosFotoUrl: string = '';
 
   constructor(private auth : AuthService, private fb : FormBuilder, private route: Router, private db: FirestoreDbService) {
     this.formGroup = this.fb.group({
@@ -45,11 +46,18 @@ export class LoginComponent implements OnInit {
       paciente.unsubscribe();
     });
 
-    let especialista = this.db.getUser('usuarios','==','mail','relabuelo@gmail.com').subscribe((usuarios: any) => {
+    let especialista = this.db.getUser('usuarios','==','mail','roquesosa@gmail.com').subscribe((usuarios: any) => {
       if (usuarios[0] != null) {
         this.especialistaFotoUrl = usuarios[0].payload.doc.data().fotoUno;
       }
       especialista.unsubscribe();
+    });
+
+    let especialistaDos = this.db.getUser('usuarios','==','mail','jpalotes@gmail.com').subscribe((usuarios: any) => {
+      if (usuarios[0] != null) {
+        this.especialistaDosFotoUrl = usuarios[0].payload.doc.data().fotoUno;
+      }
+      especialistaDos.unsubscribe();
     });
   }
 
@@ -84,7 +92,7 @@ export class LoginComponent implements OnInit {
 
                   this.auth.setCurrentUser(this.user);
                   this.loading = false;
-                  this.route.navigateByUrl('/turnos');
+                  this.route.navigateByUrl('/misTurnos');
                 }
                 else{
                   console.log('No verificó el mail.');
@@ -102,7 +110,12 @@ export class LoginComponent implements OnInit {
             if(this.user.habilitado == true){
                 this.auth.setCurrentUser(this.user);
                 this.loading = false;
-                this.route.navigateByUrl('/backoffice');
+                if(this.user.perfil == 'especialista'){
+                  this.route.navigateByUrl('/misTurnos');
+                }
+                else{
+                  this.route.navigateByUrl('/backoffice');
+                }
               }
               else{
                 console.log('No verificó el mail.');
@@ -134,9 +147,15 @@ export class LoginComponent implements OnInit {
     this.formGroup.controls.password.setValue("123456");
   }
 
-  cargarEspecialista(){
-    this.formGroup.controls.mail.setValue("roquesosa@gmail.com");
-    this.formGroup.controls.password.setValue("123456");
+  cargarEspecialista(pos : string){
+    if(pos == '1'){
+      this.formGroup.controls.mail.setValue("roquesosa@gmail.com");
+      this.formGroup.controls.password.setValue("123456");
+    }
+    else{
+      this.formGroup.controls.mail.setValue("jpalotes@gmail.com");
+      this.formGroup.controls.password.setValue("123456");
+    }
   }
 
 

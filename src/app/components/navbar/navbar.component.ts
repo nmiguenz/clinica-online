@@ -1,7 +1,6 @@
-import { Paciente } from './../../classes/paciente';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, DoCheck, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -9,7 +8,7 @@ import { Subscription } from 'rxjs';
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css']
 })
-export class NavbarComponent implements OnInit {
+export class NavbarComponent implements OnInit, DoCheck{
 
   estaLoggeado : boolean = false;
   perfil : string = '';
@@ -20,38 +19,45 @@ export class NavbarComponent implements OnInit {
     this.authServiceSubscription = this.auth.currentUser.subscribe(
       currentUser => {
         if(currentUser.perfil != undefined){
-          //Estado de logueo
-          currentUser.isLogged = true;
-          this.estaLoggeado = currentUser.isLogged;
-
-          //perfil
-          this.perfil = currentUser.perfil;
-
           //Usuario
           this.usuarioLogueado = currentUser;
-        }
-        else{
-          this.estaLoggeado = false;
-          this.perfil = '';
         }
       }
     );
   }
 
+
   ngOnInit(): void {
+    document.body.style.setProperty('--navbar-scroll-position', "fixed");
+    document.body.style.setProperty('--navbar-scroll-text', "black");
     window.addEventListener('scroll', this.scroll, true);
+  }
+
+  ngDoCheck() {
+    if(this.auth.usuarioLogueado != undefined){
+      this.perfil = this.auth.usuarioLogueado.perfil;
+      this.estaLoggeado = this.auth.estaLogueado;
+
+      if(this.estaLoggeado == true){
+        document.body.style.setProperty('--navbar-scroll-position', "relative");
+        document.body.style.setProperty('--navbar-scroll', "#0a58cad1");
+        document.body.style.setProperty('--navbar-scroll-text', "white");
+        document.body.style.setProperty('--navbar-scroll-shadow', "0px 6px 12px -5px #000000");
+      }
+    }
   }
 
   //Animación del Navbar
   scroll(){
     if(!this.estaLoggeado){
       if(window.scrollY >= 700){
-        document.body.style.setProperty('--navbar-scroll', "#eff3f5");
-        document.body.style.setProperty('--navbar-scroll-text', "black");
+        document.body.style.setProperty('--navbar-scroll', "#0a58cad1");
+        // document.body.style.setProperty('--navbar-scroll-text', "black");
         document.body.style.setProperty('--navbar-scroll-shadow', "0px 6px 12px -5px #000000");
       }else if(window.scrollY < 700){
+        document.body.style.setProperty('--navbar-scroll-position', "fixed");
         document.body.style.setProperty('--navbar-scroll', "transparent");
-        document.body.style.setProperty('--navbar-scroll-text', "white");
+        document.body.style.setProperty('--navbar-scroll-text', "black");
         document.body.style.setProperty('--navbar-scroll-shadow', "none");
       }
     }
@@ -59,8 +65,16 @@ export class NavbarComponent implements OnInit {
 
   cerrarSesion(){
     this.auth.logOut().then(()=>{
+      this.authServiceSubscription?.unsubscribe();
       this.estaLoggeado = false;
       this.perfil = '';
+
+      //Seteo el navbar style
+      document.body.style.setProperty('--navbar-scroll-position', "fixed");
+      document.body.style.setProperty('--navbar-scroll', "transparent");
+      document.body.style.setProperty('--navbar-scroll-text', "black");
+      document.body.style.setProperty('--navbar-scroll-shadow', "none");
+
       this.route.navigateByUrl('home');
     })
     .catch(error=>console.log(error));

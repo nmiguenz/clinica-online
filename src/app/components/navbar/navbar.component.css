@@ -1,20 +1,32 @@
 .navbar{
-  position: fixed;
+  /* position:   fixed; */
+  position: var(--navbar-scroll-position);
   width:100%;
   transition: background-color 1s;
   background-color: var(--navbar-scroll);
   transition: background-color 1s ease;
-  color: var(--navbar-scroll-text);
   -webkit-box-shadow: var(--navbar-scroll-shadow);
   box-shadow: var(--navbar-scroll-shadow);
+}
 
+.navbar a{
+  color: var(--navbar-scroll-text);
+}
+
+.dropdown-item{
+  color: black !important;
 }
 
 .cerrarSesion{
   font-size: 1.5rem;
-  background-color: rgb(255, 255, 255);
+  color: rgb(0, 0, 0) !important;
 }
 
 .cerrarSesion:hover{
   cursor: pointer;
 }
+
+.active{
+  color: cyan !important;
+}
+

@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { AuthService } from 'src/app/services/auth.service';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Paciente } from 'src/app/classes/paciente';
 
 @Component({
   selector: 'app-mis-turnos',
@@ -7,9 +9,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MisTurnosComponent implements OnInit {
 
-  constructor() { }
+   usuarioLogueado : any;
+   perfil : string = '';
+
+  constructor(private auth : AuthService) { }
 
   ngOnInit(): void {
+    this.usuarioLogueado = this.auth.usuarioLogueado;
+    this.perfil = this.usuarioLogueado.perfil;
   }
 
 }

@@ -1,1 +1,2 @@
-<p>mis-turnos works!</p>
+<app-turnos-paciente [usurioLogueadoInput]="usuarioLogueado" *ngIf="perfil == 'paciente'"></app-turnos-paciente>
+<app-turnos-especialista [especialistaLogueadoInput]="usuarioLogueado" *ngIf="perfil == 'especialista'"></app-turnos-especialista>

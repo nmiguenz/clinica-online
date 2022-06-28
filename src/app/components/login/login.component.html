@@ -70,10 +70,18 @@
 
       <div class="fab-button">
         <button class="fastAccessButton"
-            [ngStyle]="{'background-image': 'url(' + especialistaFotoUrl + ')'}" (click)="cargarEspecialista()">
+            [ngStyle]="{'background-image': 'url(' + especialistaFotoUrl + ')'}" (click)="cargarEspecialista('1')">
         </button>
         <br>
         <h6>Especialista</h6>
+      </div>
+
+      <div class="fab-button">
+        <button class="fastAccessButton"
+            [ngStyle]="{'background-image': 'url(' + especialistaDosFotoUrl + ')'}" (click)="cargarEspecialista('2')">
+        </button>
+        <br>
+        <h6>Especialista 2</h6>
       </div>
 
       <div class="fab-button">

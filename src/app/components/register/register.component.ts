@@ -5,6 +5,8 @@ import { Form, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Paciente } from 'src/app/classes/paciente';
 import { AuthService } from 'src/app/services/auth.service';
 import { FirestoreDbService } from 'src/app/services/firestore-db.service';
+import { RecaptchaService } from 'src/app/services/recaptcha.service';
+import { IDropdownSettings } from 'ng-multiselect-dropdown';
 
 @Component({
   selector: 'app-register',
@@ -21,12 +23,19 @@ export class RegisterComponent implements OnInit {
   archivoImg : any;
   archivoImgDos : any;
 
+  //Select multiple
+  dropdownSettings: IDropdownSettings = {};
+
+  //Variables captcha;
+  key : string = "";
+  espanol : string = "";
+
   // Variables especilidades
   especialidades : any[] = [];
   crearEspecialidad : boolean = false;
   nuevaEspecialidad : string = '';
 
-  constructor(private fb : FormBuilder, private db : FirestoreDbService, private auth : AuthService, private route : Router) {
+  constructor(private fb : FormBuilder, private db : FirestoreDbService, private auth : AuthService, private route : Router, private captcha : RecaptchaService) {
     this.formGroup = this.fb.group({
       'nombre' : ['', [Validators.required, Validators.pattern('[a-zA-ZñÑáéíóúÝÉÝÓÚ\s]+')]],
       'apellido' : ['', [Validators.required, Validators.pattern('[a-zA-ZñÑáéíóúÝÉÝÓÚ\s]+')]],
@@ -34,39 +43,51 @@ export class RegisterComponent implements OnInit {
       'dni' : ['', [Validators.required, Validators.pattern('[0-9]+'), Validators.min(1), Validators.max(99999999)]],
       'mail' : ['', [Validators.required, Validators.email]],
       'password' : ['', [Validators.required, Validators.minLength(6), Validators.maxLength(20)]],
-      'especialidad' : ['', Validators.required],
+      'especialidad' : [[], Validators.required],
       'obraSocial' : ['', Validators.required],
       'fotoUno' : ['', Validators.required],
       'fotoDos' : ['', Validators.required],
-    })
+      'recaptcha': ['', Validators.required],
+    });
+
+    this.key = this.captcha.siteKey;
+    this.espanol = this.captcha.lang;
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.db.getCollection('especialidad').then( (ref:any) => ref.subscribe((listadoRef:any) => {
+      this.especialidades = listadoRef.map((especialidad : any)=>{
+        return especialidad.payload.doc.data()
+      });
+      this.dropdownSettings = {
+        idField: 'nombre',
+        textField: 'nombre'
+      };
+    }));
+  }
 
   // Método que devuleve el perfil del usuario,
   // hardcodea controllers que no son requeridos para el perfil
   // trae las especialidades en caso de ser perfil ESPECIALISTA
   perfilUsuario(perfilSeleccionado : string){
+    this.pantalla = 'registro';
     this.perfil = perfilSeleccionado;
     if(this.perfil == 'paciente'){
       this.formGroup.controls['especialidad'].setValue('ninguna'); //Se setea un valor para pasar la validación del form
     }
     else{
-      this.loading = true;
-      //Cargo la lista de ESPECIALIDADES vigentes desde Firebase
-      this.db.getCollection('especialidad').then( (ref:any) => ref.subscribe((listadoRef:any) => {
-        listadoRef.forEach((element : any) => {
-          this.especialidades.push(element.payload.doc.data());
+      // this.loading = true;
+      // //Cargo la lista de ESPECIALIDADES vigentes desde Firebase
 
-        });
-        this.loading = false;
-      }));
+      //   this.loading = false;
+      // }));
       this.formGroup.controls['obraSocial'].setValue('ninguna'); //Se setea un valor para pasar la validación del form
       this.formGroup.controls['fotoDos'].setValue('ninguna.jpg'); //Se setea un valor para pasar la validación del form
     }
   }
 
   async alta(){
+    console.log(this.formGroup);
     // Alta de paciente
     if(this.perfil == 'paciente'){
       const paciente = new Paciente(
@@ -180,10 +201,10 @@ export class RegisterComponent implements OnInit {
     .catch(error => console.log(error));
   }
 
-  seleccionarTipoUser(tipo:string){
-    this.pantalla = 'registro';
-    this.perfil = tipo;
-    console.log(this.pantalla, this.perfil)
-  }
+  // seleccionarTipoUser(tipo:string){
+  //   this.pantalla = 'registro';
+  //   this.perfil = tipo;
+  //   console.log(this.pantalla, this.perfil)
+  // }
 
 }

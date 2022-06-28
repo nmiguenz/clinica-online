@@ -6,10 +6,10 @@
   <div class="container vh-100 d-flex justify-content-center align-items-center" *ngIf="pantalla == ''">
     <div class="row align-items-center">
       <div class="col-md-6">
-        <button class="register" (click)="seleccionarTipoUser('paciente')"><img src="../../../assets/undraw_doctor_kw-5-l.svg" alt="paciente"><h2>PACIENTE</h2></button>
+        <button class="register" (click)="perfilUsuario('paciente')"><img src="../../../assets/undraw_doctor_kw-5-l.svg" alt="paciente"><h2>PACIENTE</h2></button>
       </div>
       <div class="col-md-6">
-        <button class="register" (click)="seleccionarTipoUser('especialista')"><img src="../../../assets/undraw_medical_research_qg4d.svg" alt="doctor"><h2>ESPECIALISTA</h2></button>
+        <button class="register" (click)="perfilUsuario('especialista')"><img src="../../../assets/undraw_medical_research_qg4d.svg" alt="doctor"><h2>ESPECIALISTA</h2></button>
       </div>
     </div>
   </div>
@@ -87,7 +87,7 @@
               <span class="text-danger" *ngIf="formGroup.get('password')?.hasError('maxLength')">El password debe contener como máximo 20 caracteres.</span>
             </div>
 
-            <!-- Elección de perfil de alta -->
+            <!-- Elección de perfil de alta
             <div class="row mb-4" *ngIf="perfil == '' ">
 
               <div class="col-md-6">
@@ -103,7 +103,7 @@
               </div>
 
 
-            </div>
+            </div> -->
 
             <div  *ngIf="perfil == 'paciente'; then paciente"></div>
             <div  *ngIf="perfil == 'especialista'; then especialista"></div>
@@ -125,7 +125,7 @@
                     </div>
                   </div>
                   <div class="col-md-6">
-                    <div class="input-group custom-file-button mb-4">
+                    <div class="input-group custom-file-button">
                       <label class="input-group-text" for="inputGroupFile2">Foto de perfil dos</label>
                       <input type="file" class="form-control" id="inputGroupFile2" formControlName="fotoDos" (input)="obtenerImg($event,2)" accept="image/*">
                       <span class="text-danger" *ngIf="formGroup.get('fotoDos')?.hasError('required') && formGroup.get('fotoDos')?.touched">Foto de perfil requerida.</span>
@@ -140,14 +140,18 @@
 
                 <div class="input-group mb-4">
                   <div class="input-group-prepend">
-                    <span class="input-group-text" id="especialidad"><button type="button" (click)="crearEspecialidad = !(crearEspecialidad)">Agregar Espacialidad</button></span>
+                    <span class="input-group-text btn-especialidad " id="especialidad"><button type="button" (click)="crearEspecialidad = !(crearEspecialidad)">Agregar Espacialidad</button></span>
                   </div>
-                  <select class="form-select" id="especialidad" formControlName="especialidad">
+                  <!-- <select class="form-select" id="especialidad" formControlName="especialidad">
                     <option selected>Elige una especialidad</option>
                     <option *ngFor="let especialidad of especialidades" [value]="especialidad.nombre">{{especialidad.nombre}}</option>
-                  </select>
+                  </select> -->
+                  <ng-multiselect-dropdown class="col-md-8" id="especialidad" [settings]="dropdownSettings" [data]="especialidades"
+                              formControlName="especialidad">
+                  </ng-multiselect-dropdown>
                   <span class="text-danger" *ngIf="formGroup.get('especialidad')?.hasError('required') && formGroup.get('especialidad')?.touched">La especialidad es requerida.</span>
                 </div>
+
 
                 <div class="row" *ngIf="crearEspecialidad">
 
@@ -163,7 +167,7 @@
                   </div>
                 </div>
 
-                <div class="input-group custom-file-button mb-4">
+                <div class="input-group custom-file-button mb-3">
                   <label class="input-group-text" for="foto">Foto de perfil</label>
                   <input type="file" class="form-control" id="foto" formControlName="fotoUno" (input)="obtenerImg($event,1)" accept="image/*">
                   <span class="text-danger" *ngIf="formGroup.get('fotoUno')?.hasError('required') && formGroup.get('fotoUno')?.touched">Foto de perfil requerida.</span>
@@ -171,8 +175,17 @@
 
               </ng-template>
 
+              <div class="mb-3" *ngIf="archivoImgDos && perfil == 'paciente' || archivoImg && perfil == 'especialista'" >
+                <ngx-recaptcha2 #captchaElem
+                  [siteKey]="key"
+                  [hl]="espanol"
+                  formControlName="recaptcha">
+                </ngx-recaptcha2>
+              </div>
+
             <!-- Submit button -->
-            <button type="submit" class="btn btn-primary btn-block mb-4 " [disabled]="!formGroup.valid">
+            <button type="submit" class="btn btn-primary btn-block mb-4" [disabled]="!formGroup.valid" >
+              <!-- [disabled]="!formGroup.valid" -->
               ALTA
             </button>
 

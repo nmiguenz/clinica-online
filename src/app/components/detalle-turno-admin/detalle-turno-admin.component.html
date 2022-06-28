@@ -1,0 +1,32 @@
+<div class="h-100 p-5 text-white bg-dark rounded-3" *ngIf="turnoSeleccionado">
+  <div>
+
+          <span>Especialidad: {{turnoSeleccionado.especialidad}}</span>
+          <br>
+          <span>Especialista: {{turnoSeleccionado.datosEspecialista.nombre}} {{turnoSeleccionado.datosEspecialista.apellido}}</span>
+          <br>
+          <span>Fecha: {{turnoSeleccionado.fecha}}</span>
+          <br>
+          <span>Estado: {{turnoSeleccionado.estado}}</span>
+
+          <div class="row mb-4 mt-4" *ngIf="turnoSeleccionado.estado =='pendiente' || turnoSeleccionado.estado =='cancelado'">
+            <div class="col-2 ">
+              <button class="btn btn-sm btn-outline-light" [disabled]="turnoSeleccionado.estado =='cancelado'" type="button" (click)="mostrarOcultarCancelacion()">
+                {{mensajeBtnCancelar}}
+              </button>
+            </div>
+          </div>
+
+             <!-- Cancelar Turno FORM -->
+          <form *ngIf="turnoCancelado && turnoSeleccionado.estado!='cancelado'" [formGroup]="formCancelacionTurno" (ngSubmit)="cancelarTurno(turnoSeleccionado, usuarioSeleccionado)">
+            <h6 class="mb-3">Coméntenos por qué está cancelando el turno...</h6>
+            <div class="form-floating mb-4">
+              <input type="text" class="form-control" id="comentario" formControlName="comentario">
+              <label for="comentario">Comentario del <span>{{turnoSeleccionado.datosPaciente.perfil}}</span></label>
+              <span class="text-danger" *ngIf="formCancelacionTurno.get('comentario')?.hasError('required') && formCancelacionTurno.get('comentario')?.touched">El comentario de la cancelación es obligatorio.</span>
+            </div>
+            <button class="btn btn-primary btn-md" [disabled]="formCancelacionTurno.invalid"
+                type="submit">Confirmar cancelación</button>
+          </form>
+  </div>
+</div>

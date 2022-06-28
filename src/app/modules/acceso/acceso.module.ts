@@ -7,7 +7,8 @@ import { LoginComponent } from 'src/app/components/login/login.component';
 import { RegisterComponent } from 'src/app/components/register/register.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoadingComponent } from 'src/app/components/loading/loading.component';
-
+import { NgxCaptchaModule } from 'ngx-captcha';
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 
 @NgModule({
   declarations: [
@@ -18,9 +19,11 @@ import { LoadingComponent } from 'src/app/components/loading/loading.component';
   ],
   imports: [
     CommonModule,
+    NgMultiSelectDropDownModule.forRoot(),
     AccesoRoutingModule,
     ReactiveFormsModule,
     FormsModule,
+    NgxCaptchaModule
   ]
 })
 export class AccesoModule { }

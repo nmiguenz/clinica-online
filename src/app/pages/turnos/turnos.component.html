@@ -1,2 +1,15 @@
+<div class="container">
 
-<app-alta-turno></app-alta-turno>
+  <div class="p-5 mb-4 bg-light rounded-3">
+    <div class="container-fluid">
+      <app-tabla-turnos-admin [usuarioMostrar]="usurioLogueadoInput" (seSeleccionoTurno)="mostrar($event)"></app-tabla-turnos-admin>
+    </div>
+  </div>
+
+  <div class="p-5 mb-4 bg-light rounded-3">
+    <div class="container-fluid">
+      <app-detalle-turno-admin [usuarioSeleccionado]="usurioLogueadoInput" [turnoSeleccionado]="turnoSeleccionado"></app-detalle-turno-admin>
+    </div>
+  </div>
+
+</div>

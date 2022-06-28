@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Turno } from 'src/app/classes/turno';
+import { Especialista } from 'src/app/classes/especialista';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-turnos-especialista',
@@ -7,9 +9,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TurnosEspecialistaComponent implements OnInit {
 
+  @Input() especialistaLogueadoInput : Especialista | any;
+  @Input() turnoSeleccionado : Turno | any;
+
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  mostrar(turno : Turno){
+    this.turnoSeleccionado = turno;
   }
 
 }

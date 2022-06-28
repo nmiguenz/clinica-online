@@ -1,6 +1,9 @@
+import { MiPerfilComponent } from './pages/mi-perfil/mi-perfil.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AltaTurnoComponent } from './components/alta-turno/alta-turno.component';
+import { MisTurnosComponent } from './pages/mis-turnos/mis-turnos.component';
+import { SolicitarTurnoComponent } from './pages/solicitar-turno/solicitar-turno.component';
 
 const routes: Routes = [
   {
@@ -23,6 +26,18 @@ const routes: Routes = [
   {
     path: 'turnos',
     component: AltaTurnoComponent
+  },
+  {
+    path: 'misTurnos',
+    component: MisTurnosComponent
+  },
+  {
+    path: 'solicitarTurno',
+    component: SolicitarTurnoComponent
+  },
+  {
+    path: 'perfil',
+    component: MiPerfilComponent
   },
   {
     path: '',

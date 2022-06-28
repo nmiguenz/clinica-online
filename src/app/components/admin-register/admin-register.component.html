@@ -138,10 +138,13 @@
                   <div class="input-group-prepend">
                     <span class="input-group-text" id="especialidad">Espacialidad</span>
                   </div>
-                  <select class="form-select" id="especialidad" formControlName="especialidad">
+                  <!-- <select class="form-select" id="especialidad" formControlName="especialidad">
                     <option selected>Elige una especialidad</option>
                     <option *ngFor="let especialidad of especialidades" [value]="especialidad.nombre">{{especialidad.nombre}}</option>
-                  </select>
+                  </select> -->
+                  <ng-multiselect-dropdown class="col-md-8" id="especialidad" [settings]="dropdownSettings" [data]="especialidades"
+                              formControlName="especialidad">
+                  </ng-multiselect-dropdown>
                   <span class="text-danger" *ngIf="formGroup.get('especialidad')?.hasError('required') && formGroup.get('especialidad')?.touched">La especialidad es requerida.</span>
                 </div>
 

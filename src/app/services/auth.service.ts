@@ -9,6 +9,8 @@ import { UserPerfil } from '../interface/user-perfil';
 export class AuthService {
 
   usuarioLogueado : any;
+  perfil : string = '';
+  estaLogueado : boolean = true;
 
   private currentUserSubject: BehaviorSubject<UserPerfil> = new BehaviorSubject({} as UserPerfil);
   public readonly currentUser: Observable<UserPerfil> = this.currentUserSubject.asObservable();
@@ -17,15 +19,17 @@ export class AuthService {
    }
 
   setCurrentUser(currentUser: UserPerfil) {
-    this.currentUserSubject.next(currentUser); //método next(), del BehaviorSubject, le decimos a este, que guarde el currentUser que le entregaremos, nada más.
+    this.currentUserSubject.next(currentUser); //método next(), del BehaviorSubject, guarda el currentUser que le entregaremos, nada más.
     this.usuarioLogueado = currentUser;
   }
 
   //
   async login(email:string, password:string) : Promise<any> {
     try {
+      this.estaLogueado = true;
       return await this.auth.signInWithEmailAndPassword(email,password);
     } catch (error) {
+      this.estaLogueado = false;
       console.log('Error en login de AuthService' ,error);
     }
   }
@@ -41,6 +45,8 @@ export class AuthService {
 
   //Cierra la sesión del usuario
   logOut() : Promise<void> {
+    this.usuarioLogueado.perfil = '';
+    this.estaLogueado = false;
     return this.auth.signOut();
   }
 

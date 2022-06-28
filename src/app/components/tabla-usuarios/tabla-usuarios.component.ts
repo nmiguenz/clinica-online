@@ -34,7 +34,7 @@ export class TablaUsuariosComponent implements OnInit {
     this.db.getCollectionByField('usuarios','==','perfil','paciente')
     .then((ref:any) => ref.subscribe((arg:any) => {
       this.arrayPacientes = arg.map((element:any) => {
-          return element;
+          return element.diaHorario;
         });
     })
     ).catch(error => console.log(error));

@@ -134,6 +134,7 @@ export class AltaTurnoAdminComponent implements OnInit {
         EstadoTurno.pendiente,
         "",
         "",
+        "",
         ""
       );
 

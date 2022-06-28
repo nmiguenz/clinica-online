@@ -1,61 +1,54 @@
-<p>{{mensajeFiltro}}</p>
-<p><input type="text" [(ngModel)]="filter"></p>
 
-<ul *ngIf="tipoUsuario=='administrador'" class="list-group mb-3">
-    <!-- <li appHighlight class="list-group-item d-flex justify-content-between lh-sm" (click)="SeleccionarTurno(turno)"
-        *ngFor="let turno of arrayTurnosAdministrador | filtroMixtoEspecialidadEspecialista:filter"> -->
-        <li class="list-group-item d-flex justify-content-between lh-sm" (click)="SeleccionarTurno(turno)"
-        *ngFor="let turno of arrayTurnosAdministrador">
-        <b>Especialidad: </b>
-        <span>{{turno.especialidad}}</span>
-        <b>Especialista: </b>
-        <span>{{turno.datosEspecialista.nombre}}</span>
-        <b>Paciente: </b>
-        <span>{{turno.datosPaciente.nombre}}</span>
-        <b>Fecha: </b>
-        <span>{{turno.fecha}}</span>
-        <b>Estado:</b>
-        <span [ngStyle]="styleObject(turno)">
-            {{turno.estado}}
-        </span>
 
-    </li>
-</ul>
 
-<ul *ngIf="tipoUsuario=='especialista'" class="list-group mb-3">
-    <!-- <li appEmbiggens class="list-group-item d-flex justify-content-between lh-sm" (click)="SeleccionarTurno(turno)"
-        *ngFor="let turno of arrayTurnosEspecialista | filtroTurno:filter"> -->
-        <li class="list-group-item d-flex justify-content-between lh-sm" (click)="SeleccionarTurno(turno)"
-        *ngFor="let turno of arrayTurnosEspecialista ">
-        <b>Paciente: </b>
-        <span>{{turno.datosPaciente.nombre}</span>
-        <b>Especialidad: </b>
-        <span>{{turno.especialidad}}</span>
-        <b>Fecha: </b>
-        <span>{{turno.fecha}}</span>
-        <b>Estado:</b>
-        <span [ngStyle]="styleObject(turno)">
-            {{turno.estado}}
-        </span>
+<div class="row d-flex justify-content-arround align-items-center">
+  <div class="col col-md-8">
+    <h1 class="display-5 fw-bold">Mis turnos</h1>
+  </div>
+  <div class="col col-md-4 text-end">
+    <input class="form-control" type="text" placeholder="Buscar por especialidad o profesional..." [(ngModel)]="filter" *ngIf="tipoUsuario=='paciente'">
+    <input class="form-control" type="text" placeholder="Buscar por especialidad o paciente..." [(ngModel)]="filter" *ngIf="tipoUsuario=='especialista'">
+    <span class="lupa"><i class="bi bi-search"></i></span>
+  </div>
+</div>
 
-    </li>
-</ul>
+<!-- Tabla turnos paciente -->
+<table class="table table-striped table-hover" *ngIf="tipoUsuario=='paciente'">
+  <thead>
+    <tr>
+      <th scope="col">Especialidad</th>
+      <th scope="col">Profesional</th>
+      <th scope="col">Fecha</th>
+      <th scope="col">Estado</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let turno of listadoTurnosPaciente | filtroMisturnosPaciente:filter" (click)="SeleccionarTurno(turno)">
+      <th scope="row">{{turno.especialidad}}</th>
+      <td>{{turno.datosEspecialista.nombre}} {{turno.datosEspecialista.apellido}}</td>
+      <td>{{turno.fecha}}</td>
+      <td><span [ngStyle]="styleObject(turno)">{{turno.estado}}</span></td>
+    </tr>
+  </tbody>
+</table>
 
-<ul *ngIf="tipoUsuario=='paciente'" class="list-group mb-3">
-    <!-- <li class="list-group-item d-flex justify-content-between lh-sm" (click)="SeleccionarTurno(turno)"
-        *ngFor="let turno of arrayTurnosPaciente | filtroTurno:filter"> -->
-        <li class="list-group-item d-flex justify-content-between lh-sm" (click)="SeleccionarTurno(turno)"
-        *ngFor="let turno of arrayTurnosPaciente ">
-        <b>Especialidad: </b>
-        <span>{{turno.especialidad}}</span>
-        <b>Especialista: </b>
-        <span>{{turno.datosEspecialista.nombre}</span>
-        <b>Fecha: </b>
-        <span>{{turno.fecha}}</span>
-        <b>Estado:</b>
-        <span [ngStyle]="styleObject(turno)">
-            {{turno.estado}}
-        </span>
+<!-- Tabla turnos ESPEALISTA -->
+<table class="table table-striped table-hover" *ngIf="tipoUsuario=='especialista'">
+  <thead>
+    <tr>
+      <th scope="col">Especialidad</th>
+      <th scope="col">Paciente</th>
+      <th scope="col">Fecha</th>
+      <th scope="col">Estado</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let turno of listadoTurnosEspecialista | filtroMisturnosEspecialista:filter" (click)="SeleccionarTurno(turno)">
+      <th scope="row">{{turno.especialidad}}</th>
+      <td>{{turno.datosPaciente.nombre}} {{turno.datosPaciente.apellido}}</td>
+      <td>{{turno.fecha}}</td>
+      <td><span [ngStyle]="styleObject(turno)">{{turno.estado}}</span></td>
+    </tr>
+  </tbody>
+</table>
 
-    </li>
-</ul>

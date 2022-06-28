@@ -1,1 +1,189 @@
-<p>detalle-turno works!</p>
+<div class="h-100 p-5 text-white bg-dark rounded-3" *ngIf="turnoSeleccionado">
+  <div>
+
+      <!-- Bloque PACIENTE -->
+      <div *ngIf="usuarioSeleccionado.perfil == 'paciente'">
+          <span>Especialidad: {{turnoSeleccionado.especialidad}}</span>
+          <br>
+          <span>Especialista: {{turnoSeleccionado.datosEspecialista.nombre}} {{turnoSeleccionado.datosEspecialista.apellido}}</span>
+          <br>
+          <span>Fecha: {{turnoSeleccionado.fecha}}</span>
+          <br>
+          <span>Estado: {{turnoSeleccionado.estado}}</span>
+          <br>
+          <br>
+
+
+          <div class="row mb-4">
+            <!-- Cancelar Turno -->
+            <div class="col-2 ">
+              <button *ngIf="turnoSeleccionado.estado!='finalizado'"
+                class="btn btn-sm btn-outline-light" [disabled]="turnoSeleccionado.estado =='cancelado'" type="button" (click)="mostrarOcultarCancelacion()">
+                {{mensajeBtnCancelar}}
+              </button>
+            </div>
+            <!-- Ver reseña -->
+            <div class="col-2">
+              <button *ngIf="turnoSeleccionado.resenia !=''  || turnoSeleccionado.comentario !=''" class="btn btn-primary btn-sm"
+              type="button" (click)="mostrarResenia()">{{mensajeBtnResenia}}</button>
+            </div>
+            <!-- Calificar atención -->
+            <div class="col-2">
+              <button *ngIf="turnoSeleccionado.estado=='finalizado'" class="btn btn-sm btn-outline-light" type="button" (click)="mostrarCalificarAtencion()"
+              [disabled]="turnoSeleccionado.calificacion">{{mensajeCalificacion}}</button>
+            </div>
+
+          </div>
+
+          <!-- Cancelar Turno FORM -->
+          <form *ngIf="turnoCancelado && turnoSeleccionado.estado!='cancelado'" [formGroup]="formCancelacionTurno" (ngSubmit)="cancelarTurno(turnoSeleccionado, usuarioSeleccionado)">
+              <h6 class="mb-3">Coméntenos por qué está cancelando el turno...</h6>
+              <div class="form-floating mb-4">
+                <input type="text" class="form-control" id="comentario" formControlName="comentario">
+                <label for="comentario">Comentario del <span>{{turnoSeleccionado.datosPaciente.perfil}}</span></label>
+                <span class="text-danger" *ngIf="formCancelacionTurno.get('comentario')?.hasError('required') && formCancelacionTurno.get('comentario')?.touched">El comentario de la cancelación es obligatorio.</span>
+              </div>
+              <button class="btn btn-primary btn-md" [disabled]="formCancelacionTurno.invalid"
+                  type="submit">Confirmar cancelación</button>
+          </form>
+
+          <!-- Ver reseña CAMPOS -->
+          <div *ngIf="verResenia">
+              <span *ngIf="turnoSeleccionado.estado=='cancelado' && turnoSeleccionado.comentario!=''">Motivo de la cancelación:{{turnoSeleccionado.comentario}}</span>
+              <span *ngIf="turnoSeleccionado.estado=='rechazado' && turnoSeleccionado.comentario!=''">Motivo del rechazo: {{turnoSeleccionado.comentario}}</span>
+              <span *ngIf="turnoSeleccionado.estado=='finalizado' && turnoSeleccionado.resenia!=''">Reseña del especialista: {{turnoSeleccionado.resenia}}</span>
+              <span> {{turnoSeleccionado.resenia}}</span>
+              <!-- <br>
+              <span *ngIf="turnoSeleccionado.calificacion">Calificación:</span>
+              <span> {{turnoSeleccionado.calificacion}}</span> -->
+          </div>
+          <br>
+
+          <!-- Calificar atención -->
+          <form *ngIf="calificar" [formGroup]="formCalificacion"
+              (ngSubmit)="calificarAtencion(turnoSeleccionado)">
+              <h6 class="mb-3">Calificar la atención de <span style="transform: capitalize;">{{turnoSeleccionado.datosEspecialista.nombre}} {{turnoSeleccionado.datosEspecialista.apellido}}</span></h6>
+
+              <div class="row">
+                <div class="col-8">
+                  <div class="form-floating mb-4">
+                    <input type="text" class="form-control" id="comentario" formControlName="comentario">
+                    <label for="comentario">Comentario</label>
+                    <span class="text-danger" *ngIf="formCalificacion.get('comentario')?.hasError('required') && formCalificacion.get('comentario')?.touched">El comentario es obligatorio.</span>
+                  </div>
+                </div>
+                <div class="col-4">
+                  <div class="form-floating mb-4">
+                    <input type="text" class="form-control" id="calificacion" formControlName="calificacion">
+                    <label for="calificacion">Calificación</label>
+                    <span class="text-danger" *ngIf="formCalificacion.get('calificacion')?.hasError('required') && formCalificacion.get('calificacion')?.touched">La calificacion es obligatoria.</span>
+                    <span class="text-danger" *ngIf="formCalificacion.get('calificacion')?.hasError('min')">La calificación no puede ser menor a 1.</span>
+                    <span class="text-danger" *ngIf="formCalificacion.get('calificacion')?.hasError('max')">El calificacion no puede ser mayor a 10</span>
+                  </div>
+                </div>
+              </div>
+
+              <button class="btn btn-primary btn-md" [disabled]="formCalificacion.invalid" type="submit">Enviar calificación</button>
+
+          </form>
+
+      </div>
+      <!--Fin Bloque PACIENTE -->
+
+      <!-- Bloque ESPECIALISTA -->
+      <div *ngIf="usuarioSeleccionado.perfil == 'especialista'">
+        <span>Especialidad: {{turnoSeleccionado.especialidad}}</span>
+        <br>
+        <span>Paciente: {{turnoSeleccionado.datosPaciente.nombre}} {{turnoSeleccionado.datosPaciente.apellido}}</span>
+        <br>
+        <span>Fecha: {{turnoSeleccionado.fecha}}</span>
+        <br>
+        <span>Estado: {{turnoSeleccionado.estado}}</span>
+        <br>
+        <br>
+
+
+        <div class="row mb-4">
+          <!-- Cancelar Turno -->
+          <div class="col-2 " *ngIf="turnoSeleccionado.estado == 'cancelado' || turnoSeleccionado.estado == 'pendiente'">
+            <button
+              class="btn btn-sm btn-outline-light" [disabled]="turnoSeleccionado.estado =='cancelado'" type="button" (click)="mostrarOcultarCancelacion()">
+              {{mensajeBtnCancelar}}
+            </button>
+          </div>
+          <!-- Rechazar turno -->
+          <div class="col-2" *ngIf="turnoSeleccionado.estado=='pendiente'">
+            <button  class="btn btn-sm btn-outline-danger" type="button" (click)="mostrarRechazarTurno()">
+              {{mensajerechazar}}
+            </button>
+          </div>
+          <!-- Aceptar turno -->
+          <div class="col-2" *ngIf="turnoSeleccionado.estado=='pendiente' || turnoSeleccionado.estado=='aceptado'">
+            <button  class="btn btn-sm btn-outline-success" type="button" [disabled]="turnoSeleccionado.estado =='aceptado'" (click)="aceptarTurno(turnoSeleccionado)">
+              Aceptar turno
+            </button>
+          </div>
+          <!-- Finalizar turno -->
+          <div class="col-2" *ngIf="turnoSeleccionado.estado=='aceptado'">
+            <button  class="btn btn-sm btn-outline-primary" type="button" (click)="mostrarFinalizarAtencion()">
+              {{mensajefinalizar}}
+            </button>
+          </div>
+          <!-- Ver reseña -->
+          <div class="col-2" *ngIf="turnoSeleccionado.resenia !=''  || turnoSeleccionado.comentario !=''">
+            <button  class="btn btn-primary btn-sm"
+            type="button" (click)="mostrarResenia()">{{mensajeBtnResenia}}</button>
+          </div>
+
+        </div>
+
+        <!-- Cancelar Turno FORM -->
+        <form *ngIf="turnoCancelado && turnoSeleccionado.estado!='cancelado'" [formGroup]="formCancelacionTurno" (ngSubmit)="cancelarTurno(turnoSeleccionado, usuarioSeleccionado)">
+            <h6 class="mb-3">Coméntenos por qué está cancelando el turno...</h6>
+            <div class="form-floating mb-4">
+              <input type="text" class="form-control" id="comentario" formControlName="comentario">
+              <label for="comentario">Comentario del <span>{{turnoSeleccionado.datosEspecialista.perfil}}</span></label>
+              <span class="text-danger" *ngIf="formCancelacionTurno.get('comentario')?.hasError('required') && formCancelacionTurno.get('comentario')?.touched">El comentario de la cancelación es obligatorio.</span>
+            </div>
+            <button class="btn btn-primary btn-md" [disabled]="formCancelacionTurno.invalid"
+                type="submit">Confirmar cancelación</button>
+        </form>
+
+        <!-- Rechazar Turno FORM -->
+        <form *ngIf="rechazado && turnoSeleccionado.estado =='pendiente'" [formGroup]="formCancelacionTurno" (ngSubmit)="rechazarTurno(turnoSeleccionado, usuarioSeleccionado)">
+          <h6 class="mb-3">Coméntenos por qué está rechazando el turno...</h6>
+          <div class="form-floating mb-4">
+            <input type="text" class="form-control" id="comentario" formControlName="comentario">
+            <label for="comentario">Comentario del <span>{{turnoSeleccionado.datosEspecialista.perfil}}</span></label>
+            <span class="text-danger" *ngIf="formCancelacionTurno.get('comentario')?.hasError('required') && formCancelacionTurno.get('comentario')?.touched">El comentario del rechazo es obligatorio.</span>
+          </div>
+          <button class="btn btn-primary btn-md" [disabled]="formCancelacionTurno.invalid"
+              type="submit">Confirmar rechazo</button>
+        </form>
+
+        <!-- Finalizar Turno FORM -->
+        <form *ngIf="finalizado && turnoSeleccionado.estado =='aceptado'" [formGroup]="formFinalizar" (ngSubmit)="finalizarTurno(turnoSeleccionado, usuarioSeleccionado)">
+          <h6 class="mb-3">Deje una reseña de su atención...</h6>
+          <div class="form-floating mb-4">
+            <input type="text" class="form-control" id="resenia" formControlName="resenia">
+            <label for="resenia">Resenia</label>
+            <span class="text-danger" *ngIf="formFinalizar.get('resenia')?.hasError('resenia') && formFinalizar.get('comentario')?.touched">La reseña de la atención brindada es obligatorio.</span>
+          </div>
+          <!-- Falta la historia clínica -->
+          <button class="btn btn-primary btn-md" [disabled]="formFinalizar.invalid"
+              type="submit">Finalizar turno</button>
+        </form>
+
+        <!-- Ver reseña CAMPOS -->
+        <div *ngIf="verResenia">
+          <p class="fw-bold" *ngIf="turnoSeleccionado.comentario!='' && turnoSeleccionado.estado == 'cancelado'">Motivo de la cancelación: <span class="fw-normal">{{turnoSeleccionado.comentario}}</span></p>
+          <p class="fw-bold" *ngIf="turnoSeleccionado.comentario!='' && turnoSeleccionado.estado == 'rechazado'">Motivo del rechazo: <span class="fw-normal">{{turnoSeleccionado.comentario}}</span></p>
+          <p class="fw-bold" *ngIf="turnoSeleccionado.resenia!=''">Reseña del especialista: <span class="fw-normal">{{turnoSeleccionado.resenia}}</span></p>
+        </div>
+        <br>
+
+    </div>
+    <!--Fin Bloque ESPECIALSTA -->
+
+  </div>
+</div>

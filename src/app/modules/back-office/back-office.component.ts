@@ -1,7 +1,8 @@
+import { UserPerfil } from './../../interface/user-perfil';
 import { Router } from '@angular/router';
 import { AuthService } from './../../services/auth.service';
 import { Administrador } from './../../classes/administrador';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NavbarComponent } from 'src/app/components/navbar/navbar.component';
 import { Subscription } from 'rxjs';
 
@@ -10,7 +11,7 @@ import { Subscription } from 'rxjs';
   templateUrl: './back-office.component.html',
   styleUrls: ['./back-office.component.css']
 })
-export class BackOfficeComponent implements OnInit {
+export class BackOfficeComponent implements OnInit{
 
   pantallaSeleccionada :  string = '';
   adminUser : Administrador | any;
@@ -33,17 +34,9 @@ export class BackOfficeComponent implements OnInit {
   }
 
   cerrarSesionAdmin(){
-    this.authServiceSubscription = this.auth.currentUser.subscribe(
-      currentUser => {
-          //Estado de logueo
-          currentUser.isLogged = false;
-          //perfil
-          currentUser.perfil = '';
-        })
     this.auth.logOut().then(() => {
-      this.authServiceSubscription?.unsubscribe();
+      this.auth.usuarioLogueado.perfil = '';
       this.route.navigateByUrl('home');
     });
   }
-
 }

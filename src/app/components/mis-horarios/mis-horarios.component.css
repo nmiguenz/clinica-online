@@ -1,0 +1,14 @@
+li{
+  background: transparent;
+  border: none;
+  border-bottom: black !important;
+}
+
+.list-group-item:hover{
+  cursor: pointer;
+}
+
+.listadoHorios{
+  margin-top: -11.2rem !important;
+  position: absolute;
+}

@@ -107,9 +107,10 @@ export class FirestoreDbService {
     }
   }
 
-  // //Crea el ID con que se va a grabar la colección.
-  // async getId(){
-  //   return await this.db.createId();
-  // }
+  // Consultas ESPECIALES
+  getDisponibilidadesByEspecialistaEspecialidad(dniEspecialista: string, especialidad: string) {
+    return this.db.collection("horarios_especialidad", ref => ref.where('especialista.dni', '==', dniEspecialista).where('especialidad', '==', especialidad)).snapshotChanges();
+  }
+
 
 }

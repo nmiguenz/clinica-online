@@ -10,9 +10,10 @@ export class Turno {
   public encuesta: string;
   public calificacion: string;
   public resenia: string;
+  public comentario: string;
 
 
-  constructor(datosEspecialista: Especialista, datosEspecialidad: string, datosPaciente: Paciente, fecha: Date, estado: EstadoTurno, encuesta: string, calificacion: string, resenia: string) {
+  constructor(datosEspecialista: Especialista, datosEspecialidad: string, datosPaciente: Paciente, fecha: Date, estado: EstadoTurno, encuesta: string, calificacion: string, resenia: string, coment : string) {
       this.datosEspecialista = datosEspecialista;
       this.especialidad = datosEspecialidad;
       this.datosPaciente = datosPaciente;
@@ -21,14 +22,15 @@ export class Turno {
       this.encuesta = encuesta;
       this.calificacion = calificacion;
       this.resenia = resenia;
+      this.comentario = coment;
   }
 }
 
 export enum EstadoTurno {
-  aceptado = "Aceptado",
-  cancelado = "Cancelado",
-  rechazado = "Rechazado",
-  pendiente = "Pendiente",
-  finalizado = "Finalizado"
+  aceptado = "aceptado",
+  cancelado = "cancelado",
+  rechazado = "rechazado",
+  pendiente = "pendiente",
+  finalizado = "finalizado"
 }
 

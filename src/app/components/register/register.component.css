@@ -65,6 +65,10 @@ img{
   font-size: 1.5rem;
 }
 
+.btn-especialidad{
+  height: 38px !important;
+}
+
 @media (max-width: 1400px) {
   .show-pass {
     position: absolute;

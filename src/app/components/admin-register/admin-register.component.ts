@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { Paciente } from 'src/app/classes/paciente';
 import { Especialista } from 'src/app/classes/especialista';
 import { Administrador } from 'src/app/classes/administrador';
+import { IDropdownSettings } from 'ng-multiselect-dropdown';
 
 @Component({
   selector: 'app-admin-register',
@@ -17,6 +18,9 @@ export class AdminRegisterComponent implements OnInit {
   formGroup : FormGroup | any;
   perfil : string = '';
   loading: boolean = false;
+
+  //Select multiple
+  dropdownSettings: IDropdownSettings = {};
 
   //Sección imágenes
   imagenes : any[] = [];
@@ -34,7 +38,7 @@ export class AdminRegisterComponent implements OnInit {
       'dni' : ['', [Validators.required, Validators.pattern('[0-9]+'), Validators.min(1), Validators.max(99999999)]],
       'mail' : ['', [Validators.required, Validators.email]],
       'password' : ['', [Validators.required, Validators.minLength(6), Validators.maxLength(20)]],
-      'especialidad' : ['', Validators.required],
+      'especialidad' : [[], Validators.required],
       'obraSocial' : ['', Validators.required],
       'fotoUno' : ['', Validators.required],
       'fotoDos' : ['', Validators.required],
@@ -59,9 +63,13 @@ export class AdminRegisterComponent implements OnInit {
       this.loading = true;
       //Cargo la lista de ESPECIALIDADES vigentes desde Firebase
       this.db.getCollection('especialidad').then( (ref:any) => ref.subscribe((listadoRef:any) => {
-        listadoRef.forEach((element : any) => {
-          this.especialidades.push(element.payload.doc.data());
+        this.especialidades = listadoRef.map((especialidad : any)=>{
+          return especialidad.payload.doc.data()
         });
+        this.dropdownSettings = {
+          idField: 'nombre',
+          textField: 'nombre'
+        };
         this.loading = false;
       }));
       this.formGroup.controls['obraSocial'].setValue('ninguna'); //Se setea un valor para pasar la validación del form

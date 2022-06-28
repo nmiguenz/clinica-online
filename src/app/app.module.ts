@@ -14,7 +14,6 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { HttpClientModule } from '@angular/common/http';
 import { environment } from '../environments/environment';
 import { MisTurnosComponent } from './pages/mis-turnos/mis-turnos.component';
-import { TurnosComponent } from './pages/turnos/turnos.component';
 import { SolicitarTurnoComponent } from './pages/solicitar-turno/solicitar-turno.component';
 import { MiPerfilComponent } from './pages/mi-perfil/mi-perfil.component';
 import { TurnosPacienteComponent } from './components/turnos-paciente/turnos-paciente.component';
@@ -23,7 +22,10 @@ import { TablaTurnosComponent } from './components/tabla-turnos/tabla-turnos.com
 import { DetalleTurnoComponent } from './components/detalle-turno/detalle-turno.component';
 import { AltaTurnoComponent } from './components/alta-turno/alta-turno.component';
 import { LoadingGeneralComponent } from './components/loading-general/loading-general.component';
-
+import { NgxCaptchaModule } from 'ngx-captcha';
+import { FiltroMisturnosPacientePipe } from './pipes/filtro-misturnos-paciente.pipe';
+import { FiltroMisturnosEspecialistaPipe } from './pipes/filtro-misturnos-especialista.pipe';
+import { MisHorariosComponent } from './components/mis-horarios/mis-horarios.component';
 
 
 @NgModule({
@@ -31,7 +33,6 @@ import { LoadingGeneralComponent } from './components/loading-general/loading-ge
     AppComponent,
     NavbarComponent,
     MisTurnosComponent,
-    TurnosComponent,
     SolicitarTurnoComponent,
     MiPerfilComponent,
     TurnosPacienteComponent,
@@ -40,6 +41,9 @@ import { LoadingGeneralComponent } from './components/loading-general/loading-ge
     DetalleTurnoComponent,
     AltaTurnoComponent,
     LoadingGeneralComponent,
+    FiltroMisturnosPacientePipe,
+    FiltroMisturnosEspecialistaPipe,
+    MisHorariosComponent,
   ],
   imports: [
     BrowserModule,
@@ -48,7 +52,8 @@ import { LoadingGeneralComponent } from './components/loading-general/loading-ge
     AppRoutingModule,
     HttpClientModule,
     AngularFireModule.initializeApp(environment.firebase),
-    AngularFirestoreModule
+    AngularFirestoreModule,
+    NgxCaptchaModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
