@@ -17,7 +17,7 @@ export class MisHorariosComponent implements OnInit {
   tiempoEspecialidad : string = '';
 
   formHorarios : FormGroup | any;
-  diasSemana = ['domingo', 'lunes','martes','miercoles','jueves','viernes','sabado'];
+  diasSemana = ['domingo', 'lunes','martes','miércoles','jueves','viernes','sábado'];
 
   listaEspecialidades : any[] = [];
   listaDiasEspecialidad : any[] = [];

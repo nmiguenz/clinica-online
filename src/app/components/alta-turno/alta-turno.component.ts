@@ -5,8 +5,8 @@ import { Especialista } from 'src/app/classes/especialista';
 import { Paciente } from 'src/app/classes/paciente';
 import { EstadoTurno, Turno } from 'src/app/classes/turno';
 import { FirestoreDbService } from 'src/app/services/firestore-db.service';
-import { Console } from 'console';
 import { Time } from '@angular/common';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-alta-turno',
@@ -17,6 +17,7 @@ export class AltaTurnoComponent implements OnInit {
   formGroup : FormGroup | any;
   filter = '';
   tipoUsuario = ''
+  turnoSeleccionado: any;
 
   //Spinner
   loading : boolean = false;
@@ -32,7 +33,7 @@ export class AltaTurnoComponent implements OnInit {
   especialistaSeleccionado : Especialista | any;
   especialidadSeleccionado : any;
 
-  constructor(private db : FirestoreDbService, private auth : AuthService, private fb : FormBuilder) {
+  constructor(private db : FirestoreDbService, private auth : AuthService, private fb : FormBuilder, private datepipe: DatePipe,) {
 
     this.pacienteLoggeado = this.auth.usuarioLogueado;
     console.log(this.pacienteLoggeado);
@@ -147,7 +148,7 @@ export class AltaTurnoComponent implements OnInit {
   }
 
   async getDisponibilidadAtencion( especialidad : string) {
-    let diasSemanales = ["domingo","lunes","martes","miércoles","jueves","viernes","sábado"];
+    let diasSemanales = ["domingo","lunes","martes","miercoles","jueves","viernes","sabado"];
     await this.db.getDisponibilidadesByEspecialistaEspecialidad(this.especialistaSeleccionado.dni, especialidad)
     .subscribe((ref:any)=>{
       let horarios = ref[0].payload.doc.data();
@@ -156,6 +157,7 @@ export class AltaTurnoComponent implements OnInit {
 
       //Cada una de los días de atención semanal
       diasHorariosAtencion.diaHorario.forEach((datosDiaAtencion:any) => {
+        console.log(datosDiaAtencion);
         let primerDia = new Date();
         let ultimoDia = new Date();
         let desde = this.extractTime(datosDiaAtencion.desde);
@@ -183,10 +185,10 @@ export class AltaTurnoComponent implements OnInit {
           if (diasSemanales[primerDia.getDay()] == datosDiaAtencion.dia){
             i++;
             if(i == 1){
-              primerDiaTurno = primerDia;
+              primerDiaTurno = new Date(primerDia);
               this.listadoTurnosDisponibles.push(primerDiaTurno);
 
-              ultimoTurno.setDate(primerDiaTurno.getDate());
+              ultimoTurno = new Date(primerDiaTurno);
               ultimoTurno.setHours(hasta.hours);
               ultimoTurno.setMinutes(hasta.minutes);
               ultimoTurno.setSeconds(0);
@@ -194,16 +196,15 @@ export class AltaTurnoComponent implements OnInit {
 
               while (primerDiaTurno < ultimoTurno){
                 primerDiaTurno.setMinutes(primerDiaTurno.getMinutes() + diasHorariosAtencion.duracion);
-                this.listadoTurnosDisponibles.push(primerDiaTurno);
+                this.listadoTurnosDisponibles.push(new Date(primerDiaTurno));
               }
             }
             else if(i == 2){
-              segundoDiaTurno = primerDia;
+              segundoDiaTurno = new Date(primerDia);
               segundoDiaTurno.setHours(desde.hours);
               this.listadoTurnosDisponibles.push(segundoDiaTurno);
 
               let ultimoTurnoDos = new Date(segundoDiaTurno); //Variable para definir el último del día
-              // ultimoTurnoDos.setDate(segundoDiaTurno.getDate());
               ultimoTurnoDos.setHours(hasta.hours);
               ultimoTurnoDos.setMinutes(hasta.minutes);
               ultimoTurnoDos.setSeconds(0);
@@ -211,16 +212,16 @@ export class AltaTurnoComponent implements OnInit {
 
               while (segundoDiaTurno < ultimoTurnoDos){
                 segundoDiaTurno.setMinutes(segundoDiaTurno.getMinutes() + diasHorariosAtencion.duracion);
-                this.listadoTurnosDisponibles.push(segundoDiaTurno);
+                this.listadoTurnosDisponibles.push(new Date(segundoDiaTurno));
+                console.log(segundoDiaTurno);
               }
             }
             else{
-              tercerDiaTurno = primerDia;
+              tercerDiaTurno = new Date(primerDia);
               tercerDiaTurno.setHours(desde.hours);
               this.listadoTurnosDisponibles.push(tercerDiaTurno);
 
               let ultimoTurnoTres = new Date(tercerDiaTurno); //Variable para definir el último del día
-              // ultimoTurnoDos.setDate(tercerDiaTurno.getDate());
               ultimoTurnoTres.setHours(hasta.hours);
               ultimoTurnoTres.setMinutes(hasta.minutes);
               ultimoTurnoTres.setSeconds(0);
@@ -228,7 +229,8 @@ export class AltaTurnoComponent implements OnInit {
 
               while (tercerDiaTurno < ultimoTurnoTres){
                 tercerDiaTurno.setMinutes(tercerDiaTurno.getMinutes() + diasHorariosAtencion.duracion);
-                this.listadoTurnosDisponibles.push(tercerDiaTurno);
+                this.listadoTurnosDisponibles.push(new Date(tercerDiaTurno));
+                console.log(tercerDiaTurno);
               }
             }
           }
@@ -236,12 +238,36 @@ export class AltaTurnoComponent implements OnInit {
         }
       });
       // Fin de las atenciones semanales
+      this.borrarTurnosReservados();
     });
   }
 
   extractTime(time: string): Time {
     const [h, m] = time.split(':');
     return { hours: +h, minutes: +m };
+  }
+
+  seleccionarTurno(turno: Date) {
+    this.turnoSeleccionado = turno;
+    this.formGroup.controls['fecha'].setValue(this.datepipe.transform(turno, 'yyyy-MM-dd HH:mm'));
+  }
+
+  borrarTurnosReservados() {
+    this.db.getCollectionByField('turnos','==','datosEspecialista.dni', this.especialistaSeleccionado.dni)
+    .then((res: any) => {
+      console.log(res);
+      let miSuscription = res.subscribe((turnos:any) =>{
+        console.log(turnos)
+        for (let index = 0; index < turnos.length; index++) {
+          let turno: Turno = turnos[index];
+          this.listadoTurnosDisponibles.splice(this.listadoTurnosDisponibles.findIndex(item => (item.getTime() == new Date(turno.fecha).getTime() && (turno.estado == EstadoTurno.pendiente || turno.estado == EstadoTurno.aceptado || turno.estado == EstadoTurno.finalizado))), 1);
+        }
+        //Ordeno la lista por fecha!!!
+        this.listadoTurnosDisponibles.sort((val1, val2) => { return val1.getTime() - val2.getTime() })
+        miSuscription.unsubscribe();
+      })
+    })
+    .catch(error=> console.log(error));
   }
 
 }

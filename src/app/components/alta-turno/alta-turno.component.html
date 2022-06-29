@@ -71,7 +71,7 @@
 
                 <div class="col-md-6 mb-4">
                   <div class="form-floating">
-                    <input type="text" class="form-control" id="Especialista" placeholder="name@example.com" formControlName="especialista">
+                    <input type="text" class="form-control" id="Especialista" placeholder="name@example.com" formControlName="especialista" readonly>
                     <label for="Especialista">Especialista</label>
                     <span class="text-danger" *ngIf="formGroup.get('especialista')?.hasError('required') && formGroup.get('especialista')?.touched">El especialista es requerido.</span>
                     <!-- <span class="text-danger" *ngIf="formGroup.get('especialista')?.hasError('pattern')">Complete solo con letras.</span> -->
@@ -80,7 +80,7 @@
 
                 <div class="col-md-6 mb-4">
                   <div class="form-floating">
-                    <input type="text" class="form-control" id="especialidad" placeholder="name@example.com" formControlName="especialidad">
+                    <input type="text" class="form-control" id="especialidad" placeholder="name@example.com" formControlName="especialidad" readonly>
                     <label for="especialidad">Especialidad</label>
                     <span class="text-danger" *ngIf="formGroup.get('especialidad')?.hasError('required') && formGroup.get('especialidad')?.touched">La especialidad es requerida.</span>
                     <span class="text-danger" *ngIf="formGroup.get('especialidad')?.hasError('pattern')">Complete solo con letras.</span>
@@ -102,7 +102,7 @@
 
                 <div class="col-md-6 mb-4">
                   <div class="form-floating">
-                    <input type="date" class="form-control" id="fecha" placeholder="20-06-2022" formControlName="fecha">
+                    <input type="text" class="form-control" id="fecha" placeholder="20-06-2022" formControlName="fecha" readonly>
                     <label for="fecha">Fechas</label>
                     <span class="text-danger" *ngIf="formGroup.get('fecha')?.hasError('fecha') && formGroup.get('fecha')?.touched">La fecha es requerida.</span>
                   </div>
@@ -112,18 +112,33 @@
 
               <!-- Email input -->
               <div class="form-floating mb-4">
-                <label for="turnos">Turnos disponibles</label>
+                <h5 class="mb-3">Turnos disponibles</h5>
 
                 <div class="row">
-                    <div class="col-sm-6">
-                        <br>
-                        <li class="d-inline-block" *ngFor="let turno of listadoTurnosDisponibles">
-                            <button class="btn btn-secondary btn-sm" type="button"
-                                style="border-radius: 2px;">
-                                <p> {{turno}}</p>
-                            </button>
-                        </li>
-                    </div>
+
+                    <!-- <br>
+                    <li class="d-inline-block col-3 mb-1 me-1" *ngFor="let turno of listadoTurnosDisponibles">
+                        <button class="btn btn-secondary " type="button"
+                            style="font-size: 11px !important;">
+                            <p> {{turno | date:'d/M/yy, H:mm '}}</p>
+                        </button>
+                    </li> -->
+
+                    <table class="table table-striped table-hover mb-3">
+                      <thead>
+                        <tr>
+                          <th scope="col">Fecha</th>
+                          <th scope="col">Hora</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let turno of listadoTurnosDisponibles" (click)="seleccionarTurno(turno)">
+                          <th scope="row">{{turno | date:'d/M/yyyy'}}</th>
+                          <td>{{turno | date:'h:mm a'}}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+
                 </div>
 
               </div>
