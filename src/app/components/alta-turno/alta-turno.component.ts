@@ -98,13 +98,13 @@ export class AltaTurnoComponent implements OnInit {
     // this.listaEspecialidadFiltrada = this.filtroUnicoEspecialidad(especialista.especialidad);
     //fin filtro de especialidad
     this.listaEspecialidad= this.especialistaSeleccionado.especialidad;
-    console.log(this.listaEspecialidad);
   }
 
   seleccionarEspecialidad(espe : string){
     this.tipoUsuario = 'peciente';
     this.filter = '';
     this.formGroup.controls.especialidad.setValue(espe);
+    this.listadoTurnosDisponibles = [];
     this.getDisponibilidadAtencion(espe);
   }
 
@@ -146,9 +146,9 @@ export class AltaTurnoComponent implements OnInit {
     this.formGroup.controls.paciente.setValue(this.pacienteLoggeado.nombre + ' ' + this.pacienteLoggeado.apellido);
   }
 
-  getDisponibilidadAtencion( especialidad : string) {
+  async getDisponibilidadAtencion( especialidad : string) {
     let diasSemanales = ["domingo","lunes","martes","miércoles","jueves","viernes","sábado"];
-    this.db.getDisponibilidadesByEspecialistaEspecialidad(this.especialistaSeleccionado.dni, especialidad)
+    await this.db.getDisponibilidadesByEspecialistaEspecialidad(this.especialistaSeleccionado.dni, especialidad)
     .subscribe((ref:any)=>{
       let horarios = ref[0].payload.doc.data();
       horarios['id'] = ref[0].payload.doc.id;
@@ -192,11 +192,8 @@ export class AltaTurnoComponent implements OnInit {
               ultimoTurno.setSeconds(0);
               ultimoTurno.setMilliseconds(0);
 
-              console.log('primero',primerDia)
-
               while (primerDiaTurno < ultimoTurno){
                 primerDiaTurno.setMinutes(primerDiaTurno.getMinutes() + diasHorariosAtencion.duracion);
-                console.log(primerDiaTurno);
                 this.listadoTurnosDisponibles.push(primerDiaTurno);
               }
             }
@@ -205,38 +202,34 @@ export class AltaTurnoComponent implements OnInit {
               segundoDiaTurno.setHours(desde.hours);
               this.listadoTurnosDisponibles.push(segundoDiaTurno);
 
-              let ultimoTurnoDos = new Date(); //Variable para definir el último del día
-              ultimoTurnoDos.setDate(segundoDiaTurno.getDate());;
+              let ultimoTurnoDos = new Date(segundoDiaTurno); //Variable para definir el último del día
+              // ultimoTurnoDos.setDate(segundoDiaTurno.getDate());
               ultimoTurnoDos.setHours(hasta.hours);
               ultimoTurnoDos.setMinutes(hasta.minutes);
               ultimoTurnoDos.setSeconds(0);
               ultimoTurnoDos.setMilliseconds(0);
-              console.log('primero',segundoDiaTurno)
-              console.log('primero',ultimoTurnoDos)
 
               while (segundoDiaTurno < ultimoTurnoDos){
-                console.log('entro');
                 segundoDiaTurno.setMinutes(segundoDiaTurno.getMinutes() + diasHorariosAtencion.duracion);
-                console.log(segundoDiaTurno);
                 this.listadoTurnosDisponibles.push(segundoDiaTurno);
               }
             }
             else{
               tercerDiaTurno = primerDia;
-              ultimoTurno = tercerDiaTurno;
+              tercerDiaTurno.setHours(desde.hours);
+              this.listadoTurnosDisponibles.push(tercerDiaTurno);
 
-              let ultimoTurnoTres = new Date(); //Variable para definir el último del día
-              // ultimoTurno.setDate(tercerDiaTurno.getDate());
-              ultimoTurno.setHours(hasta.hours);
-              ultimoTurno.setMinutes(hasta.minutes);
-              ultimoTurno.setSeconds(0);
-              ultimoTurno.setMilliseconds(0);
+              let ultimoTurnoTres = new Date(tercerDiaTurno); //Variable para definir el último del día
+              // ultimoTurnoDos.setDate(tercerDiaTurno.getDate());
+              ultimoTurnoTres.setHours(hasta.hours);
+              ultimoTurnoTres.setMinutes(hasta.minutes);
+              ultimoTurnoTres.setSeconds(0);
+              ultimoTurnoTres.setMilliseconds(0);
 
-              // while (tercerDiaTurno < ultimoTurno){
-              //   tercerDiaTurno.setMinutes(tercerDiaTurno.getMinutes() + diasHorariosAtencion.duracion);
-              //   console.log(tercerDiaTurno);
-              //   this.listadoTurnosDisponibles.push(tercerDiaTurno);
-              // }
+              while (tercerDiaTurno < ultimoTurnoTres){
+                tercerDiaTurno.setMinutes(tercerDiaTurno.getMinutes() + diasHorariosAtencion.duracion);
+                this.listadoTurnosDisponibles.push(tercerDiaTurno);
+              }
             }
           }
           primerDia.setDate(primerDia.getDate() + 1);
@@ -244,7 +237,6 @@ export class AltaTurnoComponent implements OnInit {
       });
       // Fin de las atenciones semanales
     });
-    this.listadoTurnosDisponibles.forEach((element:any)=>console.log(element));
   }
 
   extractTime(time: string): Time {

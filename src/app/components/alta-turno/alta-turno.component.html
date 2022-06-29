@@ -112,10 +112,20 @@
 
               <!-- Email input -->
               <div class="form-floating mb-4">
-                <input type="" class="form-control" id="turnos" placeholder="name@example.com">
                 <label for="turnos">Turnos disponibles</label>
-                <!-- <span class="text-danger" *ngIf="formGroup.get('mail')?.hasError('required') && formGroup.get('mail')?.touched">El mail requerido.</span>
-                <span class="text-danger" *ngIf="formGroup.get('mail')?.hasError('email')">El formato del mail es incorrecto.</span> -->
+
+                <div class="row">
+                    <div class="col-sm-6">
+                        <br>
+                        <li class="d-inline-block" *ngFor="let turno of listadoTurnosDisponibles">
+                            <button class="btn btn-secondary btn-sm" type="button"
+                                style="border-radius: 2px;">
+                                <p> {{turno}}</p>
+                            </button>
+                        </li>
+                    </div>
+                </div>
+
               </div>
 
 
