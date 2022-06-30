@@ -73,3 +73,20 @@ img{
     margin-left: 23rem;
   }
 }
+
+.slide-right {
+  animation-duration: 1s ;
+  animation-name: slidein ;
+}
+
+@keyframes slidein {
+  from {
+    margin-left: 100rem;
+    width: 300%
+  }
+
+  to {
+    margin-left: 0rem;
+    width: 100%;
+  }
+}

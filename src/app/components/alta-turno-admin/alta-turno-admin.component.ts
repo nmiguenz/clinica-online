@@ -4,6 +4,8 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Paciente } from 'src/app/classes/paciente';
 import { Especialista } from 'src/app/classes/especialista';
 import { FirestoreDbService } from 'src/app/services/firestore-db.service';
+import { Time } from '@angular/common';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-alta-turno-admin',
@@ -14,7 +16,8 @@ export class AltaTurnoAdminComponent implements OnInit {
 
   formGroup : FormGroup | any;
   filter = '';
-  tipoUsuario = ''
+  tipoUsuario = '';
+  turnoSeleccionado: any;
 
   //Spinner
   @Output() eventoSpinner :  EventEmitter<any> = new EventEmitter<any>();
@@ -24,13 +27,14 @@ export class AltaTurnoAdminComponent implements OnInit {
   listaEspecialidad : any[] = [];
   listaEspecialidadFiltrada : any[] = [];
   listaPacientes : Paciente[] = [];
+  listadoTurnosDisponibles: Date[] = [];
 
   //Usuarios del turno
   especialistaSeleccionado : Especialista | any;
   especialidadSeleccionado : any;
   pacienteSeleccionado : Paciente | any;
 
-  constructor(private db : FirestoreDbService, private fb : FormBuilder) {
+  constructor(private db : FirestoreDbService, private fb : FormBuilder, private datepipe: DatePipe) {
 
     this.formGroup = this.fb.group({
       'especialista' : ['', [Validators.required]],
@@ -99,18 +103,21 @@ export class AltaTurnoAdminComponent implements OnInit {
     this.tipoUsuario = 'especialidad';
     this.filter = '';
 
-    //Filtro de especialidad
-    this.listaEspecialidadFiltrada = this.filtroUnicoEspecialidad(especialista.especialidad);
-    //fin filtro de especialidad
-
     this.formGroup.controls.especialista.setValue(especialista.nombre + ' ' + especialista.apellido);
     this.especialistaSeleccionado = especialista;
+
+    //Filtro de especialidad
+    // this.listaEspecialidadFiltrada = this.filtroUnicoEspecialidad(especialista.especialidad);
+    //fin filtro de especialidad
+    this.listaEspecialidad= this.especialistaSeleccionado.especialidad;
   }
 
   seleccionarEspecialidad(espe : string){
     this.tipoUsuario = 'peciente';
     this.filter = '';
     this.formGroup.controls.especialidad.setValue(espe);
+    this.listadoTurnosDisponibles = [];
+    this.getDisponibilidadAtencion(espe);
   }
 
   seleccionarPaciente(paciente : Paciente){
@@ -160,6 +167,134 @@ export class AltaTurnoAdminComponent implements OnInit {
   resetParametros(){
     this.tipoUsuario = '';
     this.formGroup.reset();
-
+    this.pacienteSeleccionado = null;
+    this.especialidadSeleccionado = null;
+    this.especialistaSeleccionado = null;
   }
+
+  async getDisponibilidadAtencion( especialidad : string) {
+    let diasSemanales = ["domingo","lunes","martes","miercoles","jueves","viernes","sabado"];
+    await this.db.getDisponibilidadesByEspecialistaEspecialidad(this.especialistaSeleccionado.dni, especialidad)
+    .subscribe((ref:any)=>{
+      this.lanzarSpinner(true);
+      let horarios = ref[0].payload.doc.data();
+      horarios['id'] = ref[0].payload.doc.id;
+      let diasHorariosAtencion = horarios;
+
+      //Cada una de los días de atención semanal
+      diasHorariosAtencion.diaHorario.forEach((datosDiaAtencion:any) => {
+        console.log(datosDiaAtencion);
+        let primerDia = new Date();
+        let ultimoDia = new Date();
+        let desde = this.extractTime(datosDiaAtencion.desde);
+        let hasta = this.extractTime(datosDiaAtencion.hasta);
+
+        //Seteo el horario de la primera atención
+        primerDia.setHours(desde.hours);
+        primerDia.setMinutes(desde.minutes);
+        primerDia.setSeconds(0);
+        primerDia.setMilliseconds(0);
+
+        //Seteo la última atención
+        ultimoDia.setDate(primerDia.getDate() + 15);
+
+        //Setea el dia de las atenciones
+        let primerDiaTurno = new Date();
+        let segundoDiaTurno = new Date();
+        let tercerDiaTurno = new Date();
+        let ultimoTurno = new Date(); //Variable para definir el último del día
+
+
+        let i = 0;
+
+        while (primerDia <= ultimoDia){
+          if (diasSemanales[primerDia.getDay()] == datosDiaAtencion.dia){
+            i++;
+            if(i == 1){
+              primerDiaTurno = new Date(primerDia);
+              this.listadoTurnosDisponibles.push(primerDiaTurno);
+
+              ultimoTurno = new Date(primerDiaTurno);
+              ultimoTurno.setHours(hasta.hours);
+              ultimoTurno.setMinutes(hasta.minutes);
+              ultimoTurno.setSeconds(0);
+              ultimoTurno.setMilliseconds(0);
+
+              while (primerDiaTurno < ultimoTurno){
+                primerDiaTurno.setMinutes(primerDiaTurno.getMinutes() + diasHorariosAtencion.duracion);
+                this.listadoTurnosDisponibles.push(new Date(primerDiaTurno));
+              }
+            }
+            else if(i == 2){
+              segundoDiaTurno = new Date(primerDia);
+              segundoDiaTurno.setHours(desde.hours);
+              this.listadoTurnosDisponibles.push(segundoDiaTurno);
+
+              let ultimoTurnoDos = new Date(segundoDiaTurno); //Variable para definir el último del día
+              ultimoTurnoDos.setHours(hasta.hours);
+              ultimoTurnoDos.setMinutes(hasta.minutes);
+              ultimoTurnoDos.setSeconds(0);
+              ultimoTurnoDos.setMilliseconds(0);
+
+              while (segundoDiaTurno < ultimoTurnoDos){
+                segundoDiaTurno.setMinutes(segundoDiaTurno.getMinutes() + diasHorariosAtencion.duracion);
+                this.listadoTurnosDisponibles.push(new Date(segundoDiaTurno));
+                console.log(segundoDiaTurno);
+              }
+            }
+            else{
+              tercerDiaTurno = new Date(primerDia);
+              tercerDiaTurno.setHours(desde.hours);
+              this.listadoTurnosDisponibles.push(tercerDiaTurno);
+
+              let ultimoTurnoTres = new Date(tercerDiaTurno); //Variable para definir el último del día
+              ultimoTurnoTres.setHours(hasta.hours);
+              ultimoTurnoTres.setMinutes(hasta.minutes);
+              ultimoTurnoTres.setSeconds(0);
+              ultimoTurnoTres.setMilliseconds(0);
+
+              while (tercerDiaTurno < ultimoTurnoTres){
+                tercerDiaTurno.setMinutes(tercerDiaTurno.getMinutes() + diasHorariosAtencion.duracion);
+                this.listadoTurnosDisponibles.push(new Date(tercerDiaTurno));
+                console.log(tercerDiaTurno);
+              }
+            }
+          }
+          primerDia.setDate(primerDia.getDate() + 1);
+        }
+      });
+      // Fin de las atenciones semanales
+      this.borrarTurnosReservados();
+      this.lanzarSpinner(false);
+    });
+  }
+
+  extractTime(time: string): Time {
+    const [h, m] = time.split(':');
+    return { hours: +h, minutes: +m };
+  }
+
+  seleccionarTurno(turno: Date) {
+    this.turnoSeleccionado = turno;
+    this.formGroup.controls['fecha'].setValue(this.datepipe.transform(turno, 'yyyy-MM-dd HH:mm'));
+  }
+
+  borrarTurnosReservados() {
+    this.db.getCollectionByField('turnos','==','datosEspecialista.dni', this.especialistaSeleccionado.dni)
+    .then((res: any) => {
+      console.log(res);
+      let miSuscription = res.subscribe((turnos:any) =>{
+        console.log(turnos)
+        for (let index = 0; index < turnos.length; index++) {
+          let turno: Turno = turnos[index];
+          this.listadoTurnosDisponibles.splice(this.listadoTurnosDisponibles.findIndex(item => (item.getTime() == new Date(turno.fecha).getTime() && (turno.estado == EstadoTurno.pendiente || turno.estado == EstadoTurno.aceptado || turno.estado == EstadoTurno.finalizado))), 1);
+        }
+        //Ordeno la lista por fecha!!!
+        this.listadoTurnosDisponibles.sort((val1, val2) => { return val1.getTime() - val2.getTime() })
+        miSuscription.unsubscribe();
+      })
+    })
+    .catch(error=> console.log(error));
+  }
+
 }

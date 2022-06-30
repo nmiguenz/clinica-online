@@ -4,6 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AltaTurnoComponent } from './components/alta-turno/alta-turno.component';
 import { MisTurnosComponent } from './pages/mis-turnos/mis-turnos.component';
 import { SolicitarTurnoComponent } from './pages/solicitar-turno/solicitar-turno.component';
+import { MisPacientesComponent } from './pages/mis-pacientes/mis-pacientes.component';
 
 const routes: Routes = [
   {
@@ -38,6 +39,10 @@ const routes: Routes = [
   {
     path: 'perfil',
     component: MiPerfilComponent
+  },
+  {
+    path: 'pacientes',
+    component: MisPacientesComponent
   },
   {
     path: '',

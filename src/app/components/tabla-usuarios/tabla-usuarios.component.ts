@@ -13,7 +13,7 @@ import { FirestoreDbService } from 'src/app/services/firestore-db.service';
 })
 export class TablaUsuariosComponent implements OnInit {
 
-  @Input() inputUsuarioSeleccionado : string = '';
+  @Input() inputUsuarioSeleccionado : string = 'paciente';
   @Output() seSeleccionoAdministrador: EventEmitter<any> = new EventEmitter<any>();
   @Output() seSeleccionoPaciente: EventEmitter<any> = new EventEmitter<any>();
   @Output() seSeleccionoEspecialista: EventEmitter<any> = new EventEmitter<any>();
@@ -34,7 +34,7 @@ export class TablaUsuariosComponent implements OnInit {
     this.db.getCollectionByField('usuarios','==','perfil','paciente')
     .then((ref:any) => ref.subscribe((arg:any) => {
       this.arrayPacientes = arg.map((element:any) => {
-          return element.diaHorario;
+          return element;
         });
     })
     ).catch(error => console.log(error));

@@ -13,7 +13,7 @@ import { Subscription } from 'rxjs';
 })
 export class BackOfficeComponent implements OnInit{
 
-  pantallaSeleccionada :  string = '';
+  pantallaSeleccionada :  string = 'seccionUsuario';
   adminUser : Administrador | any;
   loading : boolean = false;
   private authServiceSubscription: Subscription | undefined;

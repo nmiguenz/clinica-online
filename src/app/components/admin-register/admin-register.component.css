@@ -94,3 +94,20 @@ img{
     margin-right: 0;
   }
 }
+
+.slide-right2 {
+  animation-duration: 1.5s ;
+  animation-name: slidein2 ;
+}
+
+@keyframes slidein2 {
+  from {
+    margin-left: 100rem;
+    width: 300%
+  }
+
+  to {
+    margin-left: 0rem;
+    width: 100%;
+  }
+}

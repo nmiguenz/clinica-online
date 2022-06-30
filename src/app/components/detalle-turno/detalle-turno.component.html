@@ -166,12 +166,17 @@
           <h6 class="mb-3">Deje una reseña de su atención...</h6>
           <div class="form-floating mb-4">
             <input type="text" class="form-control" id="resenia" formControlName="resenia">
-            <label for="resenia">Resenia</label>
+            <label for="resenia">Reseña</label>
             <span class="text-danger" *ngIf="formFinalizar.get('resenia')?.hasError('resenia') && formFinalizar.get('comentario')?.touched">La reseña de la atención brindada es obligatorio.</span>
           </div>
-          <!-- Falta la historia clínica -->
+
+          <div class="mb-3">
+            <app-historia-clinica [pacienteInput]="turnoSeleccionado.datosPaciente" [especialistaInput]="turnoSeleccionado.datosEspecialista"></app-historia-clinica>
+          </div>
+
           <button class="btn btn-primary btn-md" [disabled]="formFinalizar.invalid"
               type="submit">Finalizar turno</button>
+          <!-- Falta la historia clínica -->
         </form>
 
         <!-- Ver reseña CAMPOS -->

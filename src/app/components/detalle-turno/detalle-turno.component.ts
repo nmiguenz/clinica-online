@@ -138,11 +138,11 @@ export class DetalleTurnoComponent implements OnInit {
   mostrarFinalizarAtencion(){
     if (this.finalizado == false) {
       this.finalizado = true;
-      this.mensajerechazar = "Cerrar";
+      this.mensajefinalizar = "Cerrar";
     }
     else {
       this.finalizado = false;
-      this.mensajerechazar = "Finalizar Atención";
+      this.mensajefinalizar = "Finalizar Atención";
     }
   }
 

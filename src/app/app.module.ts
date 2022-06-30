@@ -26,6 +26,14 @@ import { NgxCaptchaModule } from 'ngx-captcha';
 import { FiltroMisturnosPacientePipe } from './pipes/filtro-misturnos-paciente.pipe';
 import { FiltroMisturnosEspecialistaPipe } from './pipes/filtro-misturnos-especialista.pipe';
 import { MisHorariosComponent } from './components/mis-horarios/mis-horarios.component';
+import { FiltrarEspecialistaPipe } from './pipes/filtrar-especialista.pipe';
+import { HistoriaClinicaComponent } from './components/historia-clinica/historia-clinica.component';
+import { MisPacientesComponent } from './pages/mis-pacientes/mis-pacientes.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatButtonModule } from '@angular/material/button';
+import { DetallaHistoriaClinicaComponent } from './components/detalla-historia-clinica/detalla-historia-clinica.component';
+import { HighlightDirective } from './directives/highlight.directive';
+
 
 
 @NgModule({
@@ -44,6 +52,11 @@ import { MisHorariosComponent } from './components/mis-horarios/mis-horarios.com
     FiltroMisturnosPacientePipe,
     FiltroMisturnosEspecialistaPipe,
     MisHorariosComponent,
+    FiltrarEspecialistaPipe,
+    HistoriaClinicaComponent,
+    MisPacientesComponent,
+    DetallaHistoriaClinicaComponent,
+    HighlightDirective,
   ],
   imports: [
     BrowserModule,
@@ -54,6 +67,8 @@ import { MisHorariosComponent } from './components/mis-horarios/mis-horarios.com
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
     NgxCaptchaModule,
+    BrowserAnimationsModule,
+    MatButtonModule
   ],
   providers: [DatePipe],
   bootstrap: [AppComponent]

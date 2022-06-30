@@ -33,10 +33,9 @@ export class AltaTurnoComponent implements OnInit {
   especialistaSeleccionado : Especialista | any;
   especialidadSeleccionado : any;
 
-  constructor(private db : FirestoreDbService, private auth : AuthService, private fb : FormBuilder, private datepipe: DatePipe,) {
+  constructor(private db : FirestoreDbService, private auth : AuthService, private fb : FormBuilder, private datepipe: DatePipe) {
 
     this.pacienteLoggeado = this.auth.usuarioLogueado;
-    console.log(this.pacienteLoggeado);
 
     this.formGroup = this.fb.group({
       'especialista' : ['', [Validators.required]],
@@ -75,7 +74,7 @@ export class AltaTurnoComponent implements OnInit {
     .catch(error=>console.log(error));
   }
 
-   //Filtro las especialidades seg�n las que tiene el especialista
+   //Filtro las especialidades según las que tiene el especialista
   // Devuelve un array con las especialidades
   filtroUnicoEspecialidad(speciality : string){
     const lista = this.listaEspecialidad.filter( especialidad => {
@@ -95,15 +94,13 @@ export class AltaTurnoComponent implements OnInit {
     this.formGroup.controls.especialista.setValue(especialista.nombre + ' ' + especialista.apellido);
     this.especialistaSeleccionado = especialista;
 
-    //Filtro de especialidad
-    // this.listaEspecialidadFiltrada = this.filtroUnicoEspecialidad(especialista.especialidad);
-    //fin filtro de especialidad
     this.listaEspecialidad= this.especialistaSeleccionado.especialidad;
   }
 
   seleccionarEspecialidad(espe : string){
     this.tipoUsuario = 'peciente';
     this.filter = '';
+    this.especialidadSeleccionado = espe;
     this.formGroup.controls.especialidad.setValue(espe);
     this.listadoTurnosDisponibles = [];
     this.getDisponibilidadAtencion(espe);
@@ -144,6 +141,7 @@ export class AltaTurnoComponent implements OnInit {
   resetParametros(){
     this.tipoUsuario = '';
     this.formGroup.reset();
+    this.especialidadSeleccionado = null;
     this.formGroup.controls.paciente.setValue(this.pacienteLoggeado.nombre + ' ' + this.pacienteLoggeado.apellido);
   }
 
@@ -151,6 +149,7 @@ export class AltaTurnoComponent implements OnInit {
     let diasSemanales = ["domingo","lunes","martes","miercoles","jueves","viernes","sabado"];
     await this.db.getDisponibilidadesByEspecialistaEspecialidad(this.especialistaSeleccionado.dni, especialidad)
     .subscribe((ref:any)=>{
+      this.loading = true;
       let horarios = ref[0].payload.doc.data();
       horarios['id'] = ref[0].payload.doc.id;
       let diasHorariosAtencion = horarios;
@@ -239,6 +238,7 @@ export class AltaTurnoComponent implements OnInit {
       });
       // Fin de las atenciones semanales
       this.borrarTurnosReservados();
+      this.loading = false;
     });
   }
 

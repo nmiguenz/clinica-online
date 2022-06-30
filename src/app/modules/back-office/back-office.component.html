@@ -91,7 +91,7 @@
     <hr>
     <div class="dropdown">
       <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-        <img [src]="adminUser.fotoUno" alt="Foto admin" width="32" height="32" class="rounded-circle me-2">
+        <img [src]="adminUser?.fotoUno" alt="Foto admin" width="32" height="32" class="rounded-circle me-2">
         <strong>{{adminUser.nombre}} {{adminUser.apellido}}</strong>
       </a>
       <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
@@ -104,8 +104,8 @@
 
   <div class="b-example-divider"></div>
     <div class="container mt-3">
-      <app-seccion-usuario *ngIf="pantallaSeleccionada == 'seccionUsuario'"></app-seccion-usuario>
-      <app-admin-register *ngIf="pantallaSeleccionada == 'seccionUsuario'"></app-admin-register>
+      <app-seccion-usuario class="slide-right" *ngIf="pantallaSeleccionada == 'seccionUsuario'"></app-seccion-usuario>
+      <app-admin-register class="slide-right2" *ngIf="pantallaSeleccionada == 'seccionUsuario'"></app-admin-register>
       <app-alta-turno-admin (eventoSpinner)="obtenerEstadoSpinner($event)" *ngIf="pantallaSeleccionada == 'solicitarTurno'"></app-alta-turno-admin>
       <app-mi-perfil-admin [usuario]="adminUser"  *ngIf="pantallaSeleccionada == 'miperfil'"></app-mi-perfil-admin>
       <app-turnos *ngIf="pantallaSeleccionada == 'turnos'"></app-turnos>

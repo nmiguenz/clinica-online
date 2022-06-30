@@ -3,9 +3,16 @@
 }
 
 img{
-  height: 20rem;
+  height: 15rem;
 }
 
 tbody{
   cursor: pointer;
+}
+
+.lupa{
+  position: absolute;
+  margin-top: -32px;
+  margin-left: -32px;
+  font-size: 1.2rem;
 }

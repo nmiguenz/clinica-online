@@ -1,7 +1,4 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Administrador } from 'src/app/classes/administrador';
-import { Especialista } from 'src/app/classes/especialista';
-import { Paciente } from 'src/app/classes/paciente';
 
 @Component({
   selector: 'app-seccion-usuario',
@@ -10,9 +7,6 @@ import { Paciente } from 'src/app/classes/paciente';
 })
 export class SeccionUsuarioComponent implements OnInit {
 
-  // administrador: Administrador | any;
-  // paciente: Paciente | any;
-  // especialista: Especialista | any;
   perfil : string = '';
 
   constructor() { }

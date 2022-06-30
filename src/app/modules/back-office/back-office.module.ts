@@ -16,6 +16,7 @@ import { NgxCaptchaModule } from 'ngx-captcha';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { TurnosComponent } from 'src/app/pages/turnos/turnos.component';
 import { TablaTurnosAdminComponent } from 'src/app/components/tabla-turnos-admin/tabla-turnos-admin.component';
+import { FiltrarEspePacienteAdminPipe } from 'src/app/pipes/filtrar-espe-paciente-admin.pipe';
 
 
 @NgModule({
@@ -30,7 +31,8 @@ import { TablaTurnosAdminComponent } from 'src/app/components/tabla-turnos-admin
     TurnosComponent,
     TablaTurnosAdminComponent,
     DetalleTurnoAdminComponent,
-    FiltroTurnosPipe
+    FiltroTurnosPipe,
+    FiltrarEspePacienteAdminPipe
   ],
   imports: [
     CommonModule,

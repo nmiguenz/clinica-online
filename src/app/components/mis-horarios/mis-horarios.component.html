@@ -23,7 +23,7 @@
           </div>
 
           <ol class="list-group list-group-light list-group-numbered">
-            <li class="list-group-item" (click)="seleccionarEspecialidad(especialidad)"
+            <li appHighlight class="list-group-item" (click)="seleccionarEspecialidad(especialidad)"
             *ngFor="let especialidad of listaEspecialidades">
             <span style="text-transform: capitalize;">{{especialidad.nombre}}</span></li>
 

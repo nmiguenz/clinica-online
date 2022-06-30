@@ -1,0 +1,130 @@
+<div class="card signin-content py-4 shadow-lg p-3 mb-2 bg-body rounded-4 d-flex">
+
+  <div class="row align-items-center" >
+    <div class="signin-form py-4 px-5 text-align-start opacity-100">
+      <h1 class="fw-bold mb-4">Historia Clínica</h1>
+      <form [formGroup]="formGroup" (submit)="altaHistoria()">
+        <!-- 2 column grid layout with text inputs for the first and last names -->
+
+        <div class="form-floating mb-4">
+          <input type="text" class="form-control" id="paciente" placeholder="name@example.com" formControlName="paciente" readonly ngModel="{{pacienteInput.nombre}} {{pacienteInput.apellido}}">
+          <label for="paciente">Paciente</label>
+          <span class="text-danger" *ngIf="formGroup.get('paciente')?.hasError('required') && formGroup.get('paciente')?.touched">Nombre requerido.</span>
+        </div>
+
+        <div class="row">
+
+          <div class="col-md-6 mb-4">
+            <div class="form-floating">
+              <input type="text" class="form-control" id="altura" placeholder="name@example.com" formControlName="altura">
+              <label for="altura">Altura</label>
+              <span class="text-danger" *ngIf="formGroup.get('altura')?.hasError('required') && formGroup.get('altura')?.touched">Apellido requerido.</span>
+            </div>
+          </div>
+
+          <div class="col-md-6 mb-4">
+            <div class="form-floating">
+              <input type="text" class="form-control" id="peso" formControlName="peso" placeholder="name@example.com" >
+              <label for="edad">Peso</label>
+              <span class="text-danger" *ngIf="formGroup.get('peso')?.hasError('required') && formGroup.get('peso')?.touched">Edad requerida.</span>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="row">
+
+          <div class="col-md-6 mb-4">
+            <div class="form-floating">
+              <input type="text" class="form-control" id="temperatura" formControlName="temperatura" placeholder="name@example.com">
+              <label for="temperatura">Temperatura</label>
+              <span class="text-danger" *ngIf="formGroup.get('temperatura')?.hasError('required') && formGroup.get('temperatura')?.touched">DNI requerido.</span>
+            </div>
+          </div>
+
+          <div class="col-md-6 mb-4">
+            <div class="form-floating">
+              <input type="text" class="form-control" id="presion" placeholder="name@example.com" formControlName="presion">
+              <label for="presion">Presion</label>
+              <span class="text-danger" *ngIf="formGroup.get('presion')?.hasError('required') && formGroup.get('presion')?.touched">Nombre requerido.</span>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="row">
+
+          <div class="col-md-6 mb-4">
+            <div class="form-floating">
+              <input type="text" class="form-control" id="clave1" formControlName="clave1" placeholder="name@example.com">
+              <label for="clave1">Observación UNO</label>
+              <span class="text-danger" *ngIf="formGroup.get('clave1')?.hasError('required') && formGroup.get('clave1')?.touched">DNI requerido.</span>
+            </div>
+          </div>
+
+          <div class="col-md-6 mb-4">
+            <div class="form-floating">
+              <input type="text" class="form-control" id="valor1" placeholder="name@example.com" formControlName="valor1">
+              <label for="valor1">Valor</label>
+              <span class="text-danger" *ngIf="formGroup.get('valor1')?.hasError('required') && formGroup.get('valor1')?.touched">Nombre requerido.</span>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="row">
+
+          <div class="col-md-6 mb-4">
+            <div class="form-floating">
+              <input type="text" class="form-control" id="clave2" formControlName="clave2" placeholder="name@example.com">
+              <label for="clave2">Observación DOS</label>
+              <span class="text-danger" *ngIf="formGroup.get('clave2')?.hasError('required') && formGroup.get('clave2')?.touched">DNI requerido.</span>
+            </div>
+          </div>
+
+          <div class="col-md-6 mb-4">
+            <div class="form-floating">
+              <input type="text" class="form-control" id="valor2" placeholder="name@example.com" formControlName="valor2">
+              <label for="valor2">Valor</label>
+              <span class="text-danger" *ngIf="formGroup.get('valor2')?.hasError('required') && formGroup.get('valor2')?.touched">Nombre requerido.</span>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="row">
+
+          <div class="col-md-6 mb-4">
+            <div class="form-floating">
+              <input type="text" class="form-control" id="clave3" formControlName="clave3" placeholder="name@example.com">
+              <label for="clave3">Observación TRES</label>
+              <span class="text-danger" *ngIf="formGroup.get('clave3')?.hasError('required') && formGroup.get('clave3')?.touched">DNI requerido.</span>
+            </div>
+          </div>
+
+          <div class="col-md-6 mb-4">
+            <div class="form-floating">
+              <input type="text" class="form-control" id="valor3" placeholder="name@example.com" formControlName="valor3">
+              <label for="valor3">Valor</label>
+              <span class="text-danger" *ngIf="formGroup.get('valor3')?.hasError('required') && formGroup.get('valor3')?.touched">Nombre requerido.</span>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Submit button -->
+        <button type="submit" class="btn btn-primary btn-block mb-4" [disabled]="!formGroup.valid" >
+          <!-- [disabled]="!formGroup.valid" -->
+          ENVIAR HISTORIA CLÍNICA
+        </button>
+
+      </form>
+
+    </div>
+
+
+
+  </div>
+
+</div>
+

@@ -2,6 +2,7 @@ import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { getStorage, ref, getDownloadURL, uploadBytes } from '@angular/fire/storage';
+import { EstadoTurno } from '../classes/turno';
 
 @Injectable({
   providedIn: 'root'
@@ -112,5 +113,17 @@ export class FirestoreDbService {
     return this.db.collection("horarios_especialidad", ref => ref.where('especialista.dni', '==', dniEspecialista).where('especialidad', '==', especialidad)).snapshotChanges();
   }
 
+  getTurnosFinalizadosByEspecialista(dni: number) {
+    return this.db.collection("turnos", ref => ref.where('datosEspecialista.dni', '==', dni).where('estado', '==', EstadoTurno.finalizado)).snapshotChanges();
+  }
+
+  //list = array de elementos de algun tipo. Similar a WHERE DATO IN ()
+  getByList(campoFiltro : string, list: any[]) {
+    return this.db.collection("usuarios", ref => ref.where(campoFiltro, "in", list)).snapshotChanges();
+  }
+
+  getHistoriasByEspecialistaPaciente(dniEspecialista: string, dniPaciente: string) {
+    return this.db.collection("historiaClinica", ref => ref.where('especialista.dni', '==', dniEspecialista).where('paciente.dni', '==', dniPaciente)).snapshotChanges();
+  }
 
 }

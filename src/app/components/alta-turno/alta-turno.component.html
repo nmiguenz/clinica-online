@@ -5,27 +5,26 @@
     <!-- Selección especialistas -->
     <div class="container d-flex justify-content-center align-items-center mb-3" *ngIf="tipoUsuario == ''">
       <div class="card signin-content py-4 shadow-lg p-3 mb-2 bg-body rounded-4 d-flex">
-        <h3 class="fw-bold mb-2">Seleccionar especialista</h3>
-
-        <div class="row">
-          <div class="col-md-4 mb-3">
-            <div class="form-floating">
-              <input type="text" class="form-control" id="filtroEspecialista" placeholder="name@example.com" [(ngModel)]="filter">
-              <label for="filtroEspecialista">Filtrar especialistas</label>
-            </div>
+        <div class="row d-flex justify-content-arround align-items-center mb-3">
+          <div class="col col-md-8">
+            <h3 class="fw-bold mb-2">Seleccionar especialista</h3>
           </div>
+
+          <div class="col col-md-4 text-end">
+            <input class="form-control" type="text" placeholder="Buscar por profesional" [(ngModel)]="filter">
+            <span class="lupa"><i class="bi bi-search"></i></span>
+          </div>
+
         </div>
 
         <div class="container d-flex justify-content-between mb-2">
-          <!-- <li class="d-inline-block" (click)="seleccionarEspecialista(especialista)"
-            *ngFor="let especialista of listaEspecialistas | filtroEspecialistas:filter"> -->
           <li class="d-inline-block" (click)="seleccionarEspecialista(especialista)"
-            *ngFor="let especialista of listaEspecialistas">
+            *ngFor="let especialista of listaEspecialistas | filtrarEspecialista:filter">
             <button type="button" style=" border-radius: 10px; background-image: url({{especialista.fotoUno}}); background-position: center;
               background-repeat: no-repeat;
               background-size: cover;
-              width: 10rem; height: 10rem;">
-              <p style="background-color: #ffff00c7; margin-top: 8rem; border-radius: 10px;"> {{especialista.nombre}} {{especialista.apellido}}</p>
+              width: 10rem; height: 7rem;">
+              <p style="background-color: #ffff00c7; margin-top: 5rem; border-radius: 10px;"> {{especialista.nombre}} {{especialista.apellido}}</p>
             </button>
           </li>
         </div>
@@ -48,8 +47,6 @@
         </div>
 
         <div class="container d-flex justify-content-between mb-2">
-          <!-- <li class="d-inline-block" (click)="seleccionarEspecialista(especialista)"
-            *ngFor="let especialista of listaEspecialistas | filtroEspecialistas:filter"> -->
           <li class="d-inline-block" (click)="seleccionarEspecialidad(especialidad.nombre)"
             *ngFor="let especialidad of listaEspecialidad">
             <button type="button" class="btn btn-primary btn-block">{{especialidad.nombre}}</button>
@@ -63,7 +60,7 @@
       <div class="card signin-content py-4 shadow-lg p-3 mb-2 bg-body rounded-4 d-flex">
 
         <div class="row align-items-center" >
-          <div class="signin-form col-md-7 py-4 px-5 text-align-start opacity-100">
+          <div class="signin-form col-md-8 py-4 px-5 text-align-start opacity-100">
             <h1 class="fw-bold mb-4">Solicitar Turno</h1>
             <form [formGroup]="formGroup" (submit)="altaTurno()">
               <!-- 2 column grid layout with text inputs for the first and last names -->
@@ -111,38 +108,18 @@
               </div>
 
               <!-- Email input -->
-              <div class="form-floating mb-4">
-                <h5 class="mb-3">Turnos disponibles</h5>
+              <div class="container d-flex mb-3" *ngIf="especialidadSeleccionado">
 
-                <div class="row">
-
-                    <!-- <br>
-                    <li class="d-inline-block col-3 mb-1 me-1" *ngFor="let turno of listadoTurnosDisponibles">
-                        <button class="btn btn-secondary " type="button"
-                            style="font-size: 11px !important;">
-                            <p> {{turno | date:'d/M/yy, H:mm '}}</p>
-                        </button>
-                    </li> -->
-
-                    <table class="table table-striped table-hover mb-3">
-                      <thead>
-                        <tr>
-                          <th scope="col">Fecha</th>
-                          <th scope="col">Hora</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr *ngFor="let turno of listadoTurnosDisponibles" (click)="seleccionarTurno(turno)">
-                          <th scope="row">{{turno | date:'d/M/yyyy'}}</th>
-                          <td>{{turno | date:'h:mm a'}}</td>
-                        </tr>
-                      </tbody>
-                    </table>
-
+                <div class="row justify-content-arround">
+                  <h5 class="mb-3 col-md-12 text-start">Turnos disponibles</h5>
+                    <div class="col-md-2 mb-1" *ngFor="let turno of listadoTurnosDisponibles" (click)="seleccionarTurno(turno)">
+                      <a class="btn btn-outline-primary">
+                        {{turno | date:'d/M/yyyy H:mm'}}
+                      </a>
+                    </div>
                 </div>
 
               </div>
-
 
               <!-- Submit button -->
               <button type="submit" class="btn btn-primary btn-block mb-4 " [disabled]="!formGroup.valid">
@@ -153,7 +130,7 @@
 
           </div>
 
-          <div class="alta-img col-md-5 py-5 text-lg-center">
+          <div class="alta-img col-md-4 py-5 text-lg-center">
             <img src="../../../assets/undraw_my_app_re_gxtj.svg"
             alt="" class="opacity-100"/>
           </div>
