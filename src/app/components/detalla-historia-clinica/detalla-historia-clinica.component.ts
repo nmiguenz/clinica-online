@@ -4,6 +4,10 @@ import { Component, Input, OnInit } from '@angular/core';
 import { HistoriaClinica } from 'src/app/classes/historia-clinica';
 import { FirestoreDbService } from 'src/app/services/firestore-db.service';
 
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
+
+
 @Component({
   selector: 'app-detalla-historia-clinica',
   templateUrl: './detalla-historia-clinica.component.html',
@@ -28,8 +32,18 @@ export class DetallaHistoriaClinicaComponent implements OnInit {
     });
   }
 
-  openPDF(){
-
+  public openPDF(): void {
+    let user = this.pacienteElegido.apellido;
+    let DATA: any = document.getElementById('htmlData');
+    html2canvas(DATA).then((canvas) => {
+      let fileWidth = 208;
+      let fileHeight = (canvas.height * fileWidth) / canvas.width;
+      const FILEURI = canvas.toDataURL('image/png');
+      let PDF = new jsPDF('p', 'mm', 'a4');
+      let position = 0;
+      PDF.addImage(FILEURI, 'PNG', 0, position, fileWidth, fileHeight);
+      PDF.save('historia_clinica_' + user +'.pdf');
+    });
   }
 
 }

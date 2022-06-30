@@ -21,6 +21,8 @@ export class LoginComponent implements OnInit {
   password: string = '';
   public adminFotoUrl: string = '';
   public pacienteFotoUrl: string = '';
+  public pacienteFotoUrl2: string = '';
+  public pacienteFotoUrl3: string = '';
   public especialistaFotoUrl: string = '';
   public especialistaDosFotoUrl: string = '';
 
@@ -42,6 +44,20 @@ export class LoginComponent implements OnInit {
     let paciente = this.db.getUser('usuarios','==','mail','relabuelo@gmail.com').subscribe((usuarios: any) => {
       if (usuarios[0] != null) {
         this.pacienteFotoUrl = usuarios[0].payload.doc.data().fotoUno;
+      }
+      paciente.unsubscribe();
+    });
+
+    let pacienteDos = this.db.getUser('usuarios','==','mail','nicolasmiguenz@hotmail.com').subscribe((usuarios: any) => {
+      if (usuarios[0] != null) {
+        this.pacienteFotoUrl2 = usuarios[0].payload.doc.data().fotoUno;
+      }
+      paciente.unsubscribe();
+    });
+
+    let pacienteTres = this.db.getUser('usuarios','==','mail','shibori.polonio@gmail.com').subscribe((usuarios: any) => {
+      if (usuarios[0] != null) {
+        this.pacienteFotoUrl3 = usuarios[0].payload.doc.data().fotoUno;
       }
       paciente.unsubscribe();
     });
@@ -142,9 +158,19 @@ export class LoginComponent implements OnInit {
     this.formGroup.controls.password.setValue("123456");
   }
 
-  cargarPaciente() {
+  cargarPaciente(pos : string) {
+    if(pos == '1'){
     this.formGroup.controls.mail.setValue("relabuelo@gmail.com");
     this.formGroup.controls.password.setValue("123456");
+    }
+    if(pos == '2'){
+      this.formGroup.controls.mail.setValue("nicolasmiguenz@hotmail.com");
+      this.formGroup.controls.password.setValue("123456");
+    }
+    if(pos == '3'){
+      this.formGroup.controls.mail.setValue("shibori.polonio@gmail.com");
+      this.formGroup.controls.password.setValue("123456");
+    }
   }
 
   cargarEspecialista(pos : string){

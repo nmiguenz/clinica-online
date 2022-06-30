@@ -86,10 +86,26 @@
 
       <div class="fab-button">
         <button class="fastAccessButton"
-            [ngStyle]="{'background-image': 'url(' + pacienteFotoUrl + ')'}" (click)="cargarPaciente()">
+            [ngStyle]="{'background-image': 'url(' + pacienteFotoUrl + ')'}" (click)="cargarPaciente('1')">
         </button>
         <br>
         <h6>Paciente</h6>
+      </div>
+
+      <div class="fab-button">
+        <button class="fastAccessButton"
+            [ngStyle]="{'background-image': 'url(' + pacienteFotoUrl2 + ')'}" (click)="cargarPaciente('2')">
+        </button>
+        <br>
+        <h6>Paciente 2</h6>
+      </div>
+
+      <div class="fab-button">
+        <button class="fastAccessButton"
+            [ngStyle]="{'background-image': 'url(' + pacienteFotoUrl3 + ')'}" (click)="cargarPaciente('3')">
+        </button>
+        <br>
+        <h6>Paciente 3</h6>
       </div>
 
     </div>
