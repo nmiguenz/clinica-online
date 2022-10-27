@@ -16,7 +16,7 @@ export class LoginComponent implements OnInit {
   formGroup : FormGroup | any;
   user : any = null;
 
-  //Acceso Rápido
+  //Acceso Rï¿½pido
   email: string = '';
   password: string = '';
   public adminFotoUrl: string = '';
@@ -99,7 +99,7 @@ export class LoginComponent implements OnInit {
         this.user = arg['0'];
 
         if(this.user){
-          //Chequeo si el EMAIL del PACIENTE!!! ESTÁ VERIFICADO
+          //Chequeo si el EMAIL del PACIENTE!!! ESTï¿½ VERIFICADO
           if(this.user.perfil == 'paciente'){
             this.auth.login(this.formGroup.value.mail, this.formGroup.value.password)
             .then((res:any)=>{
@@ -111,7 +111,7 @@ export class LoginComponent implements OnInit {
                   this.route.navigateByUrl('/misTurnos');
                 }
                 else{
-                  console.log('No verificó el mail.');
+                  console.log('No verificÃ³ el mail.');
                   this.loading = false;
                   this.route.navigateByUrl('/home');
                 }
@@ -122,7 +122,7 @@ export class LoginComponent implements OnInit {
             });
           }
           else{
-            //Chequeo que estén habilitados en la DB los ADMIN y los especialistas
+            //Chequeo que estÃ©n habilitados en la DB los ADMIN y los especialistas
             if(this.user.habilitado == true){
                 this.auth.setCurrentUser(this.user);
                 this.loading = false;
@@ -134,7 +134,7 @@ export class LoginComponent implements OnInit {
                 }
               }
               else{
-                console.log('No verificó el mail.');
+                console.log('No estÃ¡ habilitado por administrador.');
                 this.loading = false;
                 this.route.navigateByUrl('/home');
               }

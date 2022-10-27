@@ -2,7 +2,7 @@
 <app-loading [inputLoading]="loading"></app-loading>
 <section class="">
 
-  <div class="container vh-100 d-flex justify-content-center align-items-center slide-right">
+  <div class="container vh-100 d-flex justify-content-center align-items-center flex-column slide-right">
     <div class="card signin-content py-4 shadow-lg p-3 mb-5 bg-body rounded-4 d-flex">
       <div class="row align-items-center">
 
@@ -58,14 +58,13 @@
     </div>
     </div>
 
-    <div class="accesos-rapidos justify-content-center">
+    <div class="accesos-rapidos d-flex flex-row justify-content-between">
 
       <div class="fab-button">
           <button class="fastAccessButton"
               [ngStyle]="{'background-image': 'url(' + adminFotoUrl + ')'}" (click)="cargarAdmin()">
           </button>
           <br>
-          <h6>Administrador</h6>
       </div>
 
       <div class="fab-button">
@@ -73,7 +72,6 @@
             [ngStyle]="{'background-image': 'url(' + especialistaFotoUrl + ')'}" (click)="cargarEspecialista('1')">
         </button>
         <br>
-        <h6>Especialista</h6>
       </div>
 
       <div class="fab-button">
@@ -81,7 +79,6 @@
             [ngStyle]="{'background-image': 'url(' + especialistaDosFotoUrl + ')'}" (click)="cargarEspecialista('2')">
         </button>
         <br>
-        <h6>Especialista 2</h6>
       </div>
 
       <div class="fab-button">
@@ -89,7 +86,6 @@
             [ngStyle]="{'background-image': 'url(' + pacienteFotoUrl + ')'}" (click)="cargarPaciente('1')">
         </button>
         <br>
-        <h6>Paciente</h6>
       </div>
 
       <div class="fab-button">
@@ -97,7 +93,6 @@
             [ngStyle]="{'background-image': 'url(' + pacienteFotoUrl2 + ')'}" (click)="cargarPaciente('2')">
         </button>
         <br>
-        <h6>Paciente 2</h6>
       </div>
 
       <div class="fab-button">
@@ -105,7 +100,6 @@
             [ngStyle]="{'background-image': 'url(' + pacienteFotoUrl3 + ')'}" (click)="cargarPaciente('3')">
         </button>
         <br>
-        <h6>Paciente 3</h6>
       </div>
 
     </div>

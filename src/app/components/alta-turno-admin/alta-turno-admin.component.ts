@@ -176,7 +176,8 @@ export class AltaTurnoAdminComponent implements OnInit {
     let diasSemanales = ["domingo","lunes","martes","miercoles","jueves","viernes","sabado"];
     await this.db.getDisponibilidadesByEspecialistaEspecialidad(this.especialistaSeleccionado.dni, especialidad)
     .subscribe((ref:any)=>{
-      this.lanzarSpinner(true);
+      // this.lanzarSpinner(true);
+      console.log(ref[0]);
       let horarios = ref[0].payload.doc.data();
       horarios['id'] = ref[0].payload.doc.id;
       let diasHorariosAtencion = horarios;

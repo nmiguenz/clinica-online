@@ -2,6 +2,7 @@ import { CommonModule, DatePipe } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 //Modulos AngularFire
 import { AngularFireModule } from '@angular/fire/compat';
@@ -29,7 +30,6 @@ import { MisHorariosComponent } from './components/mis-horarios/mis-horarios.com
 import { FiltrarEspecialistaPipe } from './pipes/filtrar-especialista.pipe';
 import { HistoriaClinicaComponent } from './components/historia-clinica/historia-clinica.component';
 import { MisPacientesComponent } from './pages/mis-pacientes/mis-pacientes.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule } from '@angular/material/button';
 import { DetallaHistoriaClinicaComponent } from './components/detalla-historia-clinica/detalla-historia-clinica.component';
 import { HighlightDirective } from './directives/highlight.directive';

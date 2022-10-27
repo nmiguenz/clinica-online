@@ -24,6 +24,7 @@
     "jspdf": "^2.5.1",
     "ng-multiselect-dropdown": "^0.3.8",
     "ngx-captcha": "^11.0.0",
+    "ngx-toastr": "^15.2.1",
     "rxjs": "~7.5.0",
     "toast-controller": "^0.11.6",
     "tslib": "^2.3.0",

@@ -189,6 +189,7 @@ export class RegisterComponent implements OnInit {
   obtenerImg(event:any, num:number){
     if(num == 1){
       this.archivoImg = event.target.files[0];
+      console.log('imagen,', this.archivoImg);
     }
     else{
       this.archivoImgDos = event.target.files[0];

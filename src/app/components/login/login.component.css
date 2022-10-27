@@ -28,8 +28,9 @@ img{
 
 /* Accesos rápidos */
 .accesos-rapidos{
-  position: absolute;
-  margin-left: -85%;
+  /* position: absolute;
+  margin-left: -85%; */
+  width: 90%;
   text-align: center;
 }
 
