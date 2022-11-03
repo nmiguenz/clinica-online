@@ -237,7 +237,7 @@ export class LoginComponent implements OnInit {
 
   cargarEspecialista(pos: string) {
     if (pos == '1') {
-      this.formGroup.controls.mail.setValue('roquesosa@gmail.com');
+      this.formGroup.controls.mail.setValue('efhzfoucmphrlatyuu@tmmcv.net');
       this.formGroup.controls.password.setValue('123456');
     } else {
       this.formGroup.controls.mail.setValue('jpalotes@gmail.com');
