@@ -10,15 +10,15 @@ Los profesionales pueden cambiar la duración según su especialidad. Estos prof
 También contamos con un sector dentro de la clínica que se encarga de la organización y administración de la misma."
 </i>
 
-## Primeros pasos en la clinica
+## Primeros pasos
 
-La clínica online lo recibirá con una página de bienvenida que le permitirá elegir entre loguearse o registrarse. Si no cuentas con una cuenta en el sitio no podrás ingresar al sistema ⛔.
+La clínica online lo recibirá con una página de bienvenida que le permitirá elegir entre loguearse o registrarse. Si no cuenta con una cuenta en el sitio no podrá ingresar al sistema ⛔.
 
 ![Captura de pantalla (168)](https://user-images.githubusercontent.com/37988654/199773820-c66b4adb-94b8-4d46-a874-c3ead70e6451.png)
 
 ## 🧑‍💻 Panel de control (Admin)
 
-A esta sección solo podrán acceder usuarios con perfil <i>administrador</i>, quienes tendrán acceso a las siguientes secciones:
+A esta sección solo podrán acceder usuarios con perfil <i>administrador</i>, quienes tendrán la posibilidad de recorrer las siguientes secciones:
 
 ### Usuarios
 
@@ -26,17 +26,17 @@ Listado de todos los usuarios registrados en el sistema y separados por perfil. 
 
 Se podrá habilitar/deshabilitar especialistas en el sistema.
 
+https://user-images.githubusercontent.com/37988654/199785286-dcc14fcf-d874-44d9-8591-42a72cdb5a00.mp4
+
 ### Turnos
 
-Listado de la totalidad de los turnos existentes en el sistema. 
+Listado de la totalidad de los turnos existentes en el sistema. El administrador podrá cancelarlos siempre que no haya sido aceptado, rechazado o atendido por el especialista.
+
+https://user-images.githubusercontent.com/37988654/199785337-a97f49b8-fa83-4451-ad66-3d5bae1de88f.mp4
 
 ### Solicitud de turnos
 
-Veras todos los pacientes con su historia clínica
-
-### Añadir Adm
-
-Sólo aqui se podra registrar usuarios de tipo Administrador
+https://user-images.githubusercontent.com/37988654/199786355-13125b52-6e9c-4249-ab4b-2ac6f87d6d43.mp4
 
 ## 	:woman_health_worker: Especialista
 
