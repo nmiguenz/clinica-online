@@ -12,47 +12,27 @@ También contamos con un sector dentro de la clínica que se encarga de la organ
 
 ## Primeros pasos en la clinica
 
-La clínica online lo recibirá con una página de bienvenida que le permitirá elegir entre loguearse o registrarse. Si no cuentas con una cuenta en el sitio no podrás ingresar al sistema.
+La clínica online lo recibirá con una página de bienvenida que le permitirá elegir entre loguearse o registrarse. Si no cuentas con una cuenta en el sitio no podrás ingresar al sistema ⛔.
 
 ![Captura de pantalla (168)](https://user-images.githubusercontent.com/37988654/199773820-c66b4adb-94b8-4d46-a874-c3ead70e6451.png)
 
-## 🧑‍💻 Administracion (Admin)
+## 🧑‍💻 Panel de control (Admin)
 
-Aqui podra acceder el administrador, puede ejecutar acciones como:
-
-### Listar Turnos
-
-Veras todos los turnos que hubo
-
-### Añadir Turno
-
-Podrá registrar un nuevo turno seleccionando Especialista y Paciente
-
-### Pacientes
-
-Veras todos los pacientes con su historia clínica
-
-### Comentarios
-
-Veras todos los comentarios que hubo
-
-### Reportes
-
-En tablas y graficos contendras la siguiente informacion:
-
-- Ingresos al sistema por parte de Especialistas en un determinado tiempo
-
-- Cantidad de turnos tomados por Especialidad
-
-- Cantidad de turnos tomados por día
+A esta sección solo podrán acceder usuarios con perfil <i>administrador<i>, quienes tendrán acceso a las siguientes secciones:
 
 ### Usuarios
 
-Veras todos los usuarios dentro del sistema, divididos en sus respectivas categorías
+Listado de todos los usuarios registrados en el sistema y separados por perfil. Además, podrás dar de alta cualquier tipo de usuario, aunque deberás recordar que deben validar el mail antes de que puedan ingresar. Los usuarios de tipo administrador, solo podrán ser dados de alta por un administrador logueado.
 
-Se podra habilitar/deshabilitar especialistas en el sistema
+Se podrá habilitar/deshabilitar especialistas en el sistema.
 
-Podrá agregar un nuevo administrador en categoría Administradores
+### Turnos
+
+Listado de la totalidad de los turnos existentes en el sistema. 
+
+### Solicitud de turnos
+
+Veras todos los pacientes con su historia clínica
 
 ### Añadir Adm
 
