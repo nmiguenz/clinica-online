@@ -1,6 +1,6 @@
-# Clinica Online
+<h1 align="center"> Clínica Online </h1>
 
-En la Clínica online usted podrá sacar turnos con el profesional que necesita, cuándo lo necesita y sin intermediarios, con solo dos clicks, el turno es tuyo. Además, ya no hay misterios en cuanto al diagnóstico, si fuiste atendido o atendida, tendrás a disposición todo lo que el médico escriba de vos inmediatamente. Eleginos, llegamos para cambiar la forma en que se gestiona la salud.
+En la Clínica online usted podrá sacar turnos con el profesional que necesita, cuándo lo necesita y sin intermediarios, con solo dos clicks, el turno es suyo. Además, ya no hay misterios en cuanto al diagnóstico, si fuiste atendido o atendida, tendrás a disposición todo lo que el médico escriba de vos inmediatamente. Eleginos, llegamos para cambiar la forma en que se gestiona la salud.
 
 ## Idea del proyecto
 
@@ -12,7 +12,9 @@ También contamos con un sector dentro de la clínica que se encarga de la organ
 
 ## Primeros pasos en la clinica
 
-En primer lugar te encontraras con una pagina de bienvenida donde se encuentra el logo de la clinica y un saludo. En la parte superior se observa dos opciones: un Inicio de sesion y un Registro donde podras registrar.
+La clínica online lo recibirá con una página de bienvenida que le permitirá elegir entre loguearse o registrarse. Si no cuentas con una cuenta en el sitio no podrás ingresar al sistema.
+
+![Captura de pantalla (168)](https://user-images.githubusercontent.com/37988654/199773820-c66b4adb-94b8-4d46-a874-c3ead70e6451.png)
 
 ## 🧑‍💻 Administracion (Admin)
 
