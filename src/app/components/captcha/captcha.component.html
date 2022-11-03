@@ -1,0 +1,54 @@
+<div class="content divContenedor">
+  <div *ngIf="pantalla == 'ingreso'; then ingreso"></div>
+  <div *ngIf="pantalla == 'exito'; then exito"></div>
+</div>
+
+<ng-template #ingreso>
+  <div class="d-flex flex-row m-1 captchaCard">
+    <div class="col-5 text-center captchaTitle">
+      <h1 id="captchaHeading">Captcha</h1>
+    </div>
+
+    <div
+      class="col-7 text-center d-flex flex-column"
+      id="captchaBackground"
+      #captcha
+    >
+      <div class="mt-3">
+        <h3>{{ captchaText }}</h3>
+        <input
+          #inputCaptcha
+          id="textBox"
+          type="text"
+          name="text"
+          [(ngModel)]="respuesta"
+        />
+      </div>
+
+      <div class="mb-3 mt-2 d-flex justify-content-between divBtn text-center">
+        <button
+          class="btn btn-outline-success"
+          type="button"
+          (click)="verificarRespuesta()"
+        >
+          ENVIAR
+        </button>
+        <button
+          class="btn btn-outline-warning"
+          id="refreshButton"
+          type="button"
+          (click)="refreshCaptcha()"
+        >
+          Refresh
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #exito>
+  <div class="d-flex flex-row m-1 captchaCard">
+    <img src="../../../assets/comprobado.png" alt="OK" />
+    <h1>Captcha verificado</h1>
+  </div>
+</ng-template>

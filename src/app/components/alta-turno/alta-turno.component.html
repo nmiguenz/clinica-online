@@ -1,149 +1,258 @@
 <app-loading-general [inputLoading]="loading"></app-loading-general>
-  <!-- Section: Design Block -->
-  <section class="">
-
-    <!-- Selección especialistas -->
-    <div class="container d-flex justify-content-center align-items-center mb-3" *ngIf="tipoUsuario == ''">
-      <div class="card signin-content py-4 shadow-lg p-3 mb-2 bg-body rounded-4 d-flex">
-        <div class="row d-flex justify-content-arround align-items-center mb-3">
-          <div class="col col-md-8">
-            <h3 class="fw-bold mb-2">Seleccionar especialista</h3>
-          </div>
-
-          <div class="col col-md-4 text-end">
-            <input class="form-control" type="text" placeholder="Buscar por profesional" [(ngModel)]="filter">
-            <span class="lupa"><i class="bi bi-search"></i></span>
-          </div>
-
+<!-- Section: Design Block -->
+<section class="">
+  <!-- Selección especialistas -->
+  <div
+    class="container d-flex justify-content-center align-items-center mb-3"
+    *ngIf="tipoUsuario == ''"
+  >
+    <div
+      class="card signin-content py-4 shadow-lg p-3 mb-2 bg-body rounded-4 d-flex"
+    >
+      <div class="row d-flex justify-content-arround align-items-center mb-3">
+        <div class="col col-md-8">
+          <h3 class="fw-bold mb-2">Seleccionar especialista</h3>
         </div>
 
-        <div class="container d-flex justify-content-between mb-2">
-          <li class="d-inline-block" (click)="seleccionarEspecialista(especialista)"
-            *ngFor="let especialista of listaEspecialistas | filtrarEspecialista:filter">
-            <button type="button" style=" border-radius: 10px; background-image: url({{especialista.fotoUno}}); background-position: center;
+        <div class="col col-md-4 text-end">
+          <input
+            class="form-control"
+            type="text"
+            placeholder="Buscar por profesional"
+            [(ngModel)]="filter"
+          />
+          <span class="lupa"><i class="bi bi-search"></i></span>
+        </div>
+      </div>
+
+      <div class="container d-flex justify-content-between mb-2 flex-wrap">
+        <li
+          class="d-inline-block"
+          (click)="seleccionarEspecialista(especialista)"
+          *ngFor="
+            let especialista of listaEspecialistas | filtrarEspecialista: filter
+          "
+        >
+          <button
+            type="button"
+            style=" border-radius: 10px; background-image: url({{
+              especialista.fotoUno
+            }}); background-position: center;
               background-repeat: no-repeat;
               background-size: cover;
-              width: 10rem; height: 7rem;">
-              <p style="background-color: #ffff00c7; margin-top: 5rem; border-radius: 10px;"> {{especialista.nombre}} {{especialista.apellido}}</p>
-            </button>
-          </li>
-        </div>
+              width: 10rem; height: 7rem;"
+          >
+            <p
+              style="
+                background-color: #ffff00c7;
+                margin-top: 5rem;
+                border-radius: 10px;
+              "
+            >
+              {{ especialista.nombre }} {{ especialista.apellido }}
+            </p>
+          </button>
+        </li>
       </div>
     </div>
-    <!-- Fin Selección especialistas -->
+  </div>
+  <!-- Fin Selección especialistas -->
 
-    <!-- Selección especialidad -->
-    <div class="container d-flex justify-content-center align-items-center mb-3" *ngIf="tipoUsuario == 'especialidad'">
-      <div class="card signin-content py-4 shadow-lg p-3 mb-2 bg-body rounded-4 d-flex">
-        <h3 class="fw-bold mb-2">Seleccionar especialidad</h3>
+  <!-- Selección especialidad -->
+  <div
+    class="container d-flex justify-content-center align-items-center mb-3"
+    *ngIf="tipoUsuario == 'especialidad'"
+  >
+    <div
+      class="card signin-content py-4 shadow-lg p-3 mb-2 bg-body rounded-4 d-flex"
+    >
+      <h3 class="fw-bold mb-2">Seleccionar especialidad</h3>
 
-        <div class="row">
-          <div class="col-md-4 mb-3">
-            <div class="form-floating">
-              <input type="text" class="form-control" id="especialidad" placeholder="name@example.com" [(ngModel)]="filter">
-              <label for="filtroEspecialista">Filtrar especialidad</label>
+      <div class="row">
+        <div class="col-md-4 mb-3">
+          <div class="form-floating">
+            <input
+              type="text"
+              class="form-control"
+              id="especialidad"
+              placeholder="name@example.com"
+              [(ngModel)]="filter"
+            />
+            <label for="filtroEspecialista">Filtrar especialidad</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="container d-flex justify-content-between mb-2">
+        <li
+          class="d-inline-block"
+          (click)="seleccionarEspecialidad(especialidad.nombre)"
+          *ngFor="let especialidad of listaEspecialidad"
+        >
+          <button type="button" class="btn btn-primary btn-block">
+            {{ especialidad.nombre }}
+          </button>
+        </li>
+      </div>
+    </div>
+  </div>
+  <!-- Fin Selección especialidad -->
+
+  <div class="container d-flex justify-content-center align-items-center">
+    <div
+      class="card signin-content py-4 shadow-lg p-3 mb-2 bg-body rounded-4 d-flex"
+    >
+      <div class="row align-items-center">
+        <div
+          class="signin-form col-md-8 py-4 px-5 text-align-start opacity-100"
+        >
+          <h1 class="fw-bold mb-4">Solicitar Turno</h1>
+          <form [formGroup]="formGroup" (submit)="altaTurno()">
+            <!-- 2 column grid layout with text inputs for the first and last names -->
+            <div class="row">
+              <div class="col-md-6 mb-4">
+                <div class="form-floating">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="Especialista"
+                    placeholder="name@example.com"
+                    formControlName="especialista"
+                    readonly
+                  />
+                  <label for="Especialista">Especialista</label>
+                  <span
+                    class="text-danger"
+                    *ngIf="
+                      formGroup.get('especialista')?.hasError('required') &&
+                      formGroup.get('especialista')?.touched
+                    "
+                    >El especialista es requerido.</span
+                  >
+                  <!-- <span class="text-danger" *ngIf="formGroup.get('especialista')?.hasError('pattern')">Complete solo con letras.</span> -->
+                </div>
+              </div>
+
+              <div class="col-md-6 mb-4">
+                <div class="form-floating">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="especialidad"
+                    placeholder="name@example.com"
+                    formControlName="especialidad"
+                    readonly
+                  />
+                  <label for="especialidad">Especialidad</label>
+                  <span
+                    class="text-danger"
+                    *ngIf="
+                      formGroup.get('especialidad')?.hasError('required') &&
+                      formGroup.get('especialidad')?.touched
+                    "
+                    >La especialidad es requerida.</span
+                  >
+                  <span
+                    class="text-danger"
+                    *ngIf="formGroup.get('especialidad')?.hasError('pattern')"
+                    >Complete solo con letras.</span
+                  >
+                </div>
+              </div>
             </div>
-          </div>
+
+            <div class="row">
+              <div class="col-md-6 mb-4">
+                <div class="form-floating">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="paciente"
+                    placeholder="name@example.com"
+                    formControlName="paciente"
+                    readonly
+                  />
+                  <label for="paciente">Paciente</label>
+                  <span
+                    class="text-danger"
+                    *ngIf="
+                      formGroup.get('paciente')?.hasError('paciente') &&
+                      formGroup.get('paciente')?.touched
+                    "
+                    >El paciente es requerido.</span
+                  >
+                  <!-- <span class="text-danger" *ngIf="formGroup.get('paciente')?.hasError('pattern')">Complete solo con letras.</span> -->
+                </div>
+              </div>
+
+              <div class="col-md-6 mb-4">
+                <div class="form-floating">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="fecha"
+                    placeholder="20-06-2022"
+                    formControlName="fecha"
+                    readonly
+                  />
+                  <label for="fecha">Fechas</label>
+                  <span
+                    class="text-danger"
+                    *ngIf="
+                      formGroup.get('fecha')?.hasError('fecha') &&
+                      formGroup.get('fecha')?.touched
+                    "
+                    >La fecha es requerida.</span
+                  >
+                </div>
+              </div>
+            </div>
+
+            <!-- Email input -->
+            <div class="container d-flex mb-3" *ngIf="especialidadSeleccionado">
+              <div class="row justify-content-arround">
+                <h5 class="mb-3 col-md-12 text-start">Turnos disponibles</h5>
+                <div
+                  class="col-md-2 mb-1"
+                  *ngFor="let turno of listadoTurnosDisponibles"
+                  (click)="seleccionarTurno(turno)"
+                >
+                  <a class="btn btn-outline-primary">
+                    {{ turno | date: "d/M/yyyy H:mm" }}
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <!-- Submit button -->
+            <button
+              type="submit"
+              class="btn btn-primary btn-block mb-4"
+              [disabled]="!formGroup.valid"
+            >
+              ALTA
+            </button>
+          </form>
         </div>
 
-        <div class="container d-flex justify-content-between mb-2">
-          <li class="d-inline-block" (click)="seleccionarEspecialidad(especialidad.nombre)"
-            *ngFor="let especialidad of listaEspecialidad">
-            <button type="button" class="btn btn-primary btn-block">{{especialidad.nombre}}</button>
-          </li>
+        <div class="alta-img col-md-4 py-5 text-lg-center">
+          <img
+            src="../../../assets/undraw_my_app_re_gxtj.svg"
+            alt=""
+            class="opacity-100"
+          />
         </div>
       </div>
-    </div>
-    <!-- Fin Selección especialidad -->
 
-    <div class="container d-flex justify-content-center align-items-center">
-      <div class="card signin-content py-4 shadow-lg p-3 mb-2 bg-body rounded-4 d-flex">
-
-        <div class="row align-items-center" >
-          <div class="signin-form col-md-8 py-4 px-5 text-align-start opacity-100">
-            <h1 class="fw-bold mb-4">Solicitar Turno</h1>
-            <form [formGroup]="formGroup" (submit)="altaTurno()">
-              <!-- 2 column grid layout with text inputs for the first and last names -->
-              <div class="row">
-
-                <div class="col-md-6 mb-4">
-                  <div class="form-floating">
-                    <input type="text" class="form-control" id="Especialista" placeholder="name@example.com" formControlName="especialista" readonly>
-                    <label for="Especialista">Especialista</label>
-                    <span class="text-danger" *ngIf="formGroup.get('especialista')?.hasError('required') && formGroup.get('especialista')?.touched">El especialista es requerido.</span>
-                    <!-- <span class="text-danger" *ngIf="formGroup.get('especialista')?.hasError('pattern')">Complete solo con letras.</span> -->
-                  </div>
-                </div>
-
-                <div class="col-md-6 mb-4">
-                  <div class="form-floating">
-                    <input type="text" class="form-control" id="especialidad" placeholder="name@example.com" formControlName="especialidad" readonly>
-                    <label for="especialidad">Especialidad</label>
-                    <span class="text-danger" *ngIf="formGroup.get('especialidad')?.hasError('required') && formGroup.get('especialidad')?.touched">La especialidad es requerida.</span>
-                    <span class="text-danger" *ngIf="formGroup.get('especialidad')?.hasError('pattern')">Complete solo con letras.</span>
-                  </div>
-                </div>
-
-              </div>
-
-              <div class="row">
-
-                <div class="col-md-6 mb-4">
-                  <div class="form-floating">
-                    <input type="text" class="form-control" id="paciente" placeholder="name@example.com" formControlName="paciente" readonly>
-                    <label for="paciente">Paciente</label>
-                    <span class="text-danger" *ngIf="formGroup.get('paciente')?.hasError('paciente') && formGroup.get('paciente')?.touched">El paciente es requerido.</span>
-                    <!-- <span class="text-danger" *ngIf="formGroup.get('paciente')?.hasError('pattern')">Complete solo con letras.</span> -->
-                  </div>
-                </div>
-
-                <div class="col-md-6 mb-4">
-                  <div class="form-floating">
-                    <input type="text" class="form-control" id="fecha" placeholder="20-06-2022" formControlName="fecha" readonly>
-                    <label for="fecha">Fechas</label>
-                    <span class="text-danger" *ngIf="formGroup.get('fecha')?.hasError('fecha') && formGroup.get('fecha')?.touched">La fecha es requerida.</span>
-                  </div>
-                </div>
-
-              </div>
-
-              <!-- Email input -->
-              <div class="container d-flex mb-3" *ngIf="especialidadSeleccionado">
-
-                <div class="row justify-content-arround">
-                  <h5 class="mb-3 col-md-12 text-start">Turnos disponibles</h5>
-                    <div class="col-md-2 mb-1" *ngFor="let turno of listadoTurnosDisponibles" (click)="seleccionarTurno(turno)">
-                      <a class="btn btn-outline-primary">
-                        {{turno | date:'d/M/yyyy H:mm'}}
-                      </a>
-                    </div>
-                </div>
-
-              </div>
-
-              <!-- Submit button -->
-              <button type="submit" class="btn btn-primary btn-block mb-4 " [disabled]="!formGroup.valid">
-                ALTA
-              </button>
-
-            </form>
-
-          </div>
-
-          <div class="alta-img col-md-4 py-5 text-lg-center">
-            <img src="../../../assets/undraw_my_app_re_gxtj.svg"
-            alt="" class="opacity-100"/>
-          </div>
-
-        </div>
-
-        <div class="row text-align-end volver" (click)="resetParametros()">
-          <p class="text-end me-5 text-dark"><a><i class="bi bi-arrow-left-square-fill"></i><span> Reset opciones</span></a></p>
-        </div>
-
+      <div class="row text-align-end volver" (click)="resetParametros()">
+        <p class="text-end me-5 text-dark">
+          <a
+            ><i class="bi bi-arrow-left-square-fill"></i
+            ><span> Reset opciones</span></a
+          >
+        </p>
       </div>
-
     </div>
-
-  </section>
-  <!-- Section: Design Block -->
+  </div>
+</section>
+<!-- Section: Design Block -->

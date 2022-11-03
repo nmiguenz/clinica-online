@@ -1,51 +1,117 @@
-<nav class="navbar navbar-expand-lg navbar-light pe-5 ps-5 mb-1 " *ngIf="perfil != 'admin'">
+<nav
+  class="navbar navbar-expand-lg navbar-light pe-5 ps-5 mb-1"
+  *ngIf="perfil != 'admin'"
+>
   <div class="container-fluid">
-    <a class="navbar-brand" href="#"><span><img src="../../../assets/hospital.png" alt="logo" width="50" height="50"></span> Clinica Online</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <a class="navbar-brand" href="#"
+      ><span
+        ><img
+          src="../../../assets/hospital.png"
+          alt="logo"
+          width="50"
+          height="50"
+      /></span>
+      Clinica Online</a
+    >
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarNav"
+      aria-controls="navbarNav"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNav" *ngIf="!estaLoggeado">
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a class="nav-link" [routerLink]="['/acceso/login']" routerLinkActive="active">Login</a>
+          <a
+            class="nav-link"
+            [routerLink]="['/acceso/login']"
+            routerLinkActive="active"
+            >Login</a
+          >
         </li>
         <li class="nav-item">
-          <a class="nav-link" [routerLink]="['/acceso/register']" routerLinkActive="active">Registro</a>
+          <a
+            class="nav-link"
+            [routerLink]="['/acceso/register']"
+            routerLinkActive="active"
+            >Registro</a
+          >
         </li>
       </ul>
     </div>
     <div class="collapse navbar-collapse" id="navbarNav" *ngIf="estaLoggeado">
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a class="nav-link" [routerLink]="['misTurnos']" routerLinkActive="active">Mis turnos</a>
+          <a
+            class="nav-link"
+            [routerLink]="['misTurnos']"
+            routerLinkActive="active"
+            >Mis turnos</a
+          >
         </li>
         <li class="nav-item">
-          <a class="nav-link" [routerLink]="['solicitarTurno']" routerLinkActive="active" *ngIf="perfil == 'paciente'">Solicitar Turno</a>
+          <a
+            class="nav-link"
+            [routerLink]="['solicitarTurno']"
+            routerLinkActive="active"
+            *ngIf="perfil == 'paciente'"
+            >Solicitar Turno</a
+          >
         </li>
         <li class="nav-item">
-          <a class="nav-link" [routerLink]="['pacientes']" routerLinkActive="active" *ngIf="perfil == 'especialista'">Pacientes</a>
+          <a
+            class="nav-link"
+            [routerLink]="['pacientes']"
+            routerLinkActive="active"
+            *ngIf="perfil == 'especialista'"
+            >Pacientes</a
+          >
         </li>
       </ul>
     </div>
-    <div class="collapse navbar-collapse justify-content-end " *ngIf="estaLoggeado">
+    <div
+      class="collapse navbar-collapse justify-content-end"
+      *ngIf="estaLoggeado"
+    >
       <ul class="navbar-nav">
-          <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <img [src]=usuarioLogueado.fotoUno alt="avatar" width="40" height="40" class="rounded-circle">
+        <li class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle"
+            href="#"
+            id="navbarDropdownMenuLink"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+          >
+            <img
+              [src]="usuarioLogueado?.fotoUno"
+              alt="avatar"
+              width="40"
+              height="40"
+              class="rounded-circle"
+            />
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-            <h6 class="ps-3">{{usuarioLogueado.nombre}} {{usuarioLogueado.apellido}}</h6>
+            <h6 class="ps-3">
+              {{ usuarioLogueado?.nombre }} {{ usuarioLogueado?.apellido }}
+            </h6>
             <a class="dropdown-item" [routerLink]="['perfil']">Perfil</a>
             <!-- <a class="dropdown-item" [routerLink]="['backoffice/seccionUsuarios']" *ngIf="perfil == 'admin'">Sección usuarios</a> -->
             <!-- <a class="dropdown-item" href="#">Log Out</a> -->
           </div>
         </li>
         <li class="nav-item">
-          <a class="nav-link cerrarSesion" (click)="cerrarSesion()"><span><i class="bi bi-box-arrow-left"></i></span></a>
+          <a class="nav-link cerrarSesion" (click)="cerrarSesion()"
+            ><span><i class="bi bi-box-arrow-left"></i></span
+          ></a>
         </li>
       </ul>
-
     </div>
-
   </div>
 </nav>

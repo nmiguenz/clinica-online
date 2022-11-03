@@ -9,13 +9,14 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoadingComponent } from 'src/app/components/loading/loading.component';
 import { NgxCaptchaModule } from 'ngx-captcha';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+import { GeneralesModule } from '../generales/generales.module';
 
 @NgModule({
   declarations: [
     AccesoComponent,
     LoginComponent,
     RegisterComponent,
-    LoadingComponent
+    LoadingComponent,
   ],
   imports: [
     CommonModule,
@@ -23,7 +24,8 @@ import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
     AccesoRoutingModule,
     ReactiveFormsModule,
     FormsModule,
-    NgxCaptchaModule
-  ]
+    NgxCaptchaModule,
+    GeneralesModule,
+  ],
 })
-export class AccesoModule { }
+export class AccesoModule {}

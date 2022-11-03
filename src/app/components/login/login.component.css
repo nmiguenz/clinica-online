@@ -1,25 +1,25 @@
-section{
+section {
   /* background-color: #f9f9f9; */
-  background-image: url('../../../assets/doctor-g143d9ddc3_1920.jpg');
+  background-image: url("../../../assets/doctor-g143d9ddc3_1920.jpg");
   background-size: cover;
   opacity: 1.5;
 }
-img{
-  width: 80%;
+img {
+  width: 60%;
 }
 
-.card{
+.card {
   position: relative;
   z-index: 10;
   background-color: #eff3f5ed !important;
   /* opacity: 0.95; */
 }
 
-.btn-block{
+.btn-block {
   width: -webkit-fill-available !important;
 }
 
-.show-pass{
+.show-pass {
   position: absolute;
   margin-top: -2.7rem;
   margin-left: 28rem;
@@ -27,7 +27,7 @@ img{
 }
 
 /* Accesos rápidos */
-.accesos-rapidos{
+.accesos-rapidos {
   /* position: absolute;
   margin-left: -85%; */
   width: 90%;
@@ -41,6 +41,33 @@ img{
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+}
+
+.formComentario-msg {
+  display: none;
+  background-color: red;
+  padding: 13px 10px 1px;
+  margin: -15px 0 10px;
+}
+
+.formComentario-msg-active {
+  margin-top: 1px !important;
+  display: block;
+}
+
+.formComentario-msg-active p {
+  color: #fff;
+}
+
+.formulario_mensaje-exito {
+  font-size: 14px;
+  margin-top: 1rem;
+  color: #119200;
+  display: none;
+}
+
+.formulario_mensaje-exito-activo {
+  display: block;
 }
 
 @media (max-width: 1400px) {
@@ -76,14 +103,14 @@ img{
 }
 
 .slide-right {
-  animation-duration: 1s ;
-  animation-name: slidein ;
+  animation-duration: 1s;
+  animation-name: slidein;
 }
 
 @keyframes slidein {
   from {
     margin-left: 100rem;
-    width: 300%
+    width: 300%;
   }
 
   to {

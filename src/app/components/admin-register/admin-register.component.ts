@@ -11,38 +11,72 @@ import { IDropdownSettings } from 'ng-multiselect-dropdown';
 @Component({
   selector: 'app-admin-register',
   templateUrl: './admin-register.component.html',
-  styleUrls: ['./admin-register.component.css']
+  styleUrls: ['./admin-register.component.css'],
 })
 export class AdminRegisterComponent implements OnInit {
-
-  formGroup : FormGroup | any;
-  perfil : string = '';
+  formGroup: FormGroup | any;
+  perfil: string = '';
   loading: boolean = false;
+  resCaptcha = false;
 
   //Select multiple
   dropdownSettings: IDropdownSettings = {};
 
   //Sección imágenes
-  imagenes : any[] = [];
-  archivoImg : any;
-  archivoImgDos : any;
+  imagenes: any[] = [];
+  archivoImg: any;
+  archivoImgDos: any;
 
   //Sección especialidades
-  especialidades : any[] = [];
+  especialidades: any[] = [];
 
-  constructor(private fb : FormBuilder, private db : FirestoreDbService, private auth : AuthService, private route : Router) {
+  constructor(
+    private fb: FormBuilder,
+    private db: FirestoreDbService,
+    private auth: AuthService,
+    private route: Router
+  ) {
     this.formGroup = this.fb.group({
-      'nombre' : ['', [Validators.required, Validators.pattern('[a-zA-ZñÑáéíóúÝÉÝÓÚ\s]+')]],
-      'apellido' : ['', [Validators.required, Validators.pattern('[a-zA-ZñÑáéíóúÝÉÝÓÚ\s]+')]],
-      'edad' : ['', [Validators.required, Validators.pattern('[0-9]+'), Validators.min(1), Validators.max(120)]],
-      'dni' : ['', [Validators.required, Validators.pattern('[0-9]+'), Validators.min(1), Validators.max(99999999)]],
-      'mail' : ['', [Validators.required, Validators.email]],
-      'password' : ['', [Validators.required, Validators.minLength(6), Validators.maxLength(20)]],
-      'especialidad' : [[], Validators.required],
-      'obraSocial' : ['', Validators.required],
-      'fotoUno' : ['', Validators.required],
-      'fotoDos' : ['', Validators.required],
-    })
+      nombre: [
+        '',
+        [Validators.required, Validators.pattern('[a-zA-ZñÑáéíóúÝÉÝÓÚs]+')],
+      ],
+      apellido: [
+        '',
+        [Validators.required, Validators.pattern('[a-zA-ZñÑáéíóúÝÉÝÓÚs]+')],
+      ],
+      edad: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern('[0-9]+'),
+          Validators.min(1),
+          Validators.max(120),
+        ],
+      ],
+      dni: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern('[0-9]+'),
+          Validators.min(1),
+          Validators.max(99999999),
+        ],
+      ],
+      mail: ['', [Validators.required, Validators.email]],
+      password: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(6),
+          Validators.maxLength(20),
+        ],
+      ],
+      especialidad: [[], Validators.required],
+      obraSocial: ['', Validators.required],
+      fotoUno: ['', Validators.required],
+      fotoDos: ['', Validators.required],
+    });
   }
 
   ngOnInit(): void {}
@@ -50,41 +84,41 @@ export class AdminRegisterComponent implements OnInit {
   // Método que devuleve el perfil del usuario,
   // hardcodea controllers que no son requeridos para el perfil
   // trae las especialidades en caso de ser perfil ESPECIALISTA
-  perfilUsuario(perfilSeleccionado : string){
-      this.formGroup.controls['especialidad'].setValue(null);
-      this.formGroup.controls['obraSocial'].setValue(null);
-      this.formGroup.controls['fotoDos'].setValue(null);
+  perfilUsuario(perfilSeleccionado: string) {
+    this.formGroup.controls['especialidad'].setValue(null);
+    this.formGroup.controls['obraSocial'].setValue(null);
+    this.formGroup.controls['fotoDos'].setValue(null);
 
     this.perfil = perfilSeleccionado;
-    if(this.perfil == 'paciente'){
+    if (this.perfil == 'paciente') {
       this.formGroup.controls['especialidad'].setValue('ninguna'); //Se setea un valor para pasar la validación del form
-    }
-    else if(this.perfil == 'especialista'){
+    } else if (this.perfil == 'especialista') {
       this.loading = true;
       //Cargo la lista de ESPECIALIDADES vigentes desde Firebase
-      this.db.getCollection('especialidad').then( (ref:any) => ref.subscribe((listadoRef:any) => {
-        this.especialidades = listadoRef.map((especialidad : any)=>{
-          return especialidad.payload.doc.data()
-        });
-        this.dropdownSettings = {
-          idField: 'nombre',
-          textField: 'nombre'
-        };
-        this.loading = false;
-      }));
+      this.db.getCollection('especialidad').then((ref: any) =>
+        ref.subscribe((listadoRef: any) => {
+          this.especialidades = listadoRef.map((especialidad: any) => {
+            return especialidad.payload.doc.data();
+          });
+          this.dropdownSettings = {
+            idField: 'nombre',
+            textField: 'nombre',
+          };
+          this.loading = false;
+        })
+      );
       this.formGroup.controls['obraSocial'].setValue('ninguna'); //Se setea un valor para pasar la validación del form
       this.formGroup.controls['fotoDos'].setValue('ninguna.jpg'); //Se setea un valor para pasar la validación del form
-    }
-    else{
+    } else {
       this.formGroup.controls['especialidad'].setValue('ninguna');
       this.formGroup.controls['obraSocial'].setValue('ninguna'); //Se setea un valor para pasar la validación del form
       this.formGroup.controls['fotoDos'].setValue('ninguna.jpg'); //Se setea un valor para pasar la validación del for
     }
   }
 
-  async alta(){
+  async alta() {
     // Alta de paciente
-    if(this.perfil == 'paciente'){
+    if (this.perfil == 'paciente') {
       const paciente = new Paciente(
         this.formGroup.value.nombre,
         this.formGroup.value.apellido,
@@ -95,45 +129,63 @@ export class AdminRegisterComponent implements OnInit {
         this.formGroup.value.password,
         this.formGroup.value.fotoUno,
         this.formGroup.value.fotoDos,
-        'paciente',
+        'paciente'
       );
 
       try {
-        const newUserCredentials = await this.auth.signUp(paciente.mail, paciente.password);
+        const newUserCredentials = await this.auth.signUp(
+          paciente.mail,
+          paciente.password
+        );
 
-        if(newUserCredentials.user.uid != ''){
+        if (newUserCredentials.user.uid != '') {
           this.loading = true;
           //Envío la verificación de mail
           await newUserCredentials.user.sendEmailVerification();
 
           //Agrego las fotos
-          await this.db.uploadImage('paciente',newUserCredentials.user.uid + '1', this.archivoImg)
-          .then( (res: string | any) => {
-            paciente.fotoUno = res})
-          .catch(error => console.log(error));
+          await this.db
+            .uploadImage(
+              'paciente',
+              newUserCredentials.user.uid + '1',
+              this.archivoImg
+            )
+            .then((res: string | any) => {
+              paciente.fotoUno = res;
+            })
+            .catch((error) => console.log(error));
 
-          await this.db.uploadImage('paciente',newUserCredentials.user.uid + '2', this.archivoImgDos)
-          .then( (res: string | any) => {
-            paciente.fotoDos = res})
-          .catch(error => console.log(error));
-
+          await this.db
+            .uploadImage(
+              'paciente',
+              newUserCredentials.user.uid + '2',
+              this.archivoImgDos
+            )
+            .then((res: string | any) => {
+              paciente.fotoDos = res;
+            })
+            .catch((error) => console.log(error));
         }
 
         // //Parseo el objeto porque Firebase no acepta los objetos CUSTOM
-        await this.db.altaConId(newUserCredentials.user.uid, JSON.parse(JSON.stringify(paciente)), 'usuarios')
-        .then(()=>{
-          this.formGroup.reset();
-          this.loading = false;
-        })
-        .catch(error => console.log(error));
-
+        await this.db
+          .altaConId(
+            newUserCredentials.user.uid,
+            JSON.parse(JSON.stringify(paciente)),
+            'usuarios'
+          )
+          .then(() => {
+            this.formGroup.reset();
+            this.loading = false;
+          })
+          .catch((error) => console.log(error));
       } catch (error) {
-        console.log('Error en alta paciente: ',error);
+        console.log('Error en alta paciente: ', error);
       }
     }
 
     // Alta Especialista
-    else if (this.perfil == 'especialista'){
+    else if (this.perfil == 'especialista') {
       const especialista = new Especialista(
         this.formGroup.value.nombre,
         this.formGroup.value.apellido,
@@ -148,33 +200,48 @@ export class AdminRegisterComponent implements OnInit {
       );
 
       try {
-        const newUserCredentials = await this.auth.signUp(especialista.mail, especialista.password);
+        const newUserCredentials = await this.auth.signUp(
+          especialista.mail,
+          especialista.password
+        );
 
-        if(newUserCredentials.user.uid != ''){
+        if (newUserCredentials.user.uid != '') {
           //Cargo el spinner custom
           this.loading = true;
+          //Envío la verificación de mail
+          await newUserCredentials.user.sendEmailVerification();
 
           //Agrego las fotos
-          await this.db.uploadImage('especialista',newUserCredentials.user.uid + '1', this.archivoImg)
-          .then( (res: string | any) => {
-            especialista.fotoUno = res})
-          .catch(error => console.log(error));
+          await this.db
+            .uploadImage(
+              'especialista',
+              newUserCredentials.user.uid + '1',
+              this.archivoImg
+            )
+            .then((res: string | any) => {
+              especialista.fotoUno = res;
+            })
+            .catch((error) => console.log(error));
 
           // //Parseo el objeto porque Firebase no acepta los objetos CUSTOM
-          await this.db.altaConId(newUserCredentials.user.uid, JSON.parse(JSON.stringify(especialista)), 'usuarios')
-          .then(()=>{
-            this.formGroup.reset();
-            this.loading = false;
-          })
-          .catch(error => console.log(error));
+          await this.db
+            .altaConId(
+              newUserCredentials.user.uid,
+              JSON.parse(JSON.stringify(especialista)),
+              'usuarios'
+            )
+            .then(() => {
+              this.formGroup.reset();
+              this.loading = false;
+            })
+            .catch((error) => console.log(error));
         }
-
       } catch (error) {
-        console.log('Error en alta especialista: ',error);
+        console.log('Error en alta especialista: ', error);
       }
     }
     // Alta administrado
-    else{
+    else {
       const administrador = new Administrador(
         this.formGroup.value.nombre,
         this.formGroup.value.apellido,
@@ -188,46 +255,63 @@ export class AdminRegisterComponent implements OnInit {
       );
 
       try {
-        const newUserCredentials = await this.auth.signUp(administrador.mail, administrador.password);
+        const newUserCredentials = await this.auth.signUp(
+          administrador.mail,
+          administrador.password
+        );
 
-        if(newUserCredentials.user.uid != ''){
+        if (newUserCredentials.user.uid != '') {
           //Cargo el spinner custom
           this.loading = true;
+          //Envío la verificación de mail
+          await newUserCredentials.user.sendEmailVerification();
 
           //Agrego las fotos
-          await this.db.uploadImage('administrador',newUserCredentials.user.uid + '1', this.archivoImg)
-          .then( (res: string | any) => {
-            administrador.fotoUno = res})
-          .catch(error => console.log(error));
+          await this.db
+            .uploadImage(
+              'administrador',
+              newUserCredentials.user.uid + '1',
+              this.archivoImg
+            )
+            .then((res: string | any) => {
+              administrador.fotoUno = res;
+            })
+            .catch((error) => console.log(error));
 
           // //Parseo el objeto porque Firebase no acepta los objetos CUSTOM
-          await this.db.altaConId(newUserCredentials.user.uid, JSON.parse(JSON.stringify(administrador)), 'usuarios')
-          .then(()=>{
-            this.formGroup.reset();
-            this.loading = false;
-          })
-          .catch(error => console.log(error));
+          await this.db
+            .altaConId(
+              newUserCredentials.user.uid,
+              JSON.parse(JSON.stringify(administrador)),
+              'usuarios'
+            )
+            .then(() => {
+              this.formGroup.reset();
+              this.loading = false;
+            })
+            .catch((error) => console.log(error));
         }
-
       } catch (error) {
-        console.log('Error en alta especialista: ',error);
+        console.log('Error en alta especialista: ', error);
       }
     }
-
   }
 
   //Obtengo la foto en la codificación aceptada por Storage
-  obtenerImg(event:any, num:number){
-    if(num == 1){
+  obtenerImg(event: any, num: number) {
+    if (num == 1) {
       this.archivoImg = event.target.files[0];
-    }
-    else{
+    } else {
       this.archivoImgDos = event.target.files[0];
     }
   }
 
-  volver(){
-    this.perfil = ''
+  volver() {
+    this.perfil = '';
   }
 
+  getResCaptcha(valor: any) {
+    this.resCaptcha = valor;
+    this.formGroup.controls['recaptcha'].setValue(this.resCaptcha);
+  }
 }

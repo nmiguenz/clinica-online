@@ -9,33 +9,31 @@ import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-back-office',
   templateUrl: './back-office.component.html',
-  styleUrls: ['./back-office.component.css']
+  styleUrls: ['./back-office.component.css'],
 })
-export class BackOfficeComponent implements OnInit{
-
-  pantallaSeleccionada :  string = 'seccionUsuario';
-  adminUser : Administrador | any;
-  loading : boolean = false;
+export class BackOfficeComponent implements OnInit {
+  pantallaSeleccionada: string = 'seccionUsuario';
+  adminUser: Administrador | any;
+  loading: boolean = false;
   private authServiceSubscription: Subscription | undefined;
 
-  constructor(private auth: AuthService, private route : Router) {
+  constructor(private auth: AuthService, private route: Router) {
     this.adminUser = this.auth.usuarioLogueado;
   }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
-  selectPageAdmin(nombre:string){
+  selectPageAdmin(nombre: string) {
     this.pantallaSeleccionada = nombre;
   }
 
-  obtenerEstadoSpinner(estado : boolean){
+  obtenerEstadoSpinner(estado: boolean) {
     this.loading = estado;
   }
 
-  cerrarSesionAdmin(){
+  cerrarSesionAdmin() {
     this.auth.logOut().then(() => {
-      this.auth.usuarioLogueado.perfil = '';
+      localStorage.removeItem('loggedUser');
       this.route.navigateByUrl('home');
     });
   }

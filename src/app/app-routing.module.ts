@@ -26,23 +26,23 @@ const routes: Routes = [
   },
   {
     path: 'turnos',
-    component: AltaTurnoComponent
+    component: AltaTurnoComponent,
   },
   {
     path: 'misTurnos',
-    component: MisTurnosComponent
+    component: MisTurnosComponent,
   },
   {
     path: 'solicitarTurno',
-    component: SolicitarTurnoComponent
+    component: SolicitarTurnoComponent,
   },
   {
     path: 'perfil',
-    component: MiPerfilComponent
+    component: MiPerfilComponent,
   },
   {
     path: 'pacientes',
-    component: MisPacientesComponent
+    component: MisPacientesComponent,
   },
   {
     path: '',

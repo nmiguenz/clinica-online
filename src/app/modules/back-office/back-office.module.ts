@@ -17,7 +17,7 @@ import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { TurnosComponent } from 'src/app/pages/turnos/turnos.component';
 import { TablaTurnosAdminComponent } from 'src/app/components/tabla-turnos-admin/tabla-turnos-admin.component';
 import { FiltrarEspePacienteAdminPipe } from 'src/app/pipes/filtrar-espe-paciente-admin.pipe';
-
+import { GeneralesModule } from '../generales/generales.module';
 
 @NgModule({
   declarations: [
@@ -32,7 +32,7 @@ import { FiltrarEspePacienteAdminPipe } from 'src/app/pipes/filtrar-espe-pacient
     TablaTurnosAdminComponent,
     DetalleTurnoAdminComponent,
     FiltroTurnosPipe,
-    FiltrarEspePacienteAdminPipe
+    FiltrarEspePacienteAdminPipe,
   ],
   imports: [
     CommonModule,
@@ -41,6 +41,7 @@ import { FiltrarEspePacienteAdminPipe } from 'src/app/pipes/filtrar-espe-pacient
     FormsModule,
     NgxCaptchaModule,
     NgMultiSelectDropDownModule.forRoot(),
-  ]
+    GeneralesModule,
+  ],
 })
-export class BackOfficeModule { }
+export class BackOfficeModule {}

@@ -1,18 +1,32 @@
-﻿<section style="background-color: #eee;">
+﻿<section style="background-color: #eee">
   <div class="container py-1 vh-100">
-
     <div class="row mt-1">
-
       <div class="col-lg-4">
         <div class="card mb-4">
           <div class="card-body text-center">
-            <img [src]="foto" alt="avatar"
-              class="rounded-circle img-fluid" style="width: 150px; height: 150px;">
-            <h5 class="my-3">{{usuario.nombre}} {{usuario.apellido}}</h5>
-            <p class="text-muted" [ngClass]="perfil == 'paciente' ? 'mb-4' : 'mb-1'">{{usuario.perfil | uppercase }}</p>
+            <img
+              [src]="foto"
+              alt="avatar"
+              class="rounded-circle img-fluid"
+              style="width: 150px; height: 150px"
+            />
+            <h5 class="my-3">{{ usuario.nombre }} {{ usuario.apellido }}</h5>
+            <p
+              class="text-muted"
+              [ngClass]="perfil == 'paciente' ? 'mb-4' : 'mb-1'"
+            >
+              {{ usuario.perfil | uppercase }}
+            </p>
             <!-- <p class="text-muted mb-4" style="text-transform: capitalize;" *ngIf="perfil == 'especialista'"><span *ngFor="let especialidad of listaEspecialidades">{{especialidad.nombre}} </span></p> -->
             <div class="d-flex justify-content-center mb-2">
-              <button type="button" class="btn btn-primary" (click)="cambiarFoto()" *ngIf="perfil == 'paciente'">Más fotos</button>
+              <button
+                type="button"
+                class="btn btn-primary"
+                (click)="cambiarFoto()"
+                *ngIf="usuario.perfil == 'paciente'"
+              >
+                Más fotos
+              </button>
               <!-- <button type="button" class="btn btn-outline-primary ms-1">Message</button> -->
             </div>
           </div>
@@ -27,54 +41,54 @@
                 <p class="mb-0">Nombre completo</p>
               </div>
               <div class="col-sm-9">
-                <p class="text-muted mb-0">{{usuario.nombre}} {{usuario.apellido}}</p>
+                <p class="text-muted mb-0">
+                  {{ usuario.nombre }} {{ usuario.apellido }}
+                </p>
               </div>
             </div>
-            <hr>
+            <hr />
             <div class="row">
               <div class="col-sm-3">
                 <p class="mb-0">Edad</p>
               </div>
               <div class="col-sm-9">
-                <p class="text-muted mb-0">{{usuario.edad}}</p>
+                <p class="text-muted mb-0">{{ usuario.edad }}</p>
               </div>
             </div>
-            <hr>
+            <hr />
             <div class="row">
               <div class="col-sm-3">
                 <p class="mb-0">DNI</p>
               </div>
               <div class="col-sm-9">
-                <p class="text-muted mb-0">{{usuario.dni}}</p>
+                <p class="text-muted mb-0">{{ usuario.dni }}</p>
               </div>
             </div>
-            <hr>
+            <hr />
             <div class="row">
               <div class="col-sm-3">
                 <p class="mb-0">Email</p>
               </div>
               <div class="col-sm-9">
-                <p class="text-muted mb-0">{{usuario.mail}}</p>
+                <p class="text-muted mb-0">{{ usuario.mail }}</p>
               </div>
             </div>
-            <hr  *ngIf="perfil == 'paciente'">
+            <hr *ngIf="perfil == 'paciente'" />
             <div class="row" *ngIf="perfil == 'paciente'">
               <div class="col-sm-3">
                 <p class="mb-0">Obra social</p>
               </div>
               <div class="col-sm-9">
-                <p class="text-muted mb-0">{{usuario.obraSocial}}</p>
+                <p class="text-muted mb-0">{{ usuario.obraSocial }}</p>
               </div>
             </div>
           </div>
         </div>
       </div>
-
     </div>
 
     <div class="row mt-2" *ngIf="perfil == 'especialista'">
       <app-mis-horarios [inputEspecialista]="usuario"></app-mis-horarios>
     </div>
-
   </div>
 </section>

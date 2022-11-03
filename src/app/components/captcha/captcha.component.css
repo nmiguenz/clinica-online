@@ -1,0 +1,49 @@
+.divContenedor {
+  display: block;
+  /* width: 60% !important; */
+  width: 400px;
+  /* height: 200px; */
+  /* margin-bottom: -30px; */
+  background: #0dbb9d30;
+}
+
+.captchaCard {
+  position: relative;
+  align-items: center;
+  box-sizing: border-box;
+  box-shadow: 0 1rem 3rem rgb(0 0 0 / 18%);
+  flex-wrap: wrap !important;
+}
+
+h1 {
+  font-size: 1rem;
+}
+
+input {
+  width: 80%;
+}
+
+img {
+  width: 52px;
+  margin: 16px 20px;
+}
+
+.divBtn {
+  flex-wrap: wrap;
+  padding: 0 10px;
+}
+
+@media (max-width: 1200px) {
+  .captchaCard {
+    flex-direction: column !important;
+    flex-wrap: wrap;
+    padding: 5px 0;
+  }
+}
+
+@media (max-width: 1080px) {
+  .divContenedor {
+    width: 100%;
+    margin-bottom: 5px;
+  }
+}

@@ -34,8 +34,6 @@ import { MatButtonModule } from '@angular/material/button';
 import { DetallaHistoriaClinicaComponent } from './components/detalla-historia-clinica/detalla-historia-clinica.component';
 import { HighlightDirective } from './directives/highlight.directive';
 
-
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -68,9 +66,9 @@ import { HighlightDirective } from './directives/highlight.directive';
     AngularFirestoreModule,
     NgxCaptchaModule,
     BrowserAnimationsModule,
-    MatButtonModule
+    MatButtonModule,
   ],
   providers: [DatePipe],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
