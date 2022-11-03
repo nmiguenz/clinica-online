@@ -1,4 +1,4 @@
-<h1 align="center"> Clínica Online </h1>
+<h1 align="center">🏥 Clínica Online 🏥</h1>
 
 En la Clínica online usted podrá sacar turnos con el profesional que necesita, cuándo lo necesita y sin intermediarios, con solo dos clicks, el turno es suyo. Además, ya no hay misterios en cuanto al diagnóstico, si fuiste atendido o atendida, tendrás a disposición todo lo que el médico escriba de vos inmediatamente. Eleginos, llegamos para cambiar la forma en que se gestiona la salud.
 
@@ -12,7 +12,7 @@ También contamos con un sector dentro de la clínica que se encarga de la organ
 
 ## Primeros pasos
 
-La clínica online lo recibirá con una página de bienvenida que le permitirá elegir entre loguearse o registrarse. Si no cuenta con una cuenta en el sitio no podrá ingresar al sistema ⛔.
+La clínica online lo recibirá con una página de bienvenida que le permitirá elegir entre loguearse o registrarse. Si no cuenta con una cuenta en el sitio, no podrá ingresar al sistema ⛔.
 
 ![Captura de pantalla (168)](https://user-images.githubusercontent.com/37988654/199773820-c66b4adb-94b8-4d46-a874-c3ead70e6451.png)
 
@@ -42,11 +42,11 @@ https://user-images.githubusercontent.com/37988654/199786355-13125b52-6e9c-4249-
 
 ### Mis Turnos
 
-Verás los turnos que tienes o tenías disponible
+Verás los turnos que tienes o tenías disponible.
 
 ### Pacientes 
 
-Verás la historia clinica de los pacientes que en algún momento tuviste
+Verás la historia clínica de los pacientes que en algún momento tuviste.
 
 ### Comentarios
 
@@ -54,17 +54,18 @@ Verás los comentarios que recibiste por parte de los pacientes
 
 ## :sneezing_face: Pacientes
 
+Espacio diseñado para que no tengas que dar muchas vueltas. Desde aquí podrás sacar y consultar turnos, ver los diagnosticos de las atenciones recibidas y un resumen del paciente desde <i>Perfil</i>.
+
 ### Mis Turnos
 
-Verás los turnos que tienes o tenías disponible
+Verás los turnos que tienes o tenías disponible. Además, desde esta sección, tendrás la posibilidad de consultar el diagnóstico/comentario que dejó el especialista sobre tu visita.
 
-### Añadir Turno
+![Captura de pantalla (170)](https://user-images.githubusercontent.com/37988654/199790208-01c5279d-79d5-439e-8d1f-5c81d2c1ce98.png)
 
-Podrás generar un nuevo turno
+### Solicitar turno
 
-### Comentarios
+Podrás generar un nuevo turno, de la misma forma en que lo hace el administrador, pero con la diferencia de que no tendrás que seleccionar al paciente 😉.
 
-Verás los comentarios de todos los Especialistas
 ---
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.3.3.
