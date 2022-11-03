@@ -18,7 +18,7 @@ La clínica online lo recibirá con una página de bienvenida que le permitirá 
 
 ## 🧑‍💻 Panel de control (Admin)
 
-A esta sección solo podrán acceder usuarios con perfil <i>administrador<i>, quienes tendrán acceso a las siguientes secciones:
+A esta sección solo podrán acceder usuarios con perfil <i>administrador</i>, quienes tendrán acceso a las siguientes secciones:
 
 ### Usuarios
 
