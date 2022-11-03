@@ -14,7 +14,7 @@ También contamos con un sector dentro de la clínica que se encarga de la organ
 
 En primer lugar te encontraras con una pagina de bienvenida donde se encuentra el logo de la clinica y un saludo. En la parte superior se observa dos opciones: un Inicio de sesion y un Registro donde podras registrar.
 
-## :sunglasses: Administracion (Admin) :sunglasses:
+## 🧑‍💻 Administracion (Admin)
 
 Aqui podra acceder el administrador, puede ejecutar acciones como:
 
@@ -56,7 +56,7 @@ Podrá agregar un nuevo administrador en categoría Administradores
 
 Sólo aqui se podra registrar usuarios de tipo Administrador
 
-## 	:woman_health_worker: Especialista :man_health_worker:
+## 	:woman_health_worker: Especialista
 
 ### Mis Turnos
 
@@ -70,7 +70,7 @@ Verás la historia clinica de los pacientes que en algún momento tuviste
 
 Verás los comentarios que recibiste por parte de los pacientes
 
-## :mask: Pacientes :sneezing_face:
+## :sneezing_face: Pacientes
 
 ### Mis Turnos
 
