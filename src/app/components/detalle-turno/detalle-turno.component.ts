@@ -196,6 +196,7 @@ export class DetalleTurnoComponent implements OnInit {
       this.db
         .update('turnos', this.turnoSeleccionado.id, turno)
         .then((res: any) => {
+          console.log(turno);
           turno.estado = EstadoTurno.finalizado;
           this.sa.confirmacionAlert(
             'Turno finalizado',

@@ -7,6 +7,7 @@ import { EstadoTurno, Turno } from 'src/app/classes/turno';
 import { FirestoreDbService } from 'src/app/services/firestore-db.service';
 import { Time } from '@angular/common';
 import { DatePipe } from '@angular/common';
+import { AlertasService } from 'src/app/services/alertas.service';
 
 @Component({
   selector: 'app-alta-turno',
@@ -39,7 +40,8 @@ export class AltaTurnoComponent implements OnInit {
     private db: FirestoreDbService,
     private auth: AuthService,
     private fb: FormBuilder,
-    private datepipe: DatePipe
+    private datepipe: DatePipe,
+    private sa: AlertasService
   ) {
     this.pacienteLoggeado = this.auth.usuarioLogueado;
 
@@ -55,11 +57,10 @@ export class AltaTurnoComponent implements OnInit {
 
     //Get de usuarios
     this.getEspecialidades();
-  }
-
-  ngOnInit(): void {
     this.getEspecialistas();
   }
+
+  ngOnInit(): void {}
 
   //GETTERS
   async getEspecialistas() {
@@ -162,8 +163,9 @@ export class AltaTurnoComponent implements OnInit {
             this.resetParametros();
             // this.loading = false;
             this.loading = false;
+            this.sa.confirmacionAlert('Confirmado', 'El turno es tuyo');
           })
-          .catch((error) => console.log(error));
+          .catch((error) => this.sa.errorAlert('Error', error));
       }
     } catch (error) {
       console.log('Error en alta paciente: ', error);

@@ -8,33 +8,39 @@ import { Turno } from 'src/app/classes/turno';
 @Component({
   selector: 'app-mis-pacientes',
   templateUrl: './mis-pacientes.component.html',
-  styleUrls: ['./mis-pacientes.component.css']
+  styleUrls: ['./mis-pacientes.component.css'],
 })
 export class MisPacientesComponent implements OnInit {
-
   listaPacientes: Paciente[] = [];
-  pacienteSeleccionado : Paciente | any;
-  especialistaLogueado : Especialista | any;
-  listaPacientesDni : number[] = [] ;
+  pacienteSeleccionado: Paciente | any;
+  especialistaLogueado: Especialista | any;
+  listaPacientesDni: number[] = [];
   filter: string = '';
-  mostrarHistoria : boolean = false;
+  mostrarHistoria: boolean = false;
 
-  constructor(private auth : AuthService, private db : FirestoreDbService) { }
+  constructor(private auth: AuthService, private db: FirestoreDbService) {}
 
   ngOnInit(): void {
     this.especialistaLogueado = this.auth.usuarioLogueado;
+    console.log(this.especialistaLogueado);
 
-    this.db.getTurnosFinalizadosByEspecialista(this.especialistaLogueado.dni).subscribe((turnos: any) => {
-      this.listaPacientesDni = turnos.map((turno : any)=>{
-        return turno.payload.doc.data().datosPaciente.dni;
-      });
-      this.db.getByList('dni',this.listaPacientesDni).subscribe((pacientes:any)=>{
-        this.listaPacientes = pacientes.map((paciente : any)=>{
-          return paciente.payload.doc.data();
+    this.db
+      .getTurnosFinalizadosByEspecialista(this.especialistaLogueado.dni)
+      .subscribe((turnos: any) => {
+        this.listaPacientesDni = turnos.map((turno: any) => {
+          return turno.payload.doc.data().datosPaciente.dni;
         });
+        this.db
+          .getByList('dni', this.listaPacientesDni)
+          .subscribe((pacientes: any) => {
+            this.listaPacientes = pacientes.map((paciente: any) => {
+              return paciente.payload.doc.data();
+            });
+          });
       });
-    });
 
+    console.log(this.listaPacientesDni);
+    console.log(this.listaPacientes);
   }
 
   seleccionarPaciente(paciente: Paciente) {

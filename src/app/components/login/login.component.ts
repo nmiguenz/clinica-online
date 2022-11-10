@@ -73,7 +73,7 @@ export class LoginComponent implements OnInit {
       });
 
     let pacienteDos = this.db
-      .getUser('usuarios', '==', 'mail', 'nicolasmiguenz@hotmail.com')
+      .getUser('usuarios', '==', 'mail', 'nkfujgfvrxmqgpbyyp@tmmcv.net')
       .subscribe((usuarios: any) => {
         if (usuarios[0] != null) {
           this.pacienteFotoUrl2 = usuarios[0].payload.doc.data().fotoUno;
@@ -82,7 +82,7 @@ export class LoginComponent implements OnInit {
       });
 
     let pacienteTres = this.db
-      .getUser('usuarios', '==', 'mail', 'shibori.polonio@gmail.com')
+      .getUser('usuarios', '==', 'mail', 'qipanbbdkijygpdhvl@tmmcv.net')
       .subscribe((usuarios: any) => {
         if (usuarios[0] != null) {
           this.pacienteFotoUrl3 = usuarios[0].payload.doc.data().fotoUno;
@@ -91,7 +91,7 @@ export class LoginComponent implements OnInit {
       });
 
     let especialista = this.db
-      .getUser('usuarios', '==', 'mail', 'efhzfoucmphrlatyuu@tmmcv.net')
+      .getUser('usuarios', '==', 'mail', 'nlncskbnxmdykhfqrh@tmmbt.com')
       .subscribe((usuarios: any) => {
         if (usuarios[0] != null) {
           this.especialistaFotoUrl = usuarios[0].payload.doc.data().fotoUno;
@@ -100,7 +100,7 @@ export class LoginComponent implements OnInit {
       });
 
     let especialistaDos = this.db
-      .getUser('usuarios', '==', 'mail', 'jpalotes@gmail.com')
+      .getUser('usuarios', '==', 'mail', 'csbmrbzysvknduoakp@tmmwj.com')
       .subscribe((usuarios: any) => {
         if (usuarios[0] != null) {
           this.especialistaDosFotoUrl = usuarios[0].payload.doc.data().fotoUno;
@@ -220,21 +220,21 @@ export class LoginComponent implements OnInit {
       this.formGroup.controls.password.setValue('123456');
     }
     if (pos == '2') {
-      this.formGroup.controls.mail.setValue('nicolasmiguenz@hotmail.com');
+      this.formGroup.controls.mail.setValue('nkfujgfvrxmqgpbyyp@tmmcv.net');
       this.formGroup.controls.password.setValue('123456');
     }
     if (pos == '3') {
-      this.formGroup.controls.mail.setValue('shibori.polonio@gmail.com');
+      this.formGroup.controls.mail.setValue('qipanbbdkijygpdhvl@tmmcv.net');
       this.formGroup.controls.password.setValue('123456');
     }
   }
 
   cargarEspecialista(pos: string) {
     if (pos == '1') {
-      this.formGroup.controls.mail.setValue('efhzfoucmphrlatyuu@tmmcv.net');
+      this.formGroup.controls.mail.setValue('nlncskbnxmdykhfqrh@tmmbt.com');
       this.formGroup.controls.password.setValue('123456');
     } else {
-      this.formGroup.controls.mail.setValue('jpalotes@gmail.com');
+      this.formGroup.controls.mail.setValue('csbmrbzysvknduoakp@tmmwj.com');
       this.formGroup.controls.password.setValue('123456');
     }
   }

@@ -1,4 +1,4 @@
-.pacienteBtn:hover{
+.pacienteBtn:hover {
   transform: scale(1.2);
 }
 
@@ -10,7 +10,13 @@
   background-size: cover;
 }
 
-.lupa{
+.fastAccessButton {
+  width: 6rem;
+  height: 6rem;
+  background-size: cover;
+}
+
+.lupa {
   position: absolute;
   margin-top: -32px;
   margin-left: -32px;

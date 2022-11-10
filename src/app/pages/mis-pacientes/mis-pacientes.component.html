@@ -1,31 +1,45 @@
-   <!-- Selección especialistas -->
-   <div class="container mt-2">
-    <div class="card signin-content py-4 shadow-lg p-3 mb-2 bg-body rounded-4 d-flex">
-
-      <div class="row d-flex justify-content-arround align-items-center mb-3">
-        <div class="col col-md-8">
-          <h3 class="fw-bold mb-2">Seleccionar paciente atendido</h3>
-        </div>
-
-        <div class="col col-md-4 text-end">
-          <input class="form-control" type="text" placeholder="Buscar por profesional" [(ngModel)]="filter">
-          <span class="lupa"><i class="bi bi-search"></i></span>
-        </div>
-
+<!-- Selección especialistas -->
+<div class="container mt-2">
+  <div
+    class="card signin-content py-4 shadow-lg p-3 mb-2 bg-body rounded-4 d-flex"
+  >
+    <div class="row d-flex justify-content-arround align-items-center mb-3">
+      <div class="col col-md-8">
+        <h3 class="fw-bold mb-2">Seleccionar paciente atendido</h3>
       </div>
 
-      <div class="row justify-content-arround">
-          <div class="col-md-3 mb-1 text-center pacienteBtn" *ngFor="let paciente of listaPacientes" (click)="seleccionarPaciente(paciente)">
-            <button mat-mini-fab class="fastAccessButton"
-                [ngStyle]="{'background-image': 'url(' + paciente.fotoUno + ')', 'width' : '6rem', 'height': '6rem' }">
-            </button>
-            <p>{{paciente.nombre}} {{paciente.apellido}} </p>
-          </div>
+      <div class="col col-md-4 text-end">
+        <input
+          class="form-control"
+          type="text"
+          placeholder="Buscar por profesional"
+          [(ngModel)]="filter"
+        />
+        <span class="lupa"><i class="bi bi-search"></i></span>
       </div>
+    </div>
 
-      <div class="container d-flex justify-content-between mb-2">
-        <app-detalla-historia-clinica [pacienteElegido]="pacienteSeleccionado" [especialista]="especialistaLogueado" *ngIf="mostrarHistoria"></app-detalla-historia-clinica>
+    <div class="row justify-content-arround">
+      <div
+        class="col-md-3 mb-1 text-center pacienteBtn"
+        *ngFor="let paciente of listaPacientes"
+        (click)="seleccionarPaciente(paciente)"
+      >
+        <button
+          mat-mini-fab
+          class="fastAccessButton"
+          [ngStyle]="{ 'background-image': 'url(' + paciente.fotoUno + ')' }"
+        ></button>
+        <p>{{ paciente.nombre }} {{ paciente.apellido }}</p>
       </div>
+    </div>
 
+    <div class="container d-flex justify-content-between mb-2">
+      <app-detalla-historia-clinica
+        [pacienteElegido]="pacienteSeleccionado"
+        [especialista]="especialistaLogueado"
+        *ngIf="mostrarHistoria"
+      ></app-detalla-historia-clinica>
     </div>
   </div>
+</div>
