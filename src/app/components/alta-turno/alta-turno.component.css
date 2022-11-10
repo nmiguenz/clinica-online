@@ -1,16 +1,66 @@
-.card{
+.card {
   width: 100%;
 }
 
-img{
+img {
   height: 15rem;
 }
 
-tbody{
+tbody {
   cursor: pointer;
 }
 
-.lupa{
+.divBtns {
+  border: black solid 1px;
+  border-radius: 10px;
+  margin-bottom: 5px;
+  margin-right: 10px;
+  height: 106px;
+}
+
+.divBtnsEspecialidad {
+  /* border: black solid 1px; */
+  border-radius: 10px;
+  margin-bottom: 5px;
+  margin-right: 10px;
+  height: 5rem;
+}
+
+.divBtns .header {
+  margin-bottom: 0;
+  background-color: #ffff00c7;
+  border-radius: 10px 10px 0 0;
+  text-align: center;
+}
+
+.divBtns button {
+  border: 0;
+  border-radius: 0 0 10px 10px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 10rem;
+  height: 5rem;
+  margin-bottom: 0;
+}
+
+.divBtnsEspecialidad button {
+  border: 0;
+  border-radius: 10px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 10rem;
+  height: 5rem;
+  margin-bottom: 0;
+}
+
+.divBtnsEspecialidad button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 1rem 3rem #0fcfaf50 !important;
+}
+
+.lupa {
   position: absolute;
   margin-top: -32px;
   margin-left: -32px;

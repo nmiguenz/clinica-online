@@ -21,23 +21,12 @@ export class NavbarComponent implements OnInit, DoCheck {
   ) {
     if (this.auth.usuarioLogueado != null)
       this.usuarioLogueado = this.auth.usuarioLogueado;
-
-    if (
-      this.usuarioLogueado == undefined &&
-      localStorage.getItem('loggedUser')
-    ) {
-      this.userJson = localStorage.getItem('loggedUser');
-      console.log(this.usuarioLogueado);
-    }
   }
 
   ngOnInit(): void {
     document.body.style.setProperty('--navbar-scroll-position', 'fixed');
     document.body.style.setProperty('--navbar-scroll-text', 'black');
     window.addEventListener('scroll', this.scroll, true);
-
-    // if (this.usuarioLogueado == undefined)
-    //   this.obtenerUsuarioDb(JSON.parse(this.userJson).email);
   }
 
   ngDoCheck() {
@@ -77,35 +66,20 @@ export class NavbarComponent implements OnInit, DoCheck {
     }
   }
 
-  // async obtenerUsuarioDb(email: string) {
-  //   this.db
-  //     .getCollectionByField('usuarios', '==', 'mail', email)
-  //     .then((res: any) => {
-  //       let miSuscription = res.subscribe((arg: any) => {
-  //         this.usuarioLogueado = arg['0'];
-  //       });
-  //       miSuscription.unsubscribe();
-  //     })
-  //     .catch((error: any) => {
-  //       console.log(error);
-  //     });
-  // }
-
   cerrarSesion() {
+    this.estaLoggeado = false;
+    this.usuarioLogueado = null;
     this.auth
       .logOut()
       .then(() => {
-        this.estaLoggeado = false;
-        this.usuarioLogueado = null;
         localStorage.removeItem('loggedUser');
-
         //Seteo el navbar style
         document.body.style.setProperty('--navbar-scroll-position', 'fixed');
         document.body.style.setProperty('--navbar-scroll', 'transparent');
         document.body.style.setProperty('--navbar-scroll-text', 'black');
         document.body.style.setProperty('--navbar-scroll-shadow', 'none');
 
-        this.route.navigateByUrl('home');
+        this.route.navigateByUrl('acceso/login');
       })
       .catch((error) => console.log(error));
   }

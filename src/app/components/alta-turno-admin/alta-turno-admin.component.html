@@ -1,68 +1,10 @@
 <!-- <app-loading [inputLoading]="loading"></app-loading> -->
 <!-- Section: Design Block -->
 <section class="">
-  <!-- Selección especialistas -->
-  <div
-    class="container d-flex justify-content-center align-items-center mb-3"
-    *ngIf="tipoUsuario == ''"
-  >
-    <div
-      class="card signin-content py-4 shadow-lg p-3 mb-2 bg-body rounded-4 d-flex"
-    >
-      <div class="row d-flex justify-content-arround align-items-center mb-3">
-        <div class="col col-md-8">
-          <h3 class="fw-bold mb-2">Seleccionar especialista</h3>
-        </div>
-
-        <div class="col col-md-4 text-end">
-          <input
-            class="form-control"
-            type="text"
-            placeholder="Buscar por profesional"
-            [(ngModel)]="filter"
-          />
-          <span class="lupa"><i class="bi bi-search"></i></span>
-        </div>
-      </div>
-
-      <div class="container d-flex justify-content-between mb-2 flex-wrap">
-        <li
-          class="d-inline-block"
-          (click)="seleccionarEspecialista(especialista)"
-          *ngFor="
-            let especialista of listaEspecialistas
-              | filtrarEspePacienteAdmin: filter
-          "
-        >
-          <button
-            type="button"
-            style=" border-radius: 10px; background-image: url({{
-              especialista.fotoUno
-            }}); background-position: center;
-            background-repeat: no-repeat;
-            background-size: cover;
-            width: 10rem; height: 7rem;"
-          >
-            <p
-              style="
-                background-color: #ffff00c7;
-                margin-top: 5rem;
-                border-radius: 10px;
-              "
-            >
-              {{ especialista.nombre }} {{ especialista.apellido }}
-            </p>
-          </button>
-        </li>
-      </div>
-    </div>
-  </div>
-  <!-- Fin Selección especialistas -->
-
   <!-- Selección especialidad -->
   <div
     class="container d-flex justify-content-center align-items-center mb-3"
-    *ngIf="tipoUsuario == 'especialidad'"
+    *ngIf="especialidadSeleccionada == ''"
   >
     <div
       class="card signin-content py-4 shadow-lg p-3 mb-2 bg-body rounded-4 d-flex"
@@ -84,30 +26,85 @@
         </div>
       </div>
 
-      <div class="container d-flex justify-content-between mb-2 flex-wrap">
+      <div class="container d-flex justify-content-start flex-wrap">
         <li
           class="d-inline-block"
           (click)="seleccionarEspecialidad(especialidad.nombre)"
           *ngFor="let especialidad of listaEspecialidad"
         >
-          <button type="button" class="btn btn-primary btn-block">
+          <div class="divBtnsEspecialidad shadow-lg">
+            <!-- <p class="header">
             {{ especialidad.nombre }}
-          </button>
+          </p> -->
+            <button
+              type="button"
+              style="
+              background-image: url({{ especialidad?.foto }});"
+            ></button>
+          </div>
         </li>
       </div>
     </div>
   </div>
   <!-- Fin Selección especialidad -->
 
-  <!-- Selección pacientes -->
+  <!-- Selección especialistas -->
   <div
     class="container d-flex justify-content-center align-items-center mb-3"
-    *ngIf="tipoUsuario == 'peciente'"
+    *ngIf="tipoUsuario == 'especialista'"
   >
     <div
       class="card signin-content py-4 shadow-lg p-3 mb-2 bg-body rounded-4 d-flex"
     >
       <div class="row d-flex justify-content-arround align-items-center mb-3">
+        <div class="col col-md-8">
+          <h3 class="fw-bold mb-2">Seleccionar especialista</h3>
+        </div>
+
+        <div class="col col-md-4 text-end">
+          <input
+            class="form-control"
+            type="text"
+            placeholder="Buscar por profesional"
+            [(ngModel)]="filter"
+          />
+          <span class="lupa"><i class="bi bi-search"></i></span>
+        </div>
+      </div>
+
+      <div class="container d-flex justify-content-start flex-wrap">
+        <li
+          class="d-inline-block"
+          (click)="seleccionarEspecialista(especialista)"
+          *ngFor="
+            let especialista of listaEspecialistasFiltrada
+              | filtrarEspePacienteAdmin: filter
+          "
+        >
+          <div class="divBtns">
+            <p class="header">
+              {{ especialista.nombre }} {{ especialista.apellido }}
+            </p>
+            <button
+              type="button"
+              style="background-image: url({{ especialista.fotoUno }});"
+            ></button>
+          </div>
+        </li>
+      </div>
+    </div>
+  </div>
+  <!-- Fin Selección especialistas -->
+
+  <!-- Selección pacientes -->
+  <div
+    class="container d-flex justify-content-center align-items-center mb-3"
+    *ngIf="tipoUsuario == 'paciente'"
+  >
+    <div
+      class="card signin-content py-4 shadow-lg p-3 mb-2 bg-body rounded-4 d-flex"
+    >
+      <div class="row d-flex justify-content-start align-items-center mb-3">
         <div class="col col-md-8">
           <h3 class="fw-bold mb-2">Seleccionar paciente</h3>
         </div>
@@ -178,6 +175,7 @@
                     id="Especialista"
                     placeholder="name@example.com"
                     formControlName="especialista"
+                    readonly
                   />
                   <label for="Especialista">Especialista</label>
                   <span
@@ -200,6 +198,7 @@
                     id="especialidad"
                     placeholder="name@example.com"
                     formControlName="especialidad"
+                    readonly
                   />
                   <label for="especialidad">Especialidad</label>
                   <span
@@ -228,6 +227,7 @@
                     id="paciente"
                     placeholder="name@example.com"
                     formControlName="paciente"
+                    readonly
                   />
                   <label for="paciente">Paciente</label>
                   <span
@@ -250,6 +250,7 @@
                     id="fecha"
                     placeholder="20-06-2022"
                     formControlName="fecha"
+                    readonly
                   />
                   <label for="fecha">Fechas</label>
                   <span

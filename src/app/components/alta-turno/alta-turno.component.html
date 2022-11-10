@@ -1,67 +1,11 @@
 <app-loading-general [inputLoading]="loading"></app-loading-general>
 <!-- Section: Design Block -->
+
 <section class="">
-  <!-- Selección especialistas -->
-  <div
-    class="container d-flex justify-content-center align-items-center mb-3"
-    *ngIf="tipoUsuario == ''"
-  >
-    <div
-      class="card signin-content py-4 shadow-lg p-3 mb-2 bg-body rounded-4 d-flex"
-    >
-      <div class="row d-flex justify-content-arround align-items-center mb-3">
-        <div class="col col-md-8">
-          <h3 class="fw-bold mb-2">Seleccionar especialista</h3>
-        </div>
-
-        <div class="col col-md-4 text-end">
-          <input
-            class="form-control"
-            type="text"
-            placeholder="Buscar por profesional"
-            [(ngModel)]="filter"
-          />
-          <span class="lupa"><i class="bi bi-search"></i></span>
-        </div>
-      </div>
-
-      <div class="container d-flex justify-content-between mb-2 flex-wrap">
-        <li
-          class="d-inline-block"
-          (click)="seleccionarEspecialista(especialista)"
-          *ngFor="
-            let especialista of listaEspecialistas | filtrarEspecialista: filter
-          "
-        >
-          <button
-            type="button"
-            style=" border-radius: 10px; background-image: url({{
-              especialista.fotoUno
-            }}); background-position: center;
-              background-repeat: no-repeat;
-              background-size: cover;
-              width: 10rem; height: 7rem;"
-          >
-            <p
-              style="
-                background-color: #ffff00c7;
-                margin-top: 5rem;
-                border-radius: 10px;
-              "
-            >
-              {{ especialista.nombre }} {{ especialista.apellido }}
-            </p>
-          </button>
-        </li>
-      </div>
-    </div>
-  </div>
-  <!-- Fin Selección especialistas -->
-
   <!-- Selección especialidad -->
   <div
     class="container d-flex justify-content-center align-items-center mb-3"
-    *ngIf="tipoUsuario == 'especialidad'"
+    *ngIf="especialidadSeleccionada == ''"
   >
     <div
       class="card signin-content py-4 shadow-lg p-3 mb-2 bg-body rounded-4 d-flex"
@@ -83,20 +27,75 @@
         </div>
       </div>
 
-      <div class="container d-flex justify-content-between mb-2">
+      <div class="container d-flex justify-content-start flex-wrap">
         <li
           class="d-inline-block"
           (click)="seleccionarEspecialidad(especialidad.nombre)"
           *ngFor="let especialidad of listaEspecialidad"
         >
-          <button type="button" class="btn btn-primary btn-block">
-            {{ especialidad.nombre }}
-          </button>
+          <div class="divBtnsEspecialidad shadow-lg">
+            <!-- <p class="header">
+              {{ especialidad.nombre }}
+            </p> -->
+            <button
+              type="button"
+              style="
+                background-image: url({{ especialidad?.foto }});"
+            ></button>
+          </div>
         </li>
       </div>
     </div>
   </div>
   <!-- Fin Selección especialidad -->
+
+  <!-- Selección especialistas -->
+  <div
+    class="container d-flex justify-content-center align-items-center mb-3"
+    *ngIf="tipoUsuario == 'especialista'"
+  >
+    <div
+      class="card signin-content py-4 shadow-lg p-3 mb-2 bg-body rounded-4 d-flex"
+    >
+      <div class="row d-flex justify-content-arround align-items-center mb-3">
+        <div class="col col-md-8">
+          <h3 class="fw-bold mb-2">Seleccionar especialista</h3>
+        </div>
+
+        <div class="col col-md-4 text-end">
+          <input
+            class="form-control"
+            type="text"
+            placeholder="Buscar por profesional"
+            [(ngModel)]="filter"
+          />
+          <span class="lupa"><i class="bi bi-search"></i></span>
+        </div>
+      </div>
+
+      <div class="container d-flex justify-content-start flex-wrap">
+        <li
+          class="d-inline-block"
+          (click)="seleccionarEspecialista(especialista)"
+          *ngFor="
+            let especialista of listaEspecialistasFiltrada
+              | filtrarEspecialista: filter
+          "
+        >
+          <div class="divBtns">
+            <p class="header">
+              {{ especialista.nombre }} {{ especialista.apellido }}
+            </p>
+            <button
+              type="button"
+              style="background-image: url({{ especialista.fotoUno }});"
+            ></button>
+          </div>
+        </li>
+      </div>
+    </div>
+  </div>
+  <!-- Fin Selección especialistas -->
 
   <div class="container d-flex justify-content-center align-items-center">
     <div
@@ -208,8 +207,7 @@
               </div>
             </div>
 
-            <!-- Email input -->
-            <div class="container d-flex mb-3" *ngIf="especialidadSeleccionado">
+            <div class="container d-flex mb-3" *ngIf="especialistaSeleccionado">
               <div class="row justify-content-arround">
                 <h5 class="mb-3 col-md-12 text-start">Turnos disponibles</h5>
                 <div

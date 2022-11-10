@@ -3,6 +3,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AlertasService } from 'src/app/services/alertas.service';
 
 @Component({
   selector: 'app-login',
@@ -36,7 +37,8 @@ export class LoginComponent implements OnInit {
     private auth: AuthService,
     private fb: FormBuilder,
     private route: Router,
-    private db: FirestoreDbService
+    private db: FirestoreDbService,
+    private sa: AlertasService
   ) {
     this.formGroup = this.fb.group({
       mail: ['', [Validators.required, Validators.email]],
@@ -49,8 +51,6 @@ export class LoginComponent implements OnInit {
         ],
       ],
     });
-
-    // this.getUsuarios();
   }
 
   ngOnInit(): void {
@@ -91,7 +91,7 @@ export class LoginComponent implements OnInit {
       });
 
     let especialista = this.db
-      .getUser('usuarios', '==', 'mail', 'roquesosa@gmail.com')
+      .getUser('usuarios', '==', 'mail', 'efhzfoucmphrlatyuu@tmmcv.net')
       .subscribe((usuarios: any) => {
         if (usuarios[0] != null) {
           this.especialistaFotoUrl = usuarios[0].payload.doc.data().fotoUno;
@@ -141,15 +141,9 @@ export class LoginComponent implements OnInit {
         this.loading = true;
         let miSuscription = res.subscribe((arg: any) => {
           this.user = arg['0'];
-
+          //Si el usuario existe se guarda en el localStorage
           if (this.user) {
-            localStorage.setItem(
-              'loggedUser',
-              JSON.stringify({
-                email: this.user.mail,
-                perfil: this.user.perfil,
-              })
-            );
+            localStorage.setItem('loggedUser', JSON.stringify(this.user));
           }
 
           if (this.user) {

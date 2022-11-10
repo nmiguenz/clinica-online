@@ -1,148 +1,39 @@
-
- <div class="card py-4 shadow-lg p-3 mb-2 bg-body rounded-4 d-flex">
-
-  <h3 class="mb-4 text-center">
-    Mis horarios
-  </h3>
+<div class="card py-4 shadow-lg p-3 mb-2 bg-body rounded-4 d-flex">
+  <h3 class="mb-4 text-center">Mis horarios</h3>
 
   <div class="row">
-
     <!-- Especialidades -->
-    <div class="col-lg-4">
-      <div class="card py-4 shadow-lg p-3 mb-2 bg-body rounded-4 d-flex ">
+    <div class="col-lg-4 d-flex flex-column justify-content-arround">
+      <div class="card py-4 shadow-lg p-3 mb-2 bg-body rounded-4 d-flex">
         <div class="card-body">
-
-          <div class="row d-flex justify-content-arround align-items-center mb-3">
-            <!-- <div class="col-5"> -->
-              <h5>Especialidades</h5>
-            <!-- </div> -->
-
-            <!-- <div class="col-7">
-              <input class="sm-5" type="text" [(ngModel)]="filter">
-            </div> -->
+          <div
+            class="row d-flex justify-content-arround align-items-center mb-3"
+          >
+            <h5>Especialidades</h5>
           </div>
 
           <ol class="list-group list-group-light list-group-numbered">
-            <li appHighlight class="list-group-item" (click)="seleccionarEspecialidad(especialidad)"
-            *ngFor="let especialidad of listaEspecialidades">
-            <span style="text-transform: capitalize;">{{especialidad.nombre}}</span></li>
-
+            <li
+              appHighlight
+              class="list-group-item"
+              (click)="seleccionarEspecialidad(especialidad)"
+              *ngFor="let especialidad of listaEspecialidades"
+            >
+              <span style="text-transform: capitalize">{{
+                especialidad.nombre
+              }}</span>
+            </li>
           </ol>
-
         </div>
       </div>
-    </div>
 
-    <div class="col-lg-8">
       <div class="card py-4 shadow-lg p-3 mb-2 bg-body rounded-4 d-flex">
-
-          <div class="horario-form py-4 px-5 text-align-start opacity-100">
-            <h5 class="fw-bold mb-4">Cargar horario</h5>
-            <form [formGroup]="formHorarios" (submit)="altaHorarios()">
-              <!-- 2 column grid layout with text inputs for the first and last names -->
-              <div class="row">
-
-                <div class="col-md-6 mb-4">
-                  <div class="form-floating">
-                    <input type="text" class="form-control" id="especialidad" placeholder="name@example.com" formControlName="especialidad" [ngModel]="especialidadSeleccionada" readonly>
-                    <label for="especialidad">Especialidad</label>
-                    <span class="text-danger" *ngIf="formHorarios.get('especialidad')?.hasError('required') && formHorarios.get('especialidad')?.touched">Seleccione una especialidad de la lista.</span>
-                  </div>
-                </div>
-
-                <div class="col-md-6 mb-4">
-                  <div class="form-floating">
-                    <select class="form-select" id="dia" aria-label="Floating label select example" formControlName="dia">
-                      <option *ngFor="let dia of diasSemana" value={{dia}} style="text-transform: capitalize;">{{dia}}</option>
-                    </select>
-                    <label for="dia">Seleccionar día</label>
-                    <span class="text-danger" *ngIf="formHorarios.get('dia')?.hasError('required') && formHorarios.get('dia')?.touched">El día es requerido.</span>
-                  </div>
-                </div>
-
-              </div>
-
-              <div class="row">
-
-                <div class="col-md-6 mb-4">
-                  <div class="form-floating">
-                    <input type="text" class="form-control" id="desde" formControlName="desde" placeholder="name@example.com" formControlName="desde"
-                          pattern="^([0-1]?[0-9]|2[0-4]):([0-5][0-9])(:[0-5][0-9])?$">
-                    <label for="desde">Desde: </label>
-                    <span class="text-danger" *ngIf="formHorarios.get('desde')?.hasError('required') && formHorarios.get('desde')?.touched">La hora de inicio es requerida.</span>
-                    <span class="text-danger" *ngIf="formHorarios.get('desde')?.hasError('pattern')">El formato es HH:mm.</span>
-                  </div>
-                </div>
-
-                <div class="col-md-6 mb-4">
-                  <div class="form-floating">
-                    <input type="text" class="form-control" id="hasta" formControlName="hasta" placeholder="name@example.com" formControlName="hasta"
-                    pattern="^([0-1]?[0-9]|2[0-4]):([0-5][0-9])(:[0-5][0-9])?$">
-                    <label for="hasta">Hasta: </label>
-                    <span class="text-danger" *ngIf="formHorarios.get('hasta')?.hasError('required') && formHorarios.get('hasta')?.touched">La hora de finalización es requerida.</span>
-                    <span class="text-danger" *ngIf="formHorarios.get('hasta')?.hasError('pattern')">El formato es HH:mm.</span>
-                  </div>
-                </div>
-
-              </div>
-
-              <div class="col-12"  *ngIf="!formHorarios.get('hasta')?.hasError('required') && !formHorarios.get('desde')?.hasError('required') && !formHorarios.get('dia')?.hasError('required')">
-
-                <button class="btn btn-outline-primary mb-3" type="button" (click)="agregarDiaHorarioEspecialidad()">Agregar horario</button>
-
-                <h5>Días y horarios: </h5>
-                <table class="table mb-3" *ngIf="listaDiasEspecialidad != []">
-                  <thead>
-                    <tr>
-                      <th scope="col">Día</th>
-                      <th scope="col">Desde</th>
-                      <th scope="col">Hasta</th>
-                      <th scope="col">Eliminar</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr *ngFor="let franja of listaDiasEspecialidad">
-                      <th scope="row">{{franja.dia}}</th>
-                      <td>{{franja.desde}}</td>
-                      <td>{{franja.hasta}}</td>
-                      <td><a (click)="eliminarhorario(franja)"><i class="bi bi-trash"></i></a></td>
-                    </tr>
-                  </tbody>
-                </table>
-
-              </div>
-
-              <div class="form-floating mb-4">
-                <input type="number" class="form-control" id="tiempo" placeholder="name@example.com" formControlName="tiempo">
-                <label for="tiempo">Duración mínima en minutos</label>
-                <span class="text-danger" *ngIf="formHorarios.get('tiempo')?.hasError('required') && formHorarios.get('tiempo')?.touched">La duración es requerida.</span>
-                <span class="text-danger" *ngIf="formHorarios.get('tiempo')?.hasError('min')">La duración mínima de la consulta es 15 minutos.</span>
-              </div>
-
-              <!-- Submit button -->
-              <button type="submit" class="btn btn-primary btn-block mb-4" [disabled]="!formHorarios.valid" >
-                ALTA HORARIOS
-              </button>
-
-            </form>
-
-          </div>
-
-    </div>
-
-    </div>
-
-  </div>
-
-  <div class="row">
-
-    <div class="col-4 listadoHorios">
-      <div class="card py-4 shadow-lg p-3 mb-2 bg-body rounded-4 d-flex ">
         <div class="card-body">
+          <h5>
+            Horarios <span>{{ especialidadSeleccionada }}</span>
+          </h5>
 
-          <h5>Horarios <span>{{especialidadSeleccionada}}</span></h5>
-
-          <table class="table mb-3" *ngIf="tiempoEspecialidad != '' ">
+          <table class="table mb-3" *ngIf="tiempoEspecialidad != ''">
             <thead>
               <tr>
                 <th scope="col">Día</th>
@@ -153,21 +44,216 @@
             </thead>
             <tbody>
               <tr *ngFor="let franja of listadoHorariosEspecialidad.diaHorario">
-                <th scope="row">{{franja.dia}}</th>
-                <td>{{franja.desde}}</td>
-                <td>{{franja.hasta}}</td>
-                <td>{{tiempoEspecialidad}}</td>
+                <th scope="row">{{ franja.dia }}</th>
+                <td>{{ franja.desde }}</td>
+                <td>{{ franja.hasta }}</td>
+                <td>{{ tiempoEspecialidad }}</td>
               </tr>
             </tbody>
           </table>
-
         </div>
       </div>
     </div>
 
-    <!-- Force next columns to break to new line at md breakpoint and up -->
-  <div class="w-100 d-none d-md-block"></div>
+    <div class="col-lg-8">
+      <div class="card py-4 shadow-lg p-3 mb-2 bg-body rounded-4 d-flex">
+        <div class="horario-form py-4 px-5 text-align-start opacity-100">
+          <h5 class="fw-bold mb-4">Cargar horario</h5>
+          <form [formGroup]="formHorarios" (submit)="altaHorarios()">
+            <!-- 2 column grid layout with text inputs for the first and last names -->
+            <div class="row">
+              <div class="col-md-6 mb-4">
+                <div class="form-floating">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="especialidad"
+                    placeholder="name@example.com"
+                    formControlName="especialidad"
+                    readonly
+                  />
+                  <label for="especialidad">Especialidad</label>
+                  <span
+                    class="text-danger"
+                    *ngIf="
+                      formHorarios.get('especialidad')?.hasError('required') &&
+                      formHorarios.get('especialidad')?.touched
+                    "
+                    >Seleccione una especialidad de la lista.</span
+                  >
+                </div>
+              </div>
 
+              <div class="col-md-6 mb-4">
+                <div class="form-floating">
+                  <select
+                    class="form-select"
+                    id="dia"
+                    aria-label="Floating label select example"
+                    formControlName="dia"
+                  >
+                    <option
+                      *ngFor="let dia of diasSemana"
+                      value="{{ dia }}"
+                      style="text-transform: capitalize"
+                    >
+                      {{ dia }}
+                    </option>
+                  </select>
+                  <label for="dia">Seleccionar día</label>
+                  <span
+                    class="text-danger"
+                    *ngIf="
+                      formHorarios.get('dia')?.hasError('required') &&
+                      formHorarios.get('dia')?.touched
+                    "
+                    >El día es requerido.</span
+                  >
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6 mb-4">
+                <div class="form-floating">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="desde"
+                    formControlName="desde"
+                    placeholder="name@example.com"
+                    formControlName="desde"
+                    pattern="^([0-1]?[0-9]|2[0-4]):([0-5][0-9])(:[0-5][0-9])?$"
+                  />
+                  <label for="desde">Desde: </label>
+                  <span
+                    class="text-danger"
+                    *ngIf="
+                      formHorarios.get('desde')?.hasError('required') &&
+                      formHorarios.get('desde')?.touched
+                    "
+                    >La hora de inicio es requerida.</span
+                  >
+                  <span
+                    class="text-danger"
+                    *ngIf="formHorarios.get('desde')?.hasError('pattern')"
+                    >El formato es HH:mm.</span
+                  >
+                </div>
+              </div>
+
+              <div class="col-md-6 mb-4">
+                <div class="form-floating">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="hasta"
+                    formControlName="hasta"
+                    placeholder="name@example.com"
+                    formControlName="hasta"
+                    pattern="^([0-1]?[0-9]|2[0-4]):([0-5][0-9])(:[0-5][0-9])?$"
+                  />
+                  <label for="hasta">Hasta: </label>
+                  <span
+                    class="text-danger"
+                    *ngIf="
+                      formHorarios.get('hasta')?.hasError('required') &&
+                      formHorarios.get('hasta')?.touched
+                    "
+                    >La hora de finalización es requerida.</span
+                  >
+                  <span
+                    class="text-danger"
+                    *ngIf="formHorarios.get('hasta')?.hasError('pattern')"
+                    >El formato es HH:mm.</span
+                  >
+                </div>
+              </div>
+            </div>
+
+            <div
+              class="col-12"
+              *ngIf="
+                !formHorarios.get('hasta')?.hasError('required') &&
+                !formHorarios.get('desde')?.hasError('required') &&
+                !formHorarios.get('dia')?.hasError('required')
+              "
+            >
+              <button
+                class="btn btn-outline-primary mb-3"
+                type="button"
+                (click)="agregarDiaHorarioEspecialidad()"
+              >
+                Agregar horario
+              </button>
+
+              <h5>Días y horarios:</h5>
+              <table class="table mb-3" *ngIf="listaDiasEspecialidad != []">
+                <thead>
+                  <tr>
+                    <th scope="col">Día</th>
+                    <th scope="col">Desde</th>
+                    <th scope="col">Hasta</th>
+                    <th scope="col">Eliminar</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let franja of listaDiasEspecialidad">
+                    <th scope="row">{{ franja.dia }}</th>
+                    <td>{{ franja.desde }}</td>
+                    <td>{{ franja.hasta }}</td>
+                    <td>
+                      <a (click)="eliminarhorario(franja)"
+                        ><i class="bi bi-trash"></i
+                      ></a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="form-floating mb-4">
+              <input
+                type="number"
+                class="form-control"
+                id="tiempo"
+                placeholder="name@example.com"
+                formControlName="tiempo"
+              />
+              <label for="tiempo">Duración mínima en minutos</label>
+              <span
+                class="text-danger"
+                *ngIf="
+                  formHorarios.get('tiempo')?.hasError('required') &&
+                  formHorarios.get('tiempo')?.touched
+                "
+                >La duración es requerida.</span
+              >
+              <span
+                class="text-danger"
+                *ngIf="formHorarios.get('tiempo')?.hasError('min')"
+                >La duración mínima de la consulta es 15 minutos.</span
+              >
+            </div>
+
+            <!-- Submit button -->
+            <button
+              type="submit"
+              class="btn btn-primary btn-block mb-4"
+              [disabled]="!formHorarios.valid"
+            >
+              ALTA HORARIOS
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
   </div>
 
+  <div class="row">
+    <div class="col-4 listadoHorios"></div>
+
+    <!-- Force next columns to break to new line at md breakpoint and up -->
+    <div class="w-100 d-none d-md-block"></div>
+  </div>
 </div>

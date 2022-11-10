@@ -360,8 +360,32 @@
                       placeholder="name@example.com"
                       [(ngModel)]="nuevaEspecialidad"
                       [ngModelOptions]="{ standalone: true }"
+                      value=""
                     />
                     <label for="ne">Nueva especialidad</label>
+                  </div>
+                </div>
+
+                <div class="col-md-6">
+                  <div class="input-group custom-file-button">
+                    <label class="input-group-text" for="inputGroupFile2"
+                      >Foto especialidad
+                    </label>
+                    <input
+                      type="file"
+                      class="form-control"
+                      id="nef"
+                      (input)="obtenerImg($event, 2)"
+                      accept="image/*"
+                    />
+                    <span
+                      class="text-danger"
+                      *ngIf="
+                        formGroup.get('fotoDos')?.hasError('required') &&
+                        formGroup.get('fotoDos')?.touched
+                      "
+                      >Foto de perfil requerida.</span
+                    >
                   </div>
                 </div>
 

@@ -13,7 +13,7 @@
             <h5 class="my-3">{{ usuario.nombre }} {{ usuario.apellido }}</h5>
             <p
               class="text-muted"
-              [ngClass]="perfil == 'paciente' ? 'mb-4' : 'mb-1'"
+              [ngClass]="usuario.perfil == 'paciente' ? 'mb-4' : 'mb-1'"
             >
               {{ usuario.perfil | uppercase }}
             </p>
@@ -73,8 +73,8 @@
                 <p class="text-muted mb-0">{{ usuario.mail }}</p>
               </div>
             </div>
-            <hr *ngIf="perfil == 'paciente'" />
-            <div class="row" *ngIf="perfil == 'paciente'">
+            <hr *ngIf="usuario.perfil == 'paciente'" />
+            <div class="row" *ngIf="usuario.perfil == 'paciente'">
               <div class="col-sm-3">
                 <p class="mb-0">Obra social</p>
               </div>
@@ -87,7 +87,7 @@
       </div>
     </div>
 
-    <div class="row mt-2" *ngIf="perfil == 'especialista'">
+    <div class="row mt-2" *ngIf="usuario.perfil == 'especialista'">
       <app-mis-horarios [inputEspecialista]="usuario"></app-mis-horarios>
     </div>
   </div>

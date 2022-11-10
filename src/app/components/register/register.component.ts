@@ -7,6 +7,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { FirestoreDbService } from 'src/app/services/firestore-db.service';
 import { RecaptchaService } from 'src/app/services/recaptcha.service';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
+import { url } from 'inspector';
 
 @Component({
   selector: 'app-register',
@@ -84,8 +85,6 @@ export class RegisterComponent implements OnInit {
       fotoDos: ['', Validators.required],
       recaptcha: ['', Validators.required],
     });
-
-    console.log(this.formGroup.value);
 
     this.key = this.captcha.siteKey;
     this.espanol = this.captcha.lang;
@@ -190,8 +189,6 @@ export class RegisterComponent implements OnInit {
 
     // Alta Especialista
     else {
-      console.log('registro captcha: ', this.resCaptcha);
-      console.log('Form login', this.formGroup.value);
       const especialista = new Especialista(
         this.formGroup.value.nombre,
         this.formGroup.value.apellido,
@@ -254,21 +251,55 @@ export class RegisterComponent implements OnInit {
   obtenerImg(event: any, num: number) {
     if (num == 1) {
       this.archivoImg = event.target.files[0];
-      console.log('imagen,', this.archivoImg);
     } else {
       this.archivoImgDos = event.target.files[0];
     }
   }
 
-  agregarEspecialidad(especialidad: string) {
+  //Agrega una nueva especialidad a la colección
+  async agregarEspecialidad(especialidad: string) {
     this.especialidades = []; //limpio el array
-    this.db
-      .alta({ nombre: especialidad }, 'especialidad')
-      .catch((error) => console.log(error));
+    let urlImg = '';
+    let especialidadNormalizada = '';
+
+    especialidadNormalizada = this.eliminarTildes(especialidad);
+
+    if (this.archivoImgDos != undefined && especialidad != '') {
+      //Agrego las fotos
+      await this.db
+        .uploadImage(
+          'especialidades',
+          especialidadNormalizada.toLowerCase(),
+          this.archivoImgDos
+        )
+        .then((res: string | any) => {
+          urlImg = res;
+        })
+        .catch((error) => console.log(error));
+
+      //Agrego nuevo objeto a la base
+      await this.db
+        .alta(
+          { nombre: especialidadNormalizada.toLowerCase(), foto: urlImg },
+          'especialidad'
+        )
+        .then((ref: any) => {
+          if (ref.id) {
+            this.crearEspecialidad = false;
+            this.nuevaEspecialidad = '';
+            this.archivoImgDos = '';
+          }
+        })
+        .catch((error) => console.log(error));
+    } else console.log('Rellene todos los campos');
   }
 
   getResCaptcha(valor: any) {
     this.resCaptcha = valor;
     this.formGroup.controls['recaptcha'].setValue(this.resCaptcha);
+  }
+
+  eliminarTildes(str: string) {
+    return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
   }
 }

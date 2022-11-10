@@ -7,17 +7,12 @@ import { Paciente } from 'src/app/classes/paciente';
   templateUrl: './mis-turnos.component.html',
   styleUrls: ['./mis-turnos.component.css'],
 })
-export class MisTurnosComponent implements OnInit {
+export class MisTurnosComponent {
   usuarioLogueado: any;
   perfil: string = '';
 
   constructor(private auth: AuthService) {
-    console.log('misturnos');
-  }
-
-  ngOnInit(): void {
     this.usuarioLogueado = this.auth.usuarioLogueado;
-    console.log(this.usuarioLogueado);
     this.perfil = this.usuarioLogueado.perfil;
   }
 }

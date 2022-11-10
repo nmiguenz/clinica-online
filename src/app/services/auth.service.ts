@@ -1,7 +1,6 @@
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { UserPerfil } from '../interface/user-perfil';
+import { FirestoreDbService } from './firestore-db.service';
 
 @Injectable({
   providedIn: 'root',
@@ -9,21 +8,15 @@ import { UserPerfil } from '../interface/user-perfil';
 export class AuthService {
   usuarioLogueado: any = null;
   estaLogueado: boolean = true;
+  local: string | any = '';
 
-  // private currentUserSubject: BehaviorSubject<UserPerfil> = new BehaviorSubject(
-  //   {} as UserPerfil
-  // );
-  // public readonly currentUser: Observable<UserPerfil> =
-  //   this.currentUserSubject.asObservable();
+  constructor(private auth: AngularFireAuth, private db: FirestoreDbService) {
+    this.local = localStorage.getItem('loggedUser');
+    if (this.local && this.usuarioLogueado == null) {
+      this.usuarioLogueado = JSON.parse(this.local);
+    }
+  }
 
-  constructor(private auth: AngularFireAuth) {}
-
-  // setCurrentUser(currentUser: UserPerfil) {
-  //   this.currentUserSubject.next(currentUser); //m�todo next(), del BehaviorSubject, guarda el currentUser que le entregaremos, nada m�s.
-  //   this.usuarioLogueado = currentUser;
-  // }
-
-  //
   async login(email: string, password: string): Promise<any> {
     try {
       this.estaLogueado = true;
@@ -43,15 +36,23 @@ export class AuthService {
     }
   }
 
+  // Obtiene el usuario logueado a partir del mail
+  getUsuarioLogueado(usuario: any) {
+    let usuarioSrv = this.db
+      .getUser('usuarios', '==', 'mail', JSON.parse(usuario).mail)
+      .subscribe((usuarios: any) => {
+        if (usuarios[0] != null) {
+          this.usuarioLogueado = usuarios[0].payload.doc.data();
+          this.estaLogueado = true;
+        }
+        usuarioSrv.unsubscribe();
+      });
+  }
+
   //Cierra la sesión del usuario
   logOut(): Promise<void> {
     this.usuarioLogueado = null;
     this.estaLogueado = false;
     return this.auth.signOut();
   }
-
-  // //Devuelve un observable con el estado.
-  // isLoggedIn() {
-  //   return this.auth.authState;
-  // }
 }
