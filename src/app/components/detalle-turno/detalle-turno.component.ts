@@ -193,11 +193,10 @@ export class DetalleTurnoComponent implements OnInit {
   finalizarTurno(turno: Turno, usuario: any) {
     turno.resenia = this.formFinalizar.value.resenia;
     if (turno.resenia != '') {
+      turno.estado = EstadoTurno.finalizado;
       this.db
         .update('turnos', this.turnoSeleccionado.id, turno)
         .then((res: any) => {
-          console.log(turno);
-          turno.estado = EstadoTurno.finalizado;
           this.sa.confirmacionAlert(
             'Turno finalizado',
             'Gracias por tu atención'
