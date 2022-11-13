@@ -8,6 +8,7 @@
   align-items: center;
   background: url(../../../assets/woman-geb2cd67e5_1920.jpg);
   background-size: cover;
+  z-index: 9999;
 }
 
 .banner .contenido {

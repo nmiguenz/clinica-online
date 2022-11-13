@@ -1,32 +1,32 @@
-.navbar{
+.navbar {
   /* position:   fixed; */
   position: var(--navbar-scroll-position);
-  width:100%;
+  width: 100%;
   transition: background-color 1s;
   background-color: var(--navbar-scroll);
   transition: background-color 1s ease;
   -webkit-box-shadow: var(--navbar-scroll-shadow);
   box-shadow: var(--navbar-scroll-shadow);
+  z-index: 9998;
 }
 
-.navbar a{
+.navbar a {
   color: var(--navbar-scroll-text);
 }
 
-.dropdown-item{
+.dropdown-item {
   color: black !important;
 }
 
-.cerrarSesion{
+.cerrarSesion {
   font-size: 1.5rem;
   color: rgb(0, 0, 0) !important;
 }
 
-.cerrarSesion:hover{
+.cerrarSesion:hover {
   cursor: pointer;
 }
 
-.active{
+.active {
   color: cyan !important;
 }
-
