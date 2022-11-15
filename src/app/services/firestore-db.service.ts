@@ -155,7 +155,6 @@ export class FirestoreDbService {
           .where('estado', '==', EstadoTurno.finalizado)
       )
       .snapshotChanges();
-    8;
   }
 
   //list = array de elementos de algun tipo. Similar a WHERE DATO IN ()
@@ -174,6 +173,24 @@ export class FirestoreDbService {
         ref
           .where('especialista.dni', '==', dniEspecialista)
           .where('paciente.dni', '==', dniPaciente)
+      )
+      .snapshotChanges();
+  }
+
+  getHistoriasByEspecialistaPacienteOrderLimit(
+    dniEspecialista: string,
+    dniPaciente: string,
+    orderCampo: string,
+    tipoOrden: 'asc' | 'desc',
+    limite: number
+  ) {
+    return this.db
+      .collection('historiaClinica', (ref) =>
+        ref
+          .where('especialista.dni', '==', dniEspecialista)
+          .where('paciente.dni', '==', dniPaciente)
+          .orderBy(orderCampo, tipoOrden)
+          .limit(limite)
       )
       .snapshotChanges();
   }

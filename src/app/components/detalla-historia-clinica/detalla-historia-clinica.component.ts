@@ -7,33 +7,41 @@ import { FirestoreDbService } from 'src/app/services/firestore-db.service';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 
-
 @Component({
   selector: 'app-detalla-historia-clinica',
   templateUrl: './detalla-historia-clinica.component.html',
-  styleUrls: ['./detalla-historia-clinica.component.css']
+  styleUrls: ['./detalla-historia-clinica.component.css'],
 })
 export class DetallaHistoriaClinicaComponent implements OnInit {
+  @Input() pacienteElegido: Paciente | any;
+  @Input() especialista: Especialista | any;
+  @Input() historiaClinicaInput: HistoriaClinica | any = null;
+  @Input() pantalla: string = '';
 
-  @Input() pacienteElegido : Paciente | any;
-  @Input() especialista : Especialista | any;
-  listaHistoriasPaciente : HistoriaClinica[] = [];
-  hoy : Date = new Date();
+  listaHistoriasPaciente: HistoriaClinica[] = [];
+  hoy: Date = new Date();
 
-  constructor(private db  : FirestoreDbService) {}
+  constructor(private db: FirestoreDbService) {}
 
-  ngOnInit(): void {}
-
-  ngOnChanges() {
-    this.db.getHistoriasByEspecialistaPaciente(this.especialista.dni,this.pacienteElegido.dni).subscribe((historias: any) => {
-      this.listaHistoriasPaciente = historias.map((historia : any)=>{
-        return historia.payload.doc.data();
-      });
-    });
+  ngOnInit(): void {
+    console.log('detalle', this.historiaClinicaInput);
   }
 
+  // ngOnChanges() {
+  //   this.db
+  //     .getHistoriasByEspecialistaPaciente(
+  //       this.especialista.dni,
+  //       this.pacienteElegido.dni
+  //     )
+  //     .subscribe((historias: any) => {
+  //       this.listaHistoriasPaciente = historias.map((historia: any) => {
+  //         return historia.payload.doc.data();
+  //       });
+  //     });
+  // }
+
   public openPDF(): void {
-    let user = this.pacienteElegido.apellido;
+    let user = this.historiaClinicaInput.historia.paciente.apellido;
     let DATA: any = document.getElementById('htmlData');
     html2canvas(DATA).then((canvas) => {
       let fileWidth = 208;
@@ -42,8 +50,7 @@ export class DetallaHistoriaClinicaComponent implements OnInit {
       let PDF = new jsPDF('p', 'mm', 'a4');
       let position = 0;
       PDF.addImage(FILEURI, 'PNG', 0, position, fileWidth, fileHeight);
-      PDF.save('historia_clinica_' + user +'.pdf');
+      PDF.save('historia_clinica_' + user + '.pdf');
     });
   }
-
 }

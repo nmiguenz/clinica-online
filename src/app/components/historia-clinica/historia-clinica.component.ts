@@ -8,30 +8,29 @@ import { HistoriaClinica } from 'src/app/classes/historia-clinica';
 @Component({
   selector: 'app-historia-clinica',
   templateUrl: './historia-clinica.component.html',
-  styleUrls: ['./historia-clinica.component.css']
+  styleUrls: ['./historia-clinica.component.css'],
 })
 export class HistoriaClinicaComponent implements OnInit {
+  formGroup: FormGroup | any;
 
-  formGroup : FormGroup | any;
+  @Input() pacienteInput: Paciente | any;
+  @Input() especialistaInput: Especialista | any;
+  @Input() especialidadInput: string = '';
 
-  @Input() pacienteInput : Paciente | any;
-  @Input() especialistaInput : Especialista | any;
-
-  constructor( private db : FirestoreDbService, private fb: FormBuilder) {
-
+  constructor(private db: FirestoreDbService, private fb: FormBuilder) {
     this.formGroup = fb.group({
-      paciente: ["", Validators.required],
-      altura: ["", Validators.required],
-      peso: ["", Validators.required],
-      temperatura: ["", Validators.required],
-      presion: ["", Validators.required],
-      clave1: [""],
-      valor1: [""],
-      clave2: [""],
-      valor2: [""],
-      clave3: [""],
-      valor3: [""]
-    })
+      paciente: ['', Validators.required],
+      altura: ['', Validators.required],
+      peso: ['', Validators.required],
+      temperatura: ['', Validators.required],
+      presion: ['', Validators.required],
+      clave1: [''],
+      valor1: [''],
+      clave2: [''],
+      valor2: [''],
+      clave3: [''],
+      valor3: [''],
+    });
   }
 
   ngOnInit(): void {
@@ -40,14 +39,15 @@ export class HistoriaClinicaComponent implements OnInit {
   }
 
   altaHistoria() {
-
     let paciente = this.pacienteInput;
     let especialista = this.especialistaInput;
+    let especialidad = this.especialidadInput;
     let fechaAtencion = new Date();
     let historiaClinica = new HistoriaClinica(
       fechaAtencion,
       paciente,
       especialista,
+      especialidad,
       this.formGroup.value.altura,
       this.formGroup.value.peso,
       this.formGroup.value.temperatura,
@@ -60,10 +60,9 @@ export class HistoriaClinicaComponent implements OnInit {
       this.formGroup.value.valor3
     );
 
-    this.db.alta(JSON.parse(JSON.stringify(historiaClinica)),'historiaClinica')
-    .then(()=> this.formGroup.reset())
-    .catch(error=>console.log(error));
-
+    this.db
+      .alta(JSON.parse(JSON.stringify(historiaClinica)), 'historiaClinica')
+      .then(() => this.formGroup.reset())
+      .catch((error) => console.log(error));
   }
-
 }

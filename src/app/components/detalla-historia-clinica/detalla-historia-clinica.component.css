@@ -1,0 +1,22 @@
+.detalleContainer {
+  display: flex;
+  justify-content: center;
+}
+
+.card {
+  width: 70%;
+}
+
+.imgDivCard {
+  height: 300px;
+  width: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+@media (max-width: 800px) {
+  .card {
+    width: 100%;
+  }
+}

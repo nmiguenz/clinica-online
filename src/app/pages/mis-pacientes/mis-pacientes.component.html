@@ -21,25 +21,82 @@
 
     <div class="row justify-content-arround">
       <div
-        class="col-md-3 mb-1 text-center pacienteBtn"
-        *ngFor="let paciente of listaPacientes"
+        class="col-md-3 mb-1 text-center pacienteBtn content"
+        id="flipCardContainer"
+        *ngFor="let pacienteHistoria of listaHistoriaPaciente"
         (click)="seleccionarPaciente(paciente)"
       >
-        <button
+        <div class="flip-card">
+          <div class="flip-card-inner">
+            <div
+              class="flip-card-front"
+              style="background-image: url({{
+                pacienteHistoria?.paciente.fotoUno
+              }});"
+            >
+              <h4>
+                {{ pacienteHistoria.paciente.nombre }}
+                {{ pacienteHistoria.paciente.apellido }}
+              </h4>
+            </div>
+            <div class="flip-card-back">
+              <div>
+                <h5 style="color: #e9c46a">Últimas 3 atenciones</h5>
+              </div>
+              <div class="divTable">
+                <table class="table">
+                  <thead style="font-size: 12px">
+                    <tr>
+                      <th scope="col">Fecha</th>
+                      <th scope="col">Especialidad</th>
+                      <th scope="col">Historia</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr
+                      class="tableRow"
+                      *ngFor="let historia of pacienteHistoria.historias"
+                    >
+                      <td>
+                        {{ historia.historia.fecha | date: "d/M/yyyy H:mm" }}
+                      </td>
+                      <td style="text-transform: capitalize">
+                        {{ historia.historia.especialidad }}
+                      </td>
+                      <td>
+                        <button
+                          class="btn btn-info"
+                          (click)="mostrarHistoria(historia)"
+                        >
+                          <i class="bi bi-eye-fill"></i>
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+        `
+        <!-- <button
           mat-mini-fab
           class="fastAccessButton"
           [ngStyle]="{ 'background-image': 'url(' + paciente.fotoUno + ')' }"
         ></button>
-        <p>{{ paciente.nombre }} {{ paciente.apellido }}</p>
+        <p>{{ paciente.nombre }} {{ paciente.apellido }}</p> -->
       </div>
-    </div>
-
-    <div class="container d-flex justify-content-between mb-2">
-      <app-detalla-historia-clinica
-        [pacienteElegido]="pacienteSeleccionado"
-        [especialista]="especialistaLogueado"
-        *ngIf="mostrarHistoria"
-      ></app-detalla-historia-clinica>
     </div>
   </div>
 </div>
+
+<div class="d-flex justify-content-center mb-2" *ngIf="mostrar">
+  <app-detalla-historia-clinica
+    [historiaClinicaInput]="historiaSeleccionada"
+    [pantalla]="pantallaSeleccionada"
+    style="width: 100%"
+  ></app-detalla-historia-clinica>
+</div>
+
+<!-- [pacienteElegido]="pacienteSeleccionado"
+        [especialista]="especialistaLogueado" -->

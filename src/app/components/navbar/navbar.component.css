@@ -18,15 +18,24 @@
   color: black !important;
 }
 
-.cerrarSesion {
+.dropdown-menu[data-bs-popper] {
+  top: 100%;
+  left: -30px;
+  margin-top: 0.125rem;
+}
+
+.active {
+  color: cyan !important;
+}
+
+/* .cerrarSesion {
   font-size: 1.5rem;
   color: rgb(0, 0, 0) !important;
 }
 
 .cerrarSesion:hover {
   cursor: pointer;
-}
-
-.active {
-  color: cyan !important;
-}
+} */
+/* i {
+  color: white;
+} */
