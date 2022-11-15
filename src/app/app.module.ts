@@ -31,8 +31,8 @@ import { FiltrarEspecialistaPipe } from './pipes/filtrar-especialista.pipe';
 import { HistoriaClinicaComponent } from './components/historia-clinica/historia-clinica.component';
 import { MisPacientesComponent } from './pages/mis-pacientes/mis-pacientes.component';
 import { MatButtonModule } from '@angular/material/button';
-import { DetallaHistoriaClinicaComponent } from './components/detalla-historia-clinica/detalla-historia-clinica.component';
 import { HighlightDirective } from './directives/highlight.directive';
+import { GeneralesModule } from './modules/generales/generales.module';
 
 @NgModule({
   declarations: [
@@ -53,7 +53,6 @@ import { HighlightDirective } from './directives/highlight.directive';
     FiltrarEspecialistaPipe,
     HistoriaClinicaComponent,
     MisPacientesComponent,
-    DetallaHistoriaClinicaComponent,
     HighlightDirective,
   ],
   imports: [
@@ -67,6 +66,7 @@ import { HighlightDirective } from './directives/highlight.directive';
     NgxCaptchaModule,
     BrowserAnimationsModule,
     MatButtonModule,
+    GeneralesModule,
   ],
   providers: [DatePipe],
   bootstrap: [AppComponent],

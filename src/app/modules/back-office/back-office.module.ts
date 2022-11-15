@@ -1,4 +1,3 @@
-import { FiltroTurnosPipe } from './../../pipes/filtro-turnos.pipe';
 import { DetalleTurnoAdminComponent } from './../../components/detalle-turno-admin/detalle-turno-admin.component';
 import { MiPerfilAdminComponent } from './../../components/mi-perfil-admin/mi-perfil-admin.component';
 import { NgModule } from '@angular/core';
@@ -18,6 +17,7 @@ import { TurnosComponent } from 'src/app/pages/turnos/turnos.component';
 import { TablaTurnosAdminComponent } from 'src/app/components/tabla-turnos-admin/tabla-turnos-admin.component';
 import { FiltrarEspePacienteAdminPipe } from 'src/app/pipes/filtrar-espe-paciente-admin.pipe';
 import { GeneralesModule } from '../generales/generales.module';
+import { InformesAdminComponent } from 'src/app/components/informes-admin/informes-admin.component';
 
 @NgModule({
   declarations: [
@@ -31,17 +31,17 @@ import { GeneralesModule } from '../generales/generales.module';
     TurnosComponent,
     TablaTurnosAdminComponent,
     DetalleTurnoAdminComponent,
-    FiltroTurnosPipe,
     FiltrarEspePacienteAdminPipe,
+    InformesAdminComponent,
   ],
   imports: [
     CommonModule,
+    GeneralesModule,
     BackOfficeRoutingModule,
     ReactiveFormsModule,
     FormsModule,
     NgxCaptchaModule,
     NgMultiSelectDropDownModule.forRoot(),
-    GeneralesModule,
   ],
 })
 export class BackOfficeModule {}

@@ -1,22 +1,52 @@
-
-  <div class="container slide-right">
-    <div class="card tablaUsuarios py-4 shadow-lg p-3 mb-5 bg-body rounded-4 d-flex">
-      <h1 class="fw-bold mb-4">Información de <span>{{perfil || '...'}}</span></h1>
-      <app-tabla-usuarios [inputUsuarioSeleccionado]="perfil"></app-tabla-usuarios>
-      <div class="row">
-        <div class="col col-md-4">
-          <button class="btn btn-primary w-100" (click)="cambiarTabla('paciente')" type="button">Ver
-              Pacientes</button>
-        </div>
-        <div class="col col-md-4">
-          <button class="btn btn-primary w-100" (click)="cambiarTabla('especialista')" type="button">Ver
-            Especialistas</button>
-        </div>
-        <div class="col col-md-4">
-          <button class="btn btn-primary w-100" (click)="cambiarTabla('admin')" type="button">Ver
-            Administradores</button>
-        </div>
+<div class="container slide-right">
+  <div
+    class="card tablaUsuarios py-4 shadow-lg p-3 mb-5 bg-body rounded-4 d-flex"
+  >
+    <h1 class="fw-bold mb-4">
+      Información de <span>{{ perfil || "..." }}</span>
+    </h1>
+    <app-tabla-usuarios
+      [inputUsuarioSeleccionado]="perfil"
+      (seSeleccionoPaciente)="pacienteElegido($event)"
+    ></app-tabla-usuarios>
+    <div class="row">
+      <div class="col col-md-4">
+        <button
+          class="btn btn-primary w-100"
+          (click)="cambiarTabla('paciente')"
+          type="button"
+        >
+          Ver Pacientes
+        </button>
+      </div>
+      <div class="col col-md-4">
+        <button
+          class="btn btn-primary w-100"
+          (click)="cambiarTabla('especialista')"
+          type="button"
+        >
+          Ver Especialistas
+        </button>
+      </div>
+      <div class="col col-md-4">
+        <button
+          class="btn btn-primary w-100"
+          (click)="cambiarTabla('admin')"
+          type="button"
+        >
+          Ver Administradores
+        </button>
       </div>
     </div>
   </div>
+</div>
 
+<div class="d-flex justify-content-center mb-2">
+  <app-detalla-historia-clinica
+    [pacienteElegido]="pacienteSeleccionado"
+    [pantalla]="'usuarios'"
+    (cerrarEvent)="accionVentanaUsuarios($event)"
+    *ngIf="mostrar"
+    style="width: 100%"
+  ></app-detalla-historia-clinica>
+</div>

@@ -11,6 +11,7 @@ export class MiPerfilComponent implements OnInit {
   perfil = '';
   foto = '';
   listaEspecialidades: any[] = [];
+  mostrar: boolean = true;
 
   constructor(private auth: AuthService) {
     this.usuario = this.auth.usuarioLogueado;
@@ -29,5 +30,9 @@ export class MiPerfilComponent implements OnInit {
     } else {
       this.foto = this.usuario.fotoUno;
     }
+  }
+
+  accionVentanaUsuarios(event: any) {
+    this.mostrar = event;
   }
 }

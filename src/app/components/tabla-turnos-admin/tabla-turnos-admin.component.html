@@ -3,7 +3,12 @@
     <h1 class="display-5 fw-bold">Turnos de la clínica</h1>
   </div>
   <div class="col col-md-4 text-end">
-    <input class="form-control" type="text" placeholder="Buscar por especialidad o profesional..." [(ngModel)]="filter">
+    <input
+      class="form-control"
+      type="text"
+      placeholder="Buscar por cualquier campo..."
+      [(ngModel)]="filter"
+    />
     <span class="lupa"><i class="bi bi-search"></i></span>
   </div>
 </div>
@@ -20,12 +25,22 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let turno of listadoTurnos | filtroTurnos:filter" (click)="SeleccionarTurno(turno)">
-      <th scope="row">{{turno.especialidad}}</th>
-      <td>{{turno.datosEspecialista.nombre}} {{turno.datosEspecialista.apellido}}</td>
-      <td>{{turno.datosPaciente.nombre}} {{turno.datosPaciente.apellido}}</td>
-      <td>{{turno.fecha}}</td>
-      <td><span [ngStyle]="styleObject(turno)">{{turno.estado}}</span></td>
+    <tr
+      *ngFor="let turno of listadoTurnos | filtroTurnos: filter"
+      (click)="SeleccionarTurno(turno)"
+    >
+      <th scope="row">{{ turno.especialidad }}</th>
+      <td>
+        {{ turno.datosEspecialista.nombre }}
+        {{ turno.datosEspecialista.apellido }}
+      </td>
+      <td>
+        {{ turno.datosPaciente.nombre }} {{ turno.datosPaciente.apellido }}
+      </td>
+      <td>{{ turno.fecha }}</td>
+      <td>
+        <span [ngStyle]="styleObject(turno)">{{ turno.estado }}</span>
+      </td>
     </tr>
   </tbody>
 </table>

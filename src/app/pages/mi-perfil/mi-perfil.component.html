@@ -90,5 +90,15 @@
     <div class="row mt-2" *ngIf="usuario.perfil == 'especialista'">
       <app-mis-horarios [inputEspecialista]="usuario"></app-mis-horarios>
     </div>
+
+    <div class="d-flex justify-content-center mb-2">
+      <app-detalla-historia-clinica
+        [pacienteElegido]="usuario"
+        [pantalla]="'perfil'"
+        (cerrarEvent)="accionVentanaUsuarios($event)"
+        *ngIf="mostrar"
+        style="width: 100%"
+      ></app-detalla-historia-clinica>
+    </div>
   </div>
 </section>

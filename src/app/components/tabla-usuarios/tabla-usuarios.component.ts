@@ -9,53 +9,66 @@ import { FirestoreDbService } from 'src/app/services/firestore-db.service';
 @Component({
   selector: 'app-tabla-usuarios',
   templateUrl: './tabla-usuarios.component.html',
-  styleUrls: ['./tabla-usuarios.component.css']
+  styleUrls: ['./tabla-usuarios.component.css'],
 })
 export class TablaUsuariosComponent implements OnInit {
-
-  @Input() inputUsuarioSeleccionado : string = 'paciente';
-  @Output() seSeleccionoAdministrador: EventEmitter<any> = new EventEmitter<any>();
+  @Input() inputUsuarioSeleccionado: string = 'paciente';
+  @Output() seSeleccionoAdministrador: EventEmitter<any> =
+    new EventEmitter<any>();
   @Output() seSeleccionoPaciente: EventEmitter<any> = new EventEmitter<any>();
-  @Output() seSeleccionoEspecialista: EventEmitter<any> = new EventEmitter<any>();
+  @Output() seSeleccionoEspecialista: EventEmitter<any> =
+    new EventEmitter<any>();
 
   arrayAdministradores: Administrador[] = [];
   arrayPacientes: Paciente[] = [];
   arrayEspecialistas: Especialista[] = [];
 
-
   constructor(
-    private db : FirestoreDbService,
-    private especSrv : EspecialistaService) {
-  }
+    private db: FirestoreDbService,
+    private especSrv: EspecialistaService
+  ) {}
 
   ngOnInit(): void {
+    //Coleccin de pacientes
+    this.db
+      .getCollectionByField('usuarios', '==', 'perfil', 'paciente')
+      .then((ref: any) =>
+        ref.subscribe((arg: any) => {
+          this.arrayPacientes = arg.map((element: any) => {
+            return element;
+          });
+        })
+      )
+      .catch((error) => console.log(error));
 
-    //Colección de pacientes
-    this.db.getCollectionByField('usuarios','==','perfil','paciente')
-    .then((ref:any) => ref.subscribe((arg:any) => {
-      this.arrayPacientes = arg.map((element:any) => {
-          return element;
-        });
-    })
-    ).catch(error => console.log(error));
+    //Colecciï¿½n de especialistas
+    this.db
+      .getCollectionByField('usuarios', '==', 'perfil', 'especialista')
+      .then((ref: any) =>
+        ref.subscribe((arg: any) => {
+          this.arrayEspecialistas = arg.map((element: any) => {
+            return element;
+          });
+        })
+      )
+      .catch((error) => console.log(error));
 
-    //Colección de especialistas
-    this.db.getCollectionByField('usuarios','==','perfil','especialista')
-    .then((ref:any) => ref.subscribe((arg:any) => {
-      this.arrayEspecialistas = arg.map((element:any) => {
-          return element;
-        });
-    })
-    ).catch(error => console.log(error));
-
-    //Colección de Administradores
-    this.db.getCollectionByField('usuarios','==','perfil','admin' || 'administrador')
-    .then((ref:any) => ref.subscribe((arg:any) => {
-      this.arrayAdministradores = arg.map((element:any) => {
-          return element;
-        });
-    })
-    ).catch(error => console.log(error));
+    //Colecciï¿½n de Administradores
+    this.db
+      .getCollectionByField(
+        'usuarios',
+        '==',
+        'perfil',
+        'admin' || 'administrador'
+      )
+      .then((ref: any) =>
+        ref.subscribe((arg: any) => {
+          this.arrayAdministradores = arg.map((element: any) => {
+            return element;
+          });
+        })
+      )
+      .catch((error) => console.log(error));
   }
 
   administradorSeleccionado(administrador: Administrador) {
@@ -74,5 +87,4 @@ export class TablaUsuariosComponent implements OnInit {
     especialista.habilitado = habilitado.target.checked;
     this.especSrv.habilitarDeshabilitarEspecialista(especialista);
   }
-
 }

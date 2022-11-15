@@ -71,7 +71,6 @@ export class MisPacientesComponent implements OnInit {
                     };
 
                     this.listaHistorias.push(this.historia);
-                    console.log('Listado: ', this.listaHistorias);
                   });
 
                   this.listaHistoriaPaciente.push({
@@ -84,14 +83,11 @@ export class MisPacientesComponent implements OnInit {
             }
           });
         });
-
-        console.log('Historias por paciente: ', this.listaHistoriaPaciente);
       });
   }
 
   seleccionarPaciente(paciente: Paciente) {
     this.pacienteSeleccionado = paciente;
-    // this.mostrarHistoria = true;
   }
 
   async obtenerUsuarios() {
@@ -121,6 +117,9 @@ export class MisPacientesComponent implements OnInit {
     this.historiaSeleccionada = historia;
     this.pantallaSeleccionada = 'misPacientes';
     this.mostrar = true;
-    console.log(this.historiaSeleccionada, this.pantallaSeleccionada);
+  }
+
+  accionVentanaUsuarios(event: any) {
+    this.mostrar = event;
   }
 }

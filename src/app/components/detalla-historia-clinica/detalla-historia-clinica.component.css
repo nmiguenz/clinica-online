@@ -4,15 +4,24 @@
 }
 
 .card {
-  width: 70%;
+  width: 100%;
 }
 
 .imgDivCard {
-  height: 300px;
+  height: 400px;
   width: 100%;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+}
+
+.especialidadTd {
+  cursor: pointer;
+}
+
+.especialidadTd:hover {
+  background-color: #0dbb9d;
+  color: #fff;
 }
 
 @media (max-width: 800px) {

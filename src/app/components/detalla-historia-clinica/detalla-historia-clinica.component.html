@@ -23,164 +23,220 @@
           class="d-flex justify-content-center flex-column align-items-center mb-2"
         >
           <div class="text-center mb-2">
-            <h3 style="color: #0dbb9d">Historia clínica</h3>
+            <h1
+              style="color: #0dbb9d"
+              *ngIf="pantalla == 'misPacientes' || pantalla == 'perfil'"
+            >
+              Historia clínica
+            </h1>
+            <h2 style="color: #0dbb9d" *ngIf="pantalla == 'usuarios'">
+              Historial de turnos
+            </h2>
           </div>
           <div
             class="container d-flex mt-2"
             style="width: 100%"
             *ngIf="pantalla == 'misPacientes'; then misPacientes"
           ></div>
+          <div
+            class="container d-flex mt-2"
+            style="width: 100%"
+            *ngIf="pantalla == 'usuarios'; then usuarios"
+          ></div>
+          <div
+            class="container d-flex mt-2"
+            style="width: 100%"
+            *ngIf="pantalla == 'perfil'; then perfil"
+          ></div>
         </div>
       </div>
     </div>
 
-    <div>
-      <div class="text-right">
+    <div class="d-flex justify-content-between">
+      <div
+        class="text-right"
+        *ngIf="pantalla == 'misPacientes' || pantalla == 'perfil'"
+      >
         <button class="btn btn-success btn-block" (click)="openPDF()">
           Descargar PDF
         </button>
       </div>
+      <div class="text-right" *ngIf="pantalla == 'usuarios'">
+        <button class="btn btn-success btn-block" (click)="exportExcel()">
+          Descargar xls
+        </button>
+      </div>
+      <div
+        class="text-left"
+        *ngIf="pantalla == 'misPacientes' || pantalla == 'usuarios'"
+      >
+        <button
+          class="btn btn-success btn-block"
+          (click)="cerrarVentana(false)"
+        >
+          Cerrar
+        </button>
+      </div>
+      <div
+        class="text-left"
+        *ngIf="pantalla == 'perfil' && especialidadSeleccionada !== ''"
+      >
+        <button class="btn btn-success btn-block" (click)="resetParams()">
+          TODAS LAS HISTORIAS
+        </button>
+      </div>
     </div>
   </div>
-</div>
 
-<ng-template #misPacientes>
-  <div class="card">
-    <div
-      class="imgDivCard"
-      style="background-image: url({{
-        historiaClinicaInput.historia.paciente.fotoUno
-      }});"
-    ></div>
-    <!-- <img
+  <ng-template #misPacientes>
+    <div class="card">
+      <div
+        class="imgDivCard"
+        style="background-image: url({{
+          historiaClinicaInput.historia.paciente.fotoUno
+        }});"
+      ></div>
+      <!-- <img
       class="card-img-top"
       src="{{ historiaClinicaInput.historia.paciente.fotoUno }}"
       alt="Card image cap"
     /> -->
-    <div class="card-body">
-      <h5 class="card-title">
-        {{ historiaClinicaInput.historia.paciente.nombre }}
-        {{ historiaClinicaInput.historia.paciente.apellido }}
-      </h5>
-      <p class="card-text">
-        Es paciente de
-        {{ historiaClinicaInput.historia.especialista.nombre }}
-        {{ historiaClinicaInput.historia.especialista.apellido }} en la
-        especialidad
-        <span style="text-transform: capitalize">{{
-          historiaClinicaInput.historia.especialidad
-        }}</span>
-      </p>
-      <small
-        >Fecha de atención:
-        {{
-          historiaClinicaInput.historia.fecha | date: "dd/mm/yyyy HH:mm"
-        }}</small
-      >
-    </div>
-    <ul class="list-group list-group-flush">
-      <li class="list-group-item">
-        Altura: {{ historiaClinicaInput.historia.altura }}
-      </li>
-      <li class="list-group-item">
-        Peso: {{ historiaClinicaInput.historia.peso }}
-      </li>
-      <li class="list-group-item">
-        Temperatura: {{ historiaClinicaInput.historia.temperatura }}
-      </li>
-      <li class="list-group-item">
-        Presión: {{ historiaClinicaInput.historia.presion }}
-      </li>
-      <li
-        class="list-group-item"
-        *ngIf="historiaClinicaInput.historia.clave1 !== ''"
-      >
-        {{ historiaClinicaInput.historia.clave1 }}:
-        {{ historiaClinicaInput.historia.valor1 }}
-      </li>
-      <li
-        class="list-group-item"
-        *ngIf="historiaClinicaInput.historia.clave2 !== ''"
-      >
-        {{ historiaClinicaInput.historia.clave2 }}:
-        {{ historiaClinicaInput.historia.valor2 }}
-      </li>
-      <li
-        class="list-group-item"
-        *ngIf="historiaClinicaInput.historia.clave3 !== ''"
-      >
-        {{ historiaClinicaInput.historia.clave3 }}:
-        {{ historiaClinicaInput.historia.valor3 }}
-      </li>
-    </ul>
-  </div>
-</ng-template>
-
-<!-- <ng-template #Prueba>
-  <div class="container">
-    <div>
-      <div class="row mb-3">
-        <div class="col-md-12" style="width: 100%" id="htmlData">
-          <div class="row d-flex justify-content-between align-items-end mb-1">
-            <div class="col-7">
-              <img
-                src="../../../assets/hospital.png"
-                style="width: 20%"
-                class="mb-3"
-              />
-            </div>
-            <div class="col-5 text-end">
-              <p>
-                Fecha: <span>{{ hoy | date: "dd/MM/yyyy" }}</span>
-              </p>
-            </div>
-          </div>
-          <br />
-          <h3>
-            Historias Clínicas de {{ pacienteElegido.nombre }}
-            {{ pacienteElegido.apellido }}
-          </h3>
-
-          <table class="table">
-            <thead>
-              <tr>
-                <th>Fecha</th>
-                <th>Altura</th>
-                <th>Peso</th>
-                <th>Temperatura</th>
-                <th>Presión</th>
-                <th>Dato 1</th>
-                <th>Valor</th>
-                <th>Dato 2</th>
-                <th>Valor</th>
-                <th>Dato 3</th>
-                <th>Valor</th>
-              </tr>
-            </thead>
-            <tr *ngFor="let historia of listaHistoriasPaciente">
-              <td>{{ historia.fecha | date: "dd/MM/yyyy H:mm" }}</td>
-              <td>{{ historia.altura }}</td>
-              <td>{{ historia.peso }}</td>
-              <td>{{ historia.temperatura }}</td>
-              <td>{{ historia.presion }}</td>
-              <td>{{ historia.clave1 }}</td>
-              <td>{{ historia.valor1 }}</td>
-              <td>{{ historia.clave2 }}</td>
-              <td>{{ historia.valor2 }}</td>
-              <td>{{ historia.clave3 }}</td>
-              <td>{{ historia.valor3 }}</td>
-            </tr>
-          </table>
-        </div>
+      <div class="card-body">
+        <h5 class="card-title">
+          {{ historiaClinicaInput.historia.paciente.nombre }}
+          {{ historiaClinicaInput.historia.paciente.apellido }}
+        </h5>
+        <p class="card-text">
+          Es paciente de
+          {{ historiaClinicaInput.historia.especialista.nombre }}
+          {{ historiaClinicaInput.historia.especialista.apellido }} en la
+          especialidad
+          <span style="text-transform: capitalize">{{
+            historiaClinicaInput.historia.especialidad
+          }}</span>
+        </p>
+        <small
+          >Fecha de atención:
+          {{
+            historiaClinicaInput.historia.fecha | date: "dd/mm/yyyy HH:mm"
+          }}</small
+        >
       </div>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">
+          Altura: {{ historiaClinicaInput.historia.altura }}
+        </li>
+        <li class="list-group-item">
+          Peso: {{ historiaClinicaInput.historia.peso }}
+        </li>
+        <li class="list-group-item">
+          Temperatura: {{ historiaClinicaInput.historia.temperatura }}
+        </li>
+        <li class="list-group-item">
+          Presión: {{ historiaClinicaInput.historia.presion }}
+        </li>
+        <li
+          class="list-group-item"
+          *ngIf="historiaClinicaInput.historia.clave1 !== ''"
+        >
+          {{ historiaClinicaInput.historia.clave1 }}:
+          {{ historiaClinicaInput.historia.valor1 }}
+        </li>
+        <li
+          class="list-group-item"
+          *ngIf="historiaClinicaInput.historia.clave2 !== ''"
+        >
+          {{ historiaClinicaInput.historia.clave2 }}:
+          {{ historiaClinicaInput.historia.valor2 }}
+        </li>
+        <li
+          class="list-group-item"
+          *ngIf="historiaClinicaInput.historia.clave3 !== ''"
+        >
+          {{ historiaClinicaInput.historia.clave3 }}:
+          {{ historiaClinicaInput.historia.valor3 }}
+        </li>
+      </ul>
+    </div>
+  </ng-template>
 
+  <ng-template #usuarios>
+    <div class="container">
       <div>
-        <div class="text-right">
-          <button class="btn btn-success btn-block" (click)="openPDF()">
-            Descargar PDF
-          </button>
-        </div>
+        <table class="table" id="excelTable">
+          <thead>
+            <tr>
+              <th>Fecha turno</th>
+              <th>Paciente</th>
+              <th>Especialidad</th>
+              <th>Especialista</th>
+              <th>Estado</th>
+              <th>Reseña</th>
+            </tr>
+          </thead>
+          <tr *ngFor="let turno of listaTurnosPaciente">
+            <td>{{ turno.fecha | date: "dd/MM/yyyy H:mm" }}</td>
+            <td>
+              {{ turno.datosPaciente.nombre }}
+              {{ turno.datosPaciente.apellido }}
+            </td>
+            <td>{{ turno.especialidad }}</td>
+            <td>
+              {{ turno.datosEspecialista.nombre }}
+              {{ turno.datosEspecialista.apellido }}
+            </td>
+            <td>{{ turno.estado }}</td>
+            <td>{{ turno.resenia }}</td>
+            <!-- <td *ngIf="turno.resenia !== ''; then thenBlock; else elseBlock"></td>
+          <ng-template #thenBlock>{{ turno.resenia }}</ng-template>
+          <ng-template #elseBlock>{{ turno.comentario }}</ng-template> -->
+          </tr>
+        </table>
       </div>
     </div>
-  </div>
-</ng-template> -->
+  </ng-template>
+
+  <ng-template #perfil>
+    <div class="container">
+      <div>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Fecha</th>
+              <th>Altura</th>
+              <th>Peso</th>
+              <th>Temperatura</th>
+              <th>Presión</th>
+              <th>Dato 1</th>
+              <th>Valor</th>
+              <th>Dato 2</th>
+              <th>Valor</th>
+              <th>Dato 3</th>
+              <th>Valor</th>
+              <th>Especialidad</th>
+            </tr>
+          </thead>
+          <tr *ngFor="let historia of listaHistoriasPaciente">
+            <td>{{ historia.fecha | date: "dd/MM/yyyy" }}</td>
+            <td>{{ historia.altura }}</td>
+            <td>{{ historia.peso }}</td>
+            <td>{{ historia.temperatura }}</td>
+            <td>{{ historia.presion }}</td>
+            <td>{{ historia.clave1 }}</td>
+            <td>{{ historia.valor1 }}</td>
+            <td>{{ historia.clave2 }}</td>
+            <td>{{ historia.valor2 }}</td>
+            <td>{{ historia.clave3 }}</td>
+            <td>{{ historia.valor3 }}</td>
+            <td
+              class="especialidadTd"
+              (click)="seleccionarEspecialidad(historia.especialidad)"
+            >
+              {{ historia.especialidad }}
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </ng-template>
+</div>

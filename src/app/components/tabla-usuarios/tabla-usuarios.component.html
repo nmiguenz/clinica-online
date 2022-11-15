@@ -1,5 +1,28 @@
 <!-- <div class="table-responsive"> -->
-  <table *ngIf="inputUsuarioSeleccionado =='paciente'" class="table table-bordered">
+<div
+  class="d-flex justify-content-between flex-wrap mb-2"
+  *ngIf="inputUsuarioSeleccionado == 'paciente'"
+>
+  <div
+    class="card"
+    style="width: 18rem"
+    *ngFor="let paciente of arrayPacientes"
+  >
+    <div
+      class="imgDivCard"
+      style="background-image: url({{ paciente.fotoUno }});"
+    ></div>
+    <div class="card-body">
+      <h5 class="card-title">{{ paciente.nombre }} {{ paciente.apellido }}</h5>
+      <p class="card-text">DNI: {{ paciente.dni }}</p>
+      <p class="card-text edad">Edad: {{ paciente.edad }}</p>
+      <a class="btn btn-primary" (click)="pacienteSeleccionado(paciente)"
+        >VER TURNOS</a
+      >
+    </div>
+  </div>
+</div>
+<!-- <table *ngIf="inputUsuarioSeleccionado =='paciente'" class="table table-bordered">
     <thead class="thead-dark">
         <tr>
             <th scope="col">Nombre</th>
@@ -16,48 +39,60 @@
             <td>{{paciente.edad}}</td>
         </tr>
     </tbody>
-</table>
+</table> -->
 
-<table *ngIf="inputUsuarioSeleccionado =='admin'" class="table table-bordered">
+<!-- Admin -->
+<table *ngIf="inputUsuarioSeleccionado == 'admin'" class="table table-bordered">
   <thead class="thead-dark">
-      <tr>
-          <th scope="col">Nombre</th>
-          <th scope="col">Apellido</th>
-          <th scope="col">DNI</th>
-          <th scope="col">Edad</th>
-      </tr>
+    <tr>
+      <th scope="col">Nombre</th>
+      <th scope="col">Apellido</th>
+      <th scope="col">DNI</th>
+      <th scope="col">Edad</th>
+    </tr>
   </thead>
-  <tbody (click)="administradorSeleccionado(admin)" *ngFor="let admin of arrayAdministradores">
-      <tr>
-          <td>{{admin.nombre}}</td>
-          <td>{{admin.apellido}}</td>
-          <td>{{admin.dni}}</td>
-          <td>{{admin.edad}}</td>
-      </tr>
+  <tbody
+    (click)="administradorSeleccionado(admin)"
+    *ngFor="let admin of arrayAdministradores"
+  >
+    <tr>
+      <td>{{ admin.nombre }}</td>
+      <td>{{ admin.apellido }}</td>
+      <td>{{ admin.dni }}</td>
+      <td>{{ admin.edad }}</td>
+    </tr>
   </tbody>
 </table>
 
-<table *ngIf="inputUsuarioSeleccionado =='especialista'" class="table table-bordered">
-    <thead class="thead-dark">
-        <tr>
-            <th scope="col">Nombre</th>
-            <th scope="col">Apellido</th>
-            <th scope="col">DNI</th>
-            <th scope="col">Edad</th>
-            <th scope="col">Habilitado</th>
-
-        </tr>
-    </thead>
-      <tbody (click)="especialistaSeleccionado(especialista)" *ngFor="let especialista of arrayEspecialistas">
-        <tr>
-            <td>{{especialista.nombre}}</td>
-            <td>{{especialista.apellido}}</td>
-            <td>{{especialista.dni}}</td>
-            <td>{{especialista.edad}}</td>
-            <td>
-                <input type="checkbox" (change)="habilitarEspecialista(especialista,$event)" [checked]="especialista.habilitado">
-            </td>
-        </tr>
-    </tbody>
+<table
+  *ngIf="inputUsuarioSeleccionado == 'especialista'"
+  class="table table-bordered"
+>
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">Nombre</th>
+      <th scope="col">Apellido</th>
+      <th scope="col">DNI</th>
+      <th scope="col">Edad</th>
+      <th scope="col">Habilitado</th>
+    </tr>
+  </thead>
+  <tbody
+    (click)="especialistaSeleccionado(especialista)"
+    *ngFor="let especialista of arrayEspecialistas"
+  >
+    <tr>
+      <td>{{ especialista.nombre }}</td>
+      <td>{{ especialista.apellido }}</td>
+      <td>{{ especialista.dni }}</td>
+      <td>{{ especialista.edad }}</td>
+      <td>
+        <input
+          type="checkbox"
+          (change)="habilitarEspecialista(especialista, $event)"
+          [checked]="especialista.habilitado"
+        />
+      </td>
+    </tr>
+  </tbody>
 </table>
-
