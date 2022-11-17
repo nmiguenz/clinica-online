@@ -9,20 +9,20 @@
     <div
       class="card signin-content py-4 shadow-lg p-3 mb-2 bg-body rounded-4 d-flex"
     >
-      <h3 class="fw-bold mb-2">Seleccionar especialidad</h3>
+      <div class="row d-flex justify-content-arround align-items-center mb-3">
+        <div class="col col-md-8">
+          <h3 class="fw-bold mb-2">Seleccionar especialidad</h3>
+        </div>
 
-      <div class="row">
-        <div class="col-md-4 mb-3">
-          <div class="form-floating">
-            <input
-              type="text"
-              class="form-control"
-              id="especialidad"
-              placeholder="name@example.com"
-              [(ngModel)]="filter"
-            />
-            <label for="filtroEspecialista">Filtrar especialidad</label>
-          </div>
+        <div class="col col-md-4 text-end">
+          <input
+            type="text"
+            class="form-control"
+            id="especialidad"
+            placeholder="Filtro especialidad..."
+            [(ngModel)]="filter"
+          />
+          <span class="lupa"><i class="bi bi-search"></i></span>
         </div>
       </div>
 
@@ -30,7 +30,9 @@
         <li
           class="d-inline-block"
           (click)="seleccionarEspecialidad(especialidad.nombre)"
-          *ngFor="let especialidad of listaEspecialidad"
+          *ngFor="
+            let especialidad of listaEspecialidad | filtrarEspecialidad: filter
+          "
         >
           <div class="divBtnsEspecialidad shadow-lg">
             <!-- <p class="header">

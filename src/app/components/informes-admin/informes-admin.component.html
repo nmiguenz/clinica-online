@@ -1,41 +1,196 @@
 <!-- Logs -->
 <div class="container d-flex justify-content-between flex-row flex-wrap">
-  <div class="card mb-3" style="width: 30%">
+  <div class="card mb-3" style="width: 15%">
     <div class="card-body">
       <h5 class="card-title">Logs de ingreso</h5>
       <!-- <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> -->
       <div class="log-container">
         <!-- <canvas id="my-chart"> </canvas> -->
-        <button class="btn btn-primary btn-log" (click)="descargarLogs()">
-          DESCARGAR
-        </button>
+        <button class="btn btn-log" (click)="descargarLogs()">DESCARGAR</button>
       </div>
       <!-- <a href="#" class="card-link">Card link</a>
       <a href="#" class="card-link">Another link</a> -->
     </div>
   </div>
 
-  <div class="card mb-3" style="width: 60%">
+  <div class="card mb-3" style="width: 40%">
     <div class="card-body">
       <h5 class="card-title">Cantidad de turnos por especialidad</h5>
-      <!-- <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> -->
       <div class="chart-container">
-        <canvas id="my-chart"> </canvas>
+        <canvas id="turnosPorEspecialidad"> </canvas>
       </div>
       <!-- <a href="#" class="card-link">Card link</a>
       <a href="#" class="card-link">Another link</a> -->
     </div>
+    <div class="text-center">
+      <button
+        type="button"
+        class="btn mt-3 mb-2"
+        (click)="openPDF('turnosPorEspecialidad')"
+      >
+        DESCARGAR PDF
+      </button>
+      <button
+        type="button"
+        style="margin-left: 10px"
+        class="btn mt-3 mb-2"
+        (click)="
+          exportExcel('turnosPorEspecialidad', listaTurnosPorEspecialidades)
+        "
+      >
+        DESCARGAR XLSX
+      </button>
+    </div>
   </div>
 
-  <div class="card mb-3" style="width: 45%">
+  <div class="card mb-3" style="width: 40%">
     <div class="card-body">
       <h5 class="card-title">Cantidad de turnos por día</h5>
       <!-- <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> -->
       <div class="chart-container">
-        <canvas id="porDia"> </canvas>
+        <canvas id="turnosPorDia"> </canvas>
       </div>
-      <!-- <a href="#" class="card-link">Card link</a>
-      <a href="#" class="card-link">Another link</a> -->
+    </div>
+    <div class="text-center">
+      <button
+        type="button"
+        class="btn mt-3 mb-2"
+        (click)="openPDF('turnosPorDia')"
+      >
+        DESCARGAR PDF
+      </button>
+      <button
+        type="button"
+        style="margin-left: 10px"
+        class="btn mt-3 mb-2"
+        (click)="exportExcel('turnosPorDia', listaTurnosPorDia)"
+      >
+        DESCARGAR XLSX
+      </button>
+    </div>
+  </div>
+
+  <div class="card mb-3" style="width: 49%">
+    <div class="card-body">
+      <h5 class="card-title">
+        Cantidad de turnos por especialista en un lapso de tiempo
+      </h5>
+      <!-- <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> -->
+      <div class="chart-container" *ngIf="!pantallaEspecialista">
+        <div class="form-group">
+          <label for="exampleInputEmail1">Fecha Inicio</label>
+          <input
+            type="date"
+            class="form-control"
+            id="exampleInputEmail1"
+            [(ngModel)]="fechaInicio"
+          />
+        </div>
+        <div class="form-group">
+          <label for="exampleInputPassword1">Fecha fin</label>
+          <input
+            type="date"
+            class="form-control"
+            id="exampleInputPassword1"
+            [(ngModel)]="fechaFin"
+          />
+        </div>
+        <div class="text-center">
+          <button
+            type="button"
+            class="btn mt-3"
+            (click)="elegirPeriodoEspecialista()"
+          >
+            BUSCAR
+          </button>
+        </div>
+      </div>
+      <div class="chart-container">
+        <canvas id="especialistaPeriodo"> </canvas>
+      </div>
+      <div class="text-center" *ngIf="pantallaEspecialista">
+        <button
+          type="button"
+          class="btn mt-3 mb-2"
+          (click)="openPDF('especialistaPeriodo')"
+        >
+          DESCARGAR PDF
+        </button>
+        <button
+          type="button"
+          style="margin-left: 10px"
+          class="btn mt-3 mb-2"
+          (click)="
+            exportExcel('especialistaPeriodo', listaTurnosPorDiaEspecialista)
+          "
+        >
+          DESCARGAR XLSX
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="card mb-3" style="width: 49%">
+    <div class="card-body">
+      <h5 class="card-title">
+        Cantidad de turnos finalizados por especialista en un lapso de tiempo
+      </h5>
+      <!-- <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> -->
+      <div class="chart-container" *ngIf="!pantallaFinalizadoEspecialista">
+        <div class="form-group">
+          <label for="exampleInputEmail1">Fecha Inicio</label>
+          <input
+            type="date"
+            class="form-control"
+            id="exampleInputEmail1"
+            [(ngModel)]="fechaInit"
+          />
+        </div>
+        <div class="form-group">
+          <label for="exampleInputPassword1">Fecha fin</label>
+          <input
+            type="date"
+            class="form-control"
+            id="exampleInputPassword1"
+            [(ngModel)]="fechaEnd"
+          />
+        </div>
+        <div class="text-center">
+          <button
+            type="button"
+            class="btn mt-3"
+            (click)="elegirPeriodoFinalizadoEspecialista()"
+          >
+            BUSCAR
+          </button>
+        </div>
+      </div>
+      <div class="chart-container">
+        <canvas id="turnosFinalizados"> </canvas>
+      </div>
+      <div class="text-center" *ngIf="pantallaFinalizadoEspecialista">
+        <button
+          type="button"
+          class="btn mt-3 mb-2"
+          (click)="openPDF('turnosFinalizados')"
+        >
+          DESCARGAR PDF
+        </button>
+
+        <button
+          type="button"
+          style="margin-left: 10px"
+          class="btn mt-3 mb-2"
+          (click)="
+            exportExcel(
+              'turnosFinalizados',
+              listaTurnosPorDiaEspecialistaFinalizados
+            )
+          "
+        >
+          DESCARGAR XLSX
+        </button>
+      </div>
     </div>
   </div>
 </div>

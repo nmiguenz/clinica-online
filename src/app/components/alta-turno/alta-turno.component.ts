@@ -184,7 +184,7 @@ export class AltaTurnoComponent implements OnInit {
 
   async getDisponibilidadAtencion(dni: string, especialidad: string) {
     let diasSemanales = [
-      'domingo',
+      // 'domingo',
       'lunes',
       'martes',
       'miercoles',
@@ -206,7 +206,6 @@ export class AltaTurnoComponent implements OnInit {
 
         //Cada una de los días de atención semanal
         diasHorariosAtencion.diaHorario.forEach((datosDiaAtencion: any) => {
-          console.log(datosDiaAtencion);
           let primerDia = new Date();
           let ultimoDia = new Date();
           let desde = this.extractTime(datosDiaAtencion.desde);
@@ -264,7 +263,6 @@ export class AltaTurnoComponent implements OnInit {
                     segundoDiaTurno.getMinutes() + diasHorariosAtencion.duracion
                   );
                   this.listadoTurnosDisponibles.push(new Date(segundoDiaTurno));
-                  console.log(segundoDiaTurno);
                 }
               } else {
                 tercerDiaTurno = new Date(primerDia);
@@ -282,7 +280,6 @@ export class AltaTurnoComponent implements OnInit {
                     tercerDiaTurno.getMinutes() + diasHorariosAtencion.duracion
                   );
                   this.listadoTurnosDisponibles.push(new Date(tercerDiaTurno));
-                  console.log(tercerDiaTurno);
                 }
               }
             }
@@ -316,9 +313,7 @@ export class AltaTurnoComponent implements OnInit {
         this.especialistaSeleccionado.dni
       )
       .then((res: any) => {
-        console.log(res);
         let miSuscription = res.subscribe((turnos: any) => {
-          console.log(turnos);
           for (let index = 0; index < turnos.length; index++) {
             let turno: Turno = turnos[index];
             this.listadoTurnosDisponibles.splice(

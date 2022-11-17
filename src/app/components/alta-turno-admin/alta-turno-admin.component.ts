@@ -76,6 +76,7 @@ export class AltaTurnoAdminComponent implements OnInit {
           element.forEach((especialidadRef: any) => {
             this.listaEspecialidad.push(especialidadRef.payload.doc.data());
           });
+          console.log(this.listaEspecialidad);
         })
       )
       .catch((error) => console.log(error));

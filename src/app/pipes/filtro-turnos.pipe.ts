@@ -19,7 +19,6 @@ export class FiltroTurnosPipe implements PipeTransform {
               dni: historia.payload.doc.data().paciente.dni,
             };
           });
-          console.log(this.historiasClinicas);
         });
       })
       .catch((error: any) => console.log(error));

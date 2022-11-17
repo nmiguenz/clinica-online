@@ -4,5 +4,15 @@
 }
 
 .btn-log {
-  margin-top: 25%;
+  margin-top: 50%;
+}
+
+button {
+  background-color: rgb(13, 187, 157) !important;
+  color: black;
+}
+
+button:hover {
+  background-color: rgb(233 196 106) !important ;
+  color: #fff;
 }
