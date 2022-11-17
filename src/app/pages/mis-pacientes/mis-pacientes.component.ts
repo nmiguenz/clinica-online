@@ -38,9 +38,8 @@ export class MisPacientesComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log('');
     //Obtiene todos los DNI de los pacientes atendidos por un especialista en particular
-    this.db
+    let mySubs = this.db
       .getTurnosFinalizadosByEspecialista(this.especialistaLogueado.dni)
       .subscribe((turnos: any) => {
         this.listaPacientesDni = turnos.map((turno: any) => {
@@ -52,48 +51,50 @@ export class MisPacientesComponent implements OnInit {
 
         //Armado del objeto para mostrar historias
         this.dniUnicos.forEach((dni: number) => {
-          this.listaUsuarios.forEach((paciente: Paciente) => {
-            if (paciente.dni == dni) {
-              this.db
-                .getHistoriasByEspecialistaPacienteOrderLimit(
-                  this.especialistaLogueado.dni,
-                  dni.toString(),
-                  'fecha',
-                  'desc',
-                  3
-                )
-                .subscribe((historias: any) => {
-                  this.listaHistorias = historias.map((element: any) => {
-                    this.idHistoria = element.payload.doc.id;
-                    this.historia = element.payload.doc.data();
-                    this.historia = {
-                      id: this.idHistoria,
-                      historia: this.historia,
-                    };
+          let subs = this.db
+            .getHistoriasByEspecialistaPacienteOrderLimit(
+              this.especialistaLogueado.dni,
+              dni.toString(),
+              'fecha',
+              'desc',
+              3
+            )
+            .subscribe((historias: any) => {
+              this.listaHistorias = historias.map((element: any) => {
+                this.idHistoria = element.payload.doc.id;
+                this.historia = element.payload.doc.data();
+                this.historia = {
+                  id: this.idHistoria,
+                  historia: this.historia,
+                };
 
-                    return this.historia;
-                  });
-                  // historias.forEach((element: any) => {
-                  //   this.idHistoria = element.payload.doc.id;
-                  //   this.historia = element.payload.doc.data();
-                  //   this.historia = {
-                  //     id: this.idHistoria,
-                  //     historia: this.historia,
-                  //   };
+                return this.historia;
+              });
+              // historias.forEach((element: any) => {
+              //   this.idHistoria = element.payload.doc.id;
+              //   this.historia = element.payload.doc.data();
+              //   this.historia = {
+              //     id: this.idHistoria,
+              //     historia: this.historia,
+              //   };
 
-                  //   this.listaHistorias.push(this.historia);
-                  // });
+              //   this.listaHistorias.push(this.historia);
+              // });
 
-                  this.listaHistoriaPaciente.push({
-                    paciente: paciente,
-                    historias: this.listaHistorias,
-                  });
+              let usuarioDatos = this.listaUsuarios.find((usuario) => {
+                if (usuario.dni == dni) return usuario;
+              });
 
-                  this.listaHistorias = [];
-                });
-            }
-          });
+              this.listaHistoriaPaciente.push({
+                paciente: usuarioDatos,
+                historias: this.listaHistorias,
+              });
+
+              this.listaHistorias = [];
+              subs.unsubscribe();
+            });
         });
+        mySubs.unsubscribe();
       });
   }
 
