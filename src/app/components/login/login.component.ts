@@ -4,6 +4,7 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AlertasService } from 'src/app/services/alertas.service';
+import { Log } from 'src/app/classes/log';
 
 @Component({
   selector: 'app-login',
@@ -32,6 +33,7 @@ export class LoginComponent implements OnInit {
 
   users: any[] = [];
   usersAccesoRapido: any[] = [];
+  log: Log | any;
 
   constructor(
     private auth: AuthService,
@@ -144,6 +146,7 @@ export class LoginComponent implements OnInit {
           //Si el usuario existe se guarda en el localStorage
           if (this.user) {
             localStorage.setItem('loggedUser', JSON.stringify(this.user));
+            this.log = new Log(this.user.mail, this.user.perfil, new Date());
           }
 
           if (this.user) {
@@ -157,6 +160,14 @@ export class LoginComponent implements OnInit {
                     if (this.user.habilitado == true) {
                       this.loading = false;
                       this.auth.usuarioLogueado = this.user;
+                      this.db.alta(
+                        {
+                          usuario: this.log.usuario,
+                          perfil: this.log.perfil,
+                          fechaDeIngreso: this.log.fechaDeIngreso,
+                        },
+                        'logs'
+                      );
                       this.route.navigateByUrl('/misTurnos');
                     } else {
                       this.loading = false;
@@ -168,9 +179,25 @@ export class LoginComponent implements OnInit {
                     this.loading = false;
                     if (this.user.perfil == 'paciente') {
                       this.auth.usuarioLogueado = this.user;
+                      this.db.alta(
+                        {
+                          usuario: this.log.usuario,
+                          perfil: this.log.perfil,
+                          fechaDeIngreso: this.log.fechaDeIngreso,
+                        },
+                        'logs'
+                      );
                       this.route.navigateByUrl('/misTurnos');
                     } else {
                       this.auth.usuarioLogueado = this.user;
+                      this.db.alta(
+                        {
+                          usuario: this.log.usuario,
+                          perfil: this.log.perfil,
+                          fechaDeIngreso: this.log.fechaDeIngreso,
+                        },
+                        'logs'
+                      );
                       this.route.navigateByUrl('/backoffice');
                     }
                   }

@@ -1,4 +1,41 @@
-<p>Prueba Charts</p>
-<div class="chart-container" style="width: 800px; height: 600px">
-  <canvas id="my-chart"> </canvas>
+<!-- Logs -->
+<div class="container d-flex justify-content-between flex-row flex-wrap">
+  <div class="card mb-3" style="width: 30%">
+    <div class="card-body">
+      <h5 class="card-title">Logs de ingreso</h5>
+      <!-- <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> -->
+      <div class="log-container">
+        <!-- <canvas id="my-chart"> </canvas> -->
+        <button class="btn btn-primary btn-log" (click)="descargarLogs()">
+          DESCARGAR
+        </button>
+      </div>
+      <!-- <a href="#" class="card-link">Card link</a>
+      <a href="#" class="card-link">Another link</a> -->
+    </div>
+  </div>
+
+  <div class="card mb-3" style="width: 60%">
+    <div class="card-body">
+      <h5 class="card-title">Cantidad de turnos por especialidad</h5>
+      <!-- <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> -->
+      <div class="chart-container">
+        <canvas id="my-chart"> </canvas>
+      </div>
+      <!-- <a href="#" class="card-link">Card link</a>
+      <a href="#" class="card-link">Another link</a> -->
+    </div>
+  </div>
+
+  <div class="card mb-3" style="width: 45%">
+    <div class="card-body">
+      <h5 class="card-title">Cantidad de turnos por día</h5>
+      <!-- <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> -->
+      <div class="chart-container">
+        <canvas id="porDia"> </canvas>
+      </div>
+      <!-- <a href="#" class="card-link">Card link</a>
+      <a href="#" class="card-link">Another link</a> -->
+    </div>
+  </div>
 </div>
