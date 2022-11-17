@@ -17,6 +17,14 @@ export class AuthService {
     }
   }
 
+  setData(key: string, value: any) {
+    sessionStorage.setItem(key, value);
+  }
+
+  getData(key: string) {
+    return sessionStorage.getItem(key);
+  }
+
   async login(email: string, password: string): Promise<any> {
     try {
       this.estaLogueado = true;

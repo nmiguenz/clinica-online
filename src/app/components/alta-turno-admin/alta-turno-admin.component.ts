@@ -76,7 +76,6 @@ export class AltaTurnoAdminComponent implements OnInit {
           element.forEach((especialidadRef: any) => {
             this.listaEspecialidad.push(especialidadRef.payload.doc.data());
           });
-          console.log(this.listaEspecialidad);
         })
       )
       .catch((error) => console.log(error));
@@ -131,7 +130,6 @@ export class AltaTurnoAdminComponent implements OnInit {
 
   seleccionarEspecialista(especialista: Especialista) {
     this.tipoUsuario = 'paciente';
-    console.log(this.listaPacientes);
     this.filter = '';
 
     this.formGroup.controls.especialista.setValue(
@@ -224,7 +222,6 @@ export class AltaTurnoAdminComponent implements OnInit {
 
         //Cada una de los días de atención semanal
         diasHorariosAtencion.diaHorario.forEach((datosDiaAtencion: any) => {
-          console.log(datosDiaAtencion);
           let primerDia = new Date();
           let ultimoDia = new Date();
           let desde = this.extractTime(datosDiaAtencion.desde);
@@ -282,7 +279,6 @@ export class AltaTurnoAdminComponent implements OnInit {
                     segundoDiaTurno.getMinutes() + diasHorariosAtencion.duracion
                   );
                   this.listadoTurnosDisponibles.push(new Date(segundoDiaTurno));
-                  console.log(segundoDiaTurno);
                 }
               } else {
                 tercerDiaTurno = new Date(primerDia);
@@ -300,7 +296,6 @@ export class AltaTurnoAdminComponent implements OnInit {
                     tercerDiaTurno.getMinutes() + diasHorariosAtencion.duracion
                   );
                   this.listadoTurnosDisponibles.push(new Date(tercerDiaTurno));
-                  console.log(tercerDiaTurno);
                 }
               }
             }
@@ -334,9 +329,7 @@ export class AltaTurnoAdminComponent implements OnInit {
         this.especialistaSeleccionado.dni
       )
       .then((res: any) => {
-        console.log(res);
         let miSuscription = res.subscribe((turnos: any) => {
-          console.log(turnos);
           for (let index = 0; index < turnos.length; index++) {
             let turno: Turno = turnos[index];
             this.listadoTurnosDisponibles.splice(

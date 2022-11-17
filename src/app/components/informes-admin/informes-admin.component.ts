@@ -317,8 +317,6 @@ export class InformesAdminComponent implements OnInit {
       return obj;
     }, {});
 
-    console.log('por grupos: ', group_to_values);
-
     for (const [key, value] of Object.entries(group_to_values)) {
       this.listaTurnosPorDiaEspecialistaFinalizados.push([key, value]);
       columnNames.push(key);

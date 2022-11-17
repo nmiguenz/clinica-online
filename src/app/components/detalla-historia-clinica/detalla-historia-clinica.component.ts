@@ -57,7 +57,7 @@ export class DetallaHistoriaClinicaComponent implements OnInit {
 
   public openPDF(): void {
     let user = '';
-    if (this.pantalla == 'usuarios') {
+    if (this.pantalla == 'usuarios' || this.pantalla == 'misPacientes') {
       user = this.historiaClinicaInput.historia.paciente.apellido;
     } else {
       user = this.pacienteElegido.apellido;
@@ -108,7 +108,6 @@ export class DetallaHistoriaClinicaComponent implements OnInit {
             this.listaHistoriasPaciente = arg.map((element: any) => {
               return element;
             });
-            console.log(this.listaHistoriasPaciente);
           }
         })
       )

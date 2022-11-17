@@ -109,6 +109,8 @@ export class LoginComponent implements OnInit {
         }
         especialistaDos.unsubscribe();
       });
+
+    this.auth.setData('controlInicial', 'activado');
   }
 
   async getUsuarios() {

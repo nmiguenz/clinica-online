@@ -12,7 +12,9 @@ import { AuthService } from '../services/auth.service';
 @Injectable({
   providedIn: 'root',
 })
-export class AuthGuard implements CanActivate {
+export class ControlBienvenidaGuard implements CanActivate {
+  control: string = '';
+
   constructor(private auth: AuthService, private routes: Router) {}
 
   canActivate(
@@ -23,10 +25,11 @@ export class AuthGuard implements CanActivate {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-    if (this.auth.usuarioLogueado) {
-      return true;
-    } else {
+    this.control = this.auth.getData('controlInicial')!;
+
+    if (this.control == 'activado') {
+      this.routes.navigateByUrl('acceso/login');
       return false;
-    }
+    } else return true;
   }
 }
