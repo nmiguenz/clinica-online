@@ -12,7 +12,7 @@
         <input
           class="form-control"
           type="text"
-          placeholder="Buscar por profesional"
+          placeholder="Buscar por paciente"
           [(ngModel)]="filter"
         />
         <span class="lupa"><i class="bi bi-search"></i></span>
@@ -23,7 +23,10 @@
       <div
         class="col-md-3 mb-1 text-center pacienteBtn content"
         id="flipCardContainer"
-        *ngFor="let pacienteHistoria of listaHistoriaPaciente"
+        *ngFor="
+          let pacienteHistoria of listaHistoriaPaciente
+            | filtrarPacienteHistoria: filter
+        "
         (click)="seleccionarPaciente(paciente)"
       >
         <div class="flip-card">

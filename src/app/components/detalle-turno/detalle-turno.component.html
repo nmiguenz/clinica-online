@@ -388,6 +388,7 @@
             [pacienteInput]="turnoSeleccionado.datosPaciente"
             [especialistaInput]="turnoSeleccionado.datosEspecialista"
             [especialidadInput]="turnoSeleccionado.especialidad"
+            (idHistoria)="obtenerIdHistoria($event)"
           ></app-historia-clinica>
         </div>
 

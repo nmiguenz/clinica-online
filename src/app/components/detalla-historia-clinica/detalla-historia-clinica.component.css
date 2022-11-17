@@ -19,10 +19,10 @@
   cursor: pointer;
 }
 
-.especialidadTd:hover {
+/* .especialidadTd:hover {
   background-color: #0dbb9d;
   color: #fff;
-}
+} */
 
 @media (max-width: 800px) {
   .card {

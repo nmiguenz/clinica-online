@@ -91,7 +91,10 @@
       <app-mis-horarios [inputEspecialista]="usuario"></app-mis-horarios>
     </div>
 
-    <div class="d-flex justify-content-center mb-2">
+    <div
+      class="d-flex justify-content-center mb-2"
+      *ngIf="usuario.perfil == 'paciente'"
+    >
       <app-detalla-historia-clinica
         [pacienteElegido]="usuario"
         [pantalla]="'perfil'"

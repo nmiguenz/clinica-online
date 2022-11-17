@@ -5,6 +5,8 @@ import { DetallaHistoriaClinicaComponent } from 'src/app/components/detalla-hist
 import { FormsModule } from '@angular/forms';
 import { FiltroTurnosPipe } from 'src/app/pipes/filtro-turnos.pipe';
 import { FiltrarEspecialidadPipe } from 'src/app/pipes/filtrar-especialidad.pipe';
+import { VerEspecialidadDirective } from 'src/app/directives/ver-especialidad.directive';
+import { FiltrarPacienteHistoriaPipe } from 'src/app/pipes/filtrar-paciente-historia.pipe';
 
 @NgModule({
   declarations: [
@@ -12,6 +14,8 @@ import { FiltrarEspecialidadPipe } from 'src/app/pipes/filtrar-especialidad.pipe
     DetallaHistoriaClinicaComponent,
     FiltroTurnosPipe,
     FiltrarEspecialidadPipe,
+    VerEspecialidadDirective,
+    FiltrarPacienteHistoriaPipe,
   ],
   imports: [CommonModule, FormsModule],
   exports: [
@@ -19,6 +23,8 @@ import { FiltrarEspecialidadPipe } from 'src/app/pipes/filtrar-especialidad.pipe
     DetallaHistoriaClinicaComponent,
     FiltroTurnosPipe,
     FiltrarEspecialidadPipe,
+    VerEspecialidadDirective,
+    FiltrarPacienteHistoriaPipe,
   ],
 })
 export class GeneralesModule {}

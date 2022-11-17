@@ -14,6 +14,8 @@ export class DetalleTurnoComponent implements OnInit {
   @Input() turnoSeleccionado: Turno | any = null;
   @Input() usuarioSeleccionado: any;
 
+  idHistoriaRecibido: string = '';
+
   //Mensajes
   mensajeBtnCancelar: string = 'Cancelar turno';
   mensajeBtnResenia: string = 'Ver reseña';
@@ -192,8 +194,10 @@ export class DetalleTurnoComponent implements OnInit {
 
   finalizarTurno(turno: Turno, usuario: any) {
     turno.resenia = this.formFinalizar.value.resenia;
-    if (turno.resenia != '') {
+    if (turno.resenia != '' && this.idHistoriaRecibido != '') {
       turno.estado = EstadoTurno.finalizado;
+      turno.idHistoriaClinica = this.idHistoriaRecibido;
+
       this.db
         .update('turnos', this.turnoSeleccionado.id, turno)
         .then((res: any) => {
@@ -211,8 +215,12 @@ export class DetalleTurnoComponent implements OnInit {
     } else {
       this.sa.errorAlert(
         'Error al fnializar',
-        'Debe dejar una reseñia antes. '
+        'Debe dejar una reseñia y completar la historia clínica antes. '
       );
     }
+  }
+
+  obtenerIdHistoria(id: string) {
+    this.idHistoriaRecibido = id;
   }
 }

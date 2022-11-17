@@ -15,6 +15,7 @@ export class FiltroTurnosPipe implements PipeTransform {
         ref.subscribe((listadoRef: any) => {
           this.historiasClinicas = listadoRef.map((historia: any) => {
             return {
+              id: historia.payload.doc.id,
               historia: historia.payload.doc.data(),
               dni: historia.payload.doc.data().paciente.dni,
             };
@@ -63,7 +64,7 @@ export class FiltroTurnosPipe implements PipeTransform {
         turno.fecha.toString().indexOf(filter) !== -1 ||
         turno.resenia.indexOf(filter) !== -1 ||
         historiasFiltradas.find((historia) => {
-          return historia.dni.toString() == turno.datosPaciente.dni.toString();
+          return historia.id.toString() == turno.idHistoriaClinica;
         })
     );
   }

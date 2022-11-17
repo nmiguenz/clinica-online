@@ -10,6 +10,7 @@ import { LoadingComponent } from 'src/app/components/loading/loading.component';
 import { NgxCaptchaModule } from 'ngx-captcha';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { GeneralesModule } from '../generales/generales.module';
+import { ReposicionamientoDirective } from 'src/app/directives/reposicionamiento.directive';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { GeneralesModule } from '../generales/generales.module';
     LoginComponent,
     RegisterComponent,
     LoadingComponent,
+    ReposicionamientoDirective,
   ],
   imports: [
     CommonModule,

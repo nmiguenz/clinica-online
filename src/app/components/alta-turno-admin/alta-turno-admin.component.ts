@@ -169,6 +169,7 @@ export class AltaTurnoAdminComponent implements OnInit {
       '',
       '',
       '',
+      '',
       ''
     );
 

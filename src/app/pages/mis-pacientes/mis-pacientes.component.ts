@@ -38,7 +38,8 @@ export class MisPacientesComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    //Obtiene todos los DNI de los pacientes atendidos por un paciente en particular
+    console.log('');
+    //Obtiene todos los DNI de los pacientes atendidos por un especialista en particular
     this.db
       .getTurnosFinalizadosByEspecialista(this.especialistaLogueado.dni)
       .subscribe((turnos: any) => {
@@ -62,7 +63,7 @@ export class MisPacientesComponent implements OnInit {
                   3
                 )
                 .subscribe((historias: any) => {
-                  historias.forEach((element: any) => {
+                  this.listaHistorias = historias.map((element: any) => {
                     this.idHistoria = element.payload.doc.id;
                     this.historia = element.payload.doc.data();
                     this.historia = {
@@ -70,8 +71,18 @@ export class MisPacientesComponent implements OnInit {
                       historia: this.historia,
                     };
 
-                    this.listaHistorias.push(this.historia);
+                    return this.historia;
                   });
+                  // historias.forEach((element: any) => {
+                  //   this.idHistoria = element.payload.doc.id;
+                  //   this.historia = element.payload.doc.data();
+                  //   this.historia = {
+                  //     id: this.idHistoria,
+                  //     historia: this.historia,
+                  //   };
+
+                  //   this.listaHistorias.push(this.historia);
+                  // });
 
                   this.listaHistoriaPaciente.push({
                     paciente: paciente,

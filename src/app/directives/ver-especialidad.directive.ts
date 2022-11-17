@@ -1,21 +1,21 @@
 import { Directive, ElementRef, HostListener } from '@angular/core';
 
 @Directive({
-  selector: '[appHighlight]',
+  selector: '[appVerEspecialidad]',
 })
-export class HighlightDirective {
+export class VerEspecialidadDirective {
   constructor(public el: ElementRef) {}
 
   @HostListener('mouseenter') onMouseEnter() {
-    this.highlight('#0dbb9d', 'white');
+    this.especialidadHighlight('#0dbb9d', '#fff');
   }
 
   @HostListener('mouseleave') onMouseLeave() {
-    this.highlight('', '');
+    this.especialidadHighlight('', '');
   }
 
-  private highlight(color: string, color2: string) {
+  private especialidadHighlight(color: string, colorText: string) {
     this.el.nativeElement.style.backgroundColor = color;
-    this.el.nativeElement.style.color = color2;
+    this.el.nativeElement.style.color = colorText;
   }
 }

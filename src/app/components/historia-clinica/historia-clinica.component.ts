@@ -2,7 +2,7 @@ import { Especialista } from './../../classes/especialista';
 import { Paciente } from './../../classes/paciente';
 import { FirestoreDbService } from 'src/app/services/firestore-db.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { HistoriaClinica } from 'src/app/classes/historia-clinica';
 
 @Component({
@@ -12,6 +12,7 @@ import { HistoriaClinica } from 'src/app/classes/historia-clinica';
 })
 export class HistoriaClinicaComponent implements OnInit {
   formGroup: FormGroup | any;
+  @Output() idHistoria: EventEmitter<any> = new EventEmitter<any>();
 
   @Input() pacienteInput: Paciente | any;
   @Input() especialistaInput: Especialista | any;
@@ -33,10 +34,7 @@ export class HistoriaClinicaComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {
-    console.log(this.pacienteInput);
-    console.log(this.especialistaInput);
-  }
+  ngOnInit(): void {}
 
   altaHistoria() {
     let paciente = this.pacienteInput;
@@ -62,7 +60,14 @@ export class HistoriaClinicaComponent implements OnInit {
 
     this.db
       .alta(JSON.parse(JSON.stringify(historiaClinica)), 'historiaClinica')
-      .then(() => this.formGroup.reset())
+      .then((res: any) => {
+        this.enviarId(res.id);
+        this.formGroup.reset();
+      })
       .catch((error) => console.log(error));
+  }
+
+  enviarId(id: string | any) {
+    this.idHistoria.emit(id);
   }
 }
